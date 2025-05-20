@@ -192,7 +192,7 @@ const Preloader = () => {
                             <span className="inline-block text-primary" style={{transform: 'translateY(100%)', display: 'inline-block'}}>E</span>
                             <span className="inline-block" style={{transform: 'translateY(100%)', display: 'inline-block'}}>N</span>
                         </p>
-                        <div className="text-center text-xs tracking-[0.5em] text-foreground mt-3 font-mono font-light">FRONTEND DEVELOPER</div>
+                        <div className="text-center text-xs tracking-[0.5em] text-foreground mt-3 font-mono font-light">Full Stack Developer</div>
                     </div>
                 </div>
                 

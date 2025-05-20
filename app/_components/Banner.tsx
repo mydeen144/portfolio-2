@@ -221,38 +221,36 @@ const Banner = () => {
                 {/* Main content with split design */}
                 <div className="w-full grid lg:grid-cols-2 gap-10 items-center">
                     {/* Left column - Text content */}
-                    <div className="order-2 lg:order-1 space-y-8 max-w-[600px] mx-auto lg:mx-0">
+                    <div className="order-2 lg:order-1 space-y-8 max-w-[600px] mx-auto lg:mx-0 group">
                         <div className="space-y-6">
                             {/* Premium badge */}
                             <div className="badge inline-block bg-background/30 backdrop-blur-md px-5 py-2.5 rounded-full border border-primary/20 shadow-[0_0_15px_rgba(var(--primary-rgb),0.2)]">
-                                <span className="text-primary font-medium tracking-wide">Frontend Developer</span>
+                                <span className="text-primary font-medium tracking-wide">Full Stack Developer</span>
                             </div>
                             
                             {/* Main heading with prioritized LCP element */}
                             <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide">
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-foreground">Crafting</span>
+                                    <span className="title-word inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Crafting</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-primary drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]">Digital</span>
+                                    <span className="title-word inline-block text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Digital</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
                                     {/* No longer the LCP element */}
                                     <span 
-                                        className="title-word inline-block text-secondary drop-shadow-[0_0_10px_rgba(var(--secondary-rgb),0.3)]"
+                                        className="title-word inline-block text-secondary drop-shadow-[0_0_15px_rgba(var(--secondary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100"
                                     >Experiences</span>
                                 </div>
                             </h1>
                             
                             {/* Description with premium styling */}
-                            <p className="banner-description text-lg text-muted-foreground leading-relaxed">
+                            <p className="banner-description text-lg text-muted-foreground/90 leading-relaxed backdrop-blur-sm py-2 px-1 rounded-md border-l-2 border-primary/30 pl-4">
                                 Hi! I&apos;m{' '}
-                                <span className="font-medium text-foreground font-anton">
+                                <span className="font-medium text-foreground font-anton relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/40 group-hover:text-primary transition-colors duration-300">
                                     MYDEEN
                                 </span>
-                                . A creative Frontend Developer with 3+ years of
-                                experience in building high-performance, scalable, and
-                                responsive web solutions.
+                                . A seasoned Full Stack Developer with <span className="text-primary font-medium">5+</span> years of experience crafting <span className="text-foreground/90">PHP solutions with Laravel & WordPress</span>. I blend modern front-end tech like <span className="text-secondary/90">Tailwind CSS & Alpine.js</span> to build human-centered digital experiences that solve real problems.
                             </p>
                         </div>
                         
@@ -283,7 +281,7 @@ const Banner = () => {
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <span className="text-2xl text-primary">3+</span>
+                                    <span className="text-2xl text-primary">5+</span>
                                 </div>
                                 <div>
                                     <h5 
@@ -310,7 +308,7 @@ const Banner = () => {
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-secondary/10 flex items-center justify-center">
-                                    <span className="text-2xl text-secondary">7+</span>
+                                    <span className="text-2xl text-secondary">15+</span>
                                 </div>
                                 <div>
                                     <h5 className="text-3xl font-anton text-secondary mb-1">

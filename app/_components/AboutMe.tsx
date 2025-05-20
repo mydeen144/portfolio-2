@@ -78,9 +78,7 @@ const AboutMe = () => {
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
                     <div className="absolute -left-4 top-10 text-8xl text-primary/10 font-anton">&ldquo;</div>
                     <h2 className="text-3xl md:text-5xl font-thin leading-tight text-foreground relative z-10">
-                        I believe in a user centered design approach, ensuring that
-                        every project I work on is tailored to meet the specific
-                        needs of its users.
+                        I craft digital solutions where user needs guide every line of code—turning functionality into intuitive experiences
                     </h2>
                     <div className="absolute -right-4 bottom-0 text-8xl text-primary/10 font-anton">&rdquo;</div>
                 </div>
@@ -109,18 +107,10 @@ const AboutMe = () => {
                         <div className="md:col-span-7">
                             <div className="space-y-6 text-lg">
                                 <p className="slide-up-and-fade bg-background/40 backdrop-blur-sm p-6 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300">
-                                    I&apos;m a frontend web developer dedicated to
-                                    turning ideas into creative solutions. I
-                                    specialize in creating seamless and intuitive
-                                    user experiences.
+                                    I&apos;m a seasoned Full Stack Developer with over 5 years of experience, specializing in PHP frameworks (Laravel, Symfony, Phalcon), WordPress, and modern front-end technologies including Tailwind CSS and Alpine.js.
                                 </p>
                                 <p className="slide-up-and-fade bg-background/40 backdrop-blur-sm p-6 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300">
-                                    My approach focuses on creating scalable,
-                                    high-performing solutions tailored to both user
-                                    needs and business objectives. By prioritizing
-                                    performance, accessibility, and responsiveness,
-                                    I strive to deliver experiences that not only
-                                    engage users but also drive tangible results.
+                                    My approach focuses on creating scalable, high-performing solutions tailored to both user needs and business objectives. I&apos;ve transformed digital ecosystems, led interface redesigns, and delivered award-winning work that drives tangible results through performance optimization, accessibility, and responsive design.
                                 </p>
                             </div>
                         </div>

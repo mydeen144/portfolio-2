@@ -74,7 +74,7 @@ const Footer = async () => {
                             </div>
                             
                             <div className="flex flex-wrap justify-center gap-4">
-                                <a href="https://github.com/mydeen" target="_blank" rel="noopener noreferrer" className="size-12 flex items-center justify-center rounded-full bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group">
+                                <a href="https://github.com/mydeen144" target="_blank" rel="noopener noreferrer" className="size-12 flex items-center justify-center rounded-full bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group">
                                     <Github className="size-5 text-muted-foreground group-hover:text-primary transition-all duration-300" />
                                 </a>
                                 <a href="https://linkedin.com/in/mydeenpitchai" target="_blank" rel="noopener noreferrer" className="size-12 flex items-center justify-center rounded-full bg-background/60 border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group">
@@ -134,7 +134,7 @@ const Footer = async () => {
                         </div>
                         
                         <a
-                            href="https://github.com/mydeen/portfolio-2.0"
+                            href="https://github.com/mydeen144"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"

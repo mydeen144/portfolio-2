@@ -1,7 +1,7 @@
 import { IProject } from '@/types';
 
 export const GENERAL_INFO = {
-    email: 'tasmirolislam@gmail.com',
+    email: 'mydeen144@gmail.com',
 
     emailSubject: "Let's collaborate on a project",
     emailBody: 'Hi Mydeen, I am reaching out to you because...',
@@ -18,63 +18,59 @@ export const SOCIAL_LINKS = [
 ];
 
 export const MY_STACK = {
-    frontend: [
+    'programming languages': [
         {
-            name: 'Javascript',
+            name: 'PHP',
+            icon: '/logo/php.svg',
+        },
+        {
+            name: 'JavaScript',
             icon: '/logo/js.png',
         },
+    ],
+    'frameworks & libraries': [
         {
-            name: 'Typescript',
-            icon: '/logo/ts.png',
+            name: 'Laravel',
+            icon: '/logo/laravel.svg',
         },
         {
-            name: 'React',
+            name: 'Symfony',
+            icon: '/logo/symfony.svg',
+        },
+        {
+            name: 'Phalcon',
+            icon: '/logo/phalcon.svg',
+        },
+        {
+            name: 'Alpine.js',
+            icon: '/logo/alpinejs.svg',
+        },
+        {
+            name: 'ReactJS',
             icon: '/logo/react.png',
         },
-        {
-            name: 'Next.js',
-            icon: '/logo/next.png',
-        },
-        {
-            name: 'Redux',
-            icon: '/logo/redux.png',
-        },
+    ],
+    'frontend technologies': [
         {
             name: 'Tailwind CSS',
             icon: '/logo/tailwind.png',
-        },
-        {
-            name: 'GSAP',
-            icon: '/logo/gsap.png',
-        },
-        {
-            name: 'Frammer Motion',
-            icon: '/logo/framer-motion.png',
-        },
-        {
-            name: 'SASS',
-            icon: '/logo/sass.png',
         },
         {
             name: 'Bootstrap',
             icon: '/logo/bootstrap.svg',
         },
     ],
-    backend: [
+    'cms': [
         {
-            name: 'Node.js',
-            icon: '/logo/node.png',
+            name: 'WordPress',
+            icon: '/logo/wordpress.svg',
         },
         {
-            name: 'Nest.js',
-            icon: '/logo/nest.svg',
-        },
-        {
-            name: 'Express.js',
-            icon: '/logo/express.png',
+            name: 'WPBlazer',
+            icon: '/logo/wpblazer.svg',
         },
     ],
-    database: [
+    'database': [
         {
             name: 'MySQL',
             icon: '/logo/mysql.svg',
@@ -83,18 +79,10 @@ export const MY_STACK = {
             name: 'PostgreSQL',
             icon: '/logo/postgreSQL.png',
         },
-        {
-            name: 'MongoDB',
-            icon: '/logo/mongodb.svg',
-        },
-        {
-            name: 'Prisma',
-            icon: '/logo/prisma.png',
-        },
     ],
-    tools: [
+    'devops & tools': [
         {
-            name: 'Git',
+            name: 'Git & GitHub',
             icon: '/logo/git.png',
         },
         {
@@ -102,8 +90,22 @@ export const MY_STACK = {
             icon: '/logo/docker.svg',
         },
         {
-            name: 'AWS',
-            icon: '/logo/aws.png',
+            name: 'cPanel',
+            icon: '/logo/cpanel.svg',
+        },
+    ],
+    'project management': [
+        {
+            name: 'Jira',
+            icon: '/logo/jira.svg',
+        },
+        {
+            name: 'ClickUp',
+            icon: '/logo/clickup.svg',
+        },
+        {
+            name: 'Zoho Projects',
+            icon: '/logo/zoho.svg',
         },
     ],
 };
@@ -186,7 +188,7 @@ export const PROJECTS: IProject[] = [
         liveUrl: 'https://demo.epikcart.siphertech.com/',
         year: 2023,
         description: `Epikcart is a feature-rich, scalable e-commerce platform tailored for large businesses. It features dynamic product filtering, multi-language support with RTL, advanced inventory management, order tracking, and refund systems, offering a comprehensive solution for multi-vendor operations.`,
-        role: `As the frontend developer in a team of five, I: <br/>
+        role: `As the Full Stack Developer in a team of five, I: <br/>
         - Built the frontend from scratch using React, Redux, RTK Query, and Tailwind CSS.<br/>
         - Developed dynamic filtering logic for the product search page with admin-configurable parameters.<br/>
         - Integrated multi-language support with React i18n, including RTL handling.<br/>
@@ -239,7 +241,7 @@ export const PROJECTS: IProject[] = [
         year: 2023,
         description:
             'PropertyPro is a real estate management platform offering users a seamless experience to explore, manage, and view property listings. The application emphasizes accessibility and responsive design, ensuring a smooth interface across devices.',
-        role: `As the frontend developer, I:<br/>
+        role: `As the Full Stack Developer, I:<br/>
         - Built the frontend using React, Redux, RTK Query, Framer Motion, and Tailwind CSS.<br/>
         - Integrated dynamic state management for efficient handling of property data.<br/>
         - Implemented multi-language support with React i18n to cater to diverse audiences.<br/>
@@ -291,7 +293,7 @@ export const MY_EXPERIENCE = [
         duration: 'Dec 2024 - Present',
     },
     {
-        title: 'Frontend Developer',
+        title: 'Full Stack Developer',
         company: 'Epikcoders',
         duration: 'Oct 2023 - Nov 2024',
     },
@@ -301,7 +303,7 @@ export const MY_EXPERIENCE = [
         duration: 'Oct 2022 - Sep 2023',
     },
     {
-        title: 'Frontend Developer (Part-time)',
+        title: 'Full Stack Developer (Part-time)',
         company: 'Branex IT',
         duration: 'Jan 2022 - Oct 2022',
     },

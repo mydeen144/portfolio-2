@@ -11,6 +11,38 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Skills = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    
+    // Handle image loading errors by displaying a colored div with the first letter of the skill name
+    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, skillName: string) => {
+        const target = e.currentTarget;
+        const parent = target.parentElement;
+        if (parent) {
+            // Create a colored div with the first letter
+            const firstLetter = skillName.charAt(0).toUpperCase();
+            const colors = ['#FF6B00', '#2684FF', '#8993be', '#FF2D20', '#76C39B', '#77C1D2', '#21759B', '#7B68EE', '#C00'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Hide the image
+            target.style.display = 'none';
+            
+            // Create a fallback element
+            const fallback = document.createElement('div');
+            fallback.style.width = '40px';
+            fallback.style.height = '40px';
+            fallback.style.backgroundColor = randomColor;
+            fallback.style.borderRadius = '50%';
+            fallback.style.display = 'flex';
+            fallback.style.justifyContent = 'center';
+            fallback.style.alignItems = 'center';
+            fallback.style.color = 'white';
+            fallback.style.fontWeight = 'bold';
+            fallback.style.fontSize = '18px';
+            fallback.textContent = firstLetter;
+            
+            // Add the fallback to the parent
+            parent.appendChild(fallback);
+        }
+    };
 
     useGSAP(
         () => {
@@ -130,6 +162,7 @@ const Skills = () => {
                                                     width="40"
                                                     height="40"
                                                     className="max-h-10 transition-transform duration-300 group-hover/item:scale-110"
+                                                    onError={(e) => handleImageError(e, tech.name)}
                                                 />
                                             </div>
                                         </div>
