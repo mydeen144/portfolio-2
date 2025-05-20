@@ -34,7 +34,7 @@ const Banner = () => {
                 }
             }, { timeout: 10 });
         } else {
-            immediateRender = window.requestAnimationFrame(() => {
+            immediateRender = (window as Window).requestAnimationFrame(() => {
                 const lcpElement = document.querySelector('.lcp-element');
                 if (lcpElement) {
                     (lcpElement as HTMLElement).getBoundingClientRect();
