@@ -65,10 +65,6 @@ export const MY_STACK = {
             name: 'WordPress',
             icon: '/logo/wordpress.svg',
         },
-        {
-            name: 'WPBlazer',
-            icon: '/logo/wpblazer.svg',
-        },
     ],
     'database': [
         {
@@ -288,23 +284,60 @@ export const PROJECTS: IProject[] = [
 
 export const MY_EXPERIENCE = [
     {
-        title: 'Software Engineer (Frontend)',
-        company: 'Strativ AB',
-        duration: 'Dec 2024 - Present',
+        title: 'Software Developer',
+        company: 'OBII KRIATIONZ WEB LLP',
+        location: 'Bengaluru, Karnataka, India',
+        duration: 'July 2024 - Present',
+        description: `
+        • Developed high-performance web applications using Laravel, enhancing both user experience and scalability.
+        • Led and mentored junior developers, maintaining high-quality coding standards and delivery timelines.
+        • Delivered end-to-end projects including Students Xerox (e-commerce platform for academic printing) and Proudify (certificate generation platform).
+        • Designed and deployed WordPress solutions for clients like Terrain Flooring, RKM Goa, and Digital Dopamine.
+        • Practiced clean coding, rigorous testing, and effective team communication.
+        `,
     },
     {
-        title: 'Full Stack Developer',
-        company: 'Epikcoders',
-        duration: 'Oct 2023 - Nov 2024',
+        title: 'Software Developer',
+        company: 'In2 Computing India Pvt. Ltd.',
+        location: 'Tirunelveli, Tamil Nadu, India',
+        duration: 'July 2023 - May 2024',
+        description: `
+        • Designed and developed software solutions to address various business challenges.
+        • Collaborated cross-functionally to resolve integration issues and deliver stable systems.
+        `,
     },
     {
-        title: 'FRONTEND ENGINEER',
-        company: 'Anchorblock Technology',
-        duration: 'Oct 2022 - Sep 2023',
+        title: 'Software Developer',
+        company: 'Touch Logic Technologies',
+        location: 'Tirunelveli, Tamil Nadu, India',
+        duration: 'May 2022 - July 2023',
+        description: `
+        • Spearheaded the redesign of WPBlazer, boosting usability and engagement.
+        • Developed major modules:
+          - SiteBlazer – Quick site deployment tool.
+          - ProofBlazer – Content verification workflow.
+          - MonitorBlazer – Website monitoring tool (unreleased).
+        • Improved client satisfaction through optimized code and feature-rich interfaces.
+        `,
     },
     {
-        title: 'Full Stack Developer (Part-time)',
-        company: 'Branex IT',
-        duration: 'Jan 2022 - Oct 2022',
+        title: 'Web Developer',
+        company: 'Techzarinfo Software Solutions',
+        location: 'Tiruchirappalli, Tamil Nadu, India',
+        duration: 'December 2020 - March 2022',
+        description: `
+        • Built and maintained responsive websites aligned with client goals.
+        • Enhanced application speed and addressed technical issues efficiently.
+        `,
+    },
+    {
+        title: 'Junior Web Developer',
+        company: 'Techsomo',
+        location: 'Tirunelveli, Tamil Nadu, India',
+        duration: 'June 2019 - December 2020',
+        description: `
+        • Assisted in development and deployment of client web projects.
+        • Gained foundational experience in frontend/backend integration and user-centric design.
+        `,
     },
 ];

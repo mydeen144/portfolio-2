@@ -115,7 +115,7 @@ const Experiences = () => {
                                     {/* Skills tags */}
                                     <div className="mt-4 flex flex-wrap gap-2">
                                         {[
-                                            "React", "TypeScript", "Next.js", "Tailwind CSS"
+                                            "PHP", "Laravel", "WordPress", "Tailwind CSS", "Alpine.js", "MySQL"
                                         ].map((skill: string) => (
                                             <span key={skill} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-md">{skill}</span>
                                         ))}

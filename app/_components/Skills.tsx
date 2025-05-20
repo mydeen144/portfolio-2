@@ -128,9 +128,9 @@ const Skills = () => {
             <div className="container relative z-10">
                 <div className="stack-title mb-8">
                     <SectionTitle title="My Stack" />
-                    <p className="text-muted-foreground max-w-2xl mt-4 text-center mx-auto">
+                    {/* <p className="text-muted-foreground max-w-2xl mt-4 text-center mx-auto">
                         Proficient in a wide range of modern technologies for building premium digital experiences
-                    </p>
+                    </p> */}
                 </div>
 
                 <div className="space-y-10">
