@@ -15,8 +15,33 @@ const Banner = () => {
     // Separate state to track if LCP has occurred
     const [lcpComplete, setLcpComplete] = React.useState(false);
 
-    // Use useEffect to monitor LCP and defer animations
+    // Prioritize LCP rendering before any other operations
     React.useEffect(() => {
+        // Only run in browser environment
+        if (typeof window === 'undefined') return;
+        
+        // Use high priority rendering for LCP
+        let immediateRender: number | null = null;
+        
+        if ('requestIdleCallback' in window) {
+            const rIC = window.requestIdleCallback as (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+            immediateRender = rIC(() => {
+                // Mark LCP element with high priority
+                const lcpElement = document.querySelector('.lcp-element');
+                if (lcpElement && 'setAttribute' in lcpElement) {
+                    (lcpElement as HTMLElement).setAttribute('fetchpriority', 'high');
+                    (lcpElement as HTMLElement).getBoundingClientRect();
+                }
+            }, { timeout: 10 });
+        } else {
+            immediateRender = window.requestAnimationFrame(() => {
+                const lcpElement = document.querySelector('.lcp-element');
+                if (lcpElement) {
+                    (lcpElement as HTMLElement).getBoundingClientRect();
+                }
+            });
+        }
+
         // Monitor LCP completion
         if ('PerformanceObserver' in window) {
             const lcpObserver = new PerformanceObserver((entryList) => {
@@ -29,12 +54,22 @@ const Banner = () => {
             
             lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
             
-            // Fallback - set LCP complete after a timeout
+            // Reduced fallback timeout for faster animation start
             const fallbackTimer = setTimeout(() => {
                 setLcpComplete(true);
-            }, 1000);
+            }, 500);
             
             return () => {
+                if (typeof window !== 'undefined') {
+                    if (immediateRender !== null) {
+                        if ('cancelIdleCallback' in window) {
+                            const cIC = window.cancelIdleCallback as (handle: number) => void;
+                            cIC(immediateRender);
+                        } else {
+                            window.cancelAnimationFrame(immediateRender);
+                        }
+                    }
+                }
                 lcpObserver.disconnect();
                 clearTimeout(fallbackTimer);
             };
@@ -42,8 +77,20 @@ const Banner = () => {
             // Fallback for browsers without PerformanceObserver
             const timer = setTimeout(() => {
                 setLcpComplete(true);
-            }, 1000);
-            return () => clearTimeout(timer);
+            }, 500);
+            return () => {
+                if (typeof window !== 'undefined') {
+                    if (immediateRender !== null) {
+                        if ('cancelIdleCallback' in window) {
+                            const cIC = window.cancelIdleCallback as (handle: number) => void;
+                            cIC(immediateRender);
+                        } else {
+                            window.cancelAnimationFrame(immediateRender);
+                        }
+                    }
+                }
+                clearTimeout(timer);
+            };
         }
     }, []);
     
@@ -63,8 +110,8 @@ const Banner = () => {
                 0
             );
             
-            // Then animate the text elements - except LCP elements
-            loadTl.fromTo('.title-word', 
+            // Then animate the text elements - explicitly excluding LCP element
+            loadTl.fromTo('.title-word:not(.lcp-element)', 
                 { y: 80, opacity: 0 },
                 { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'back.out(1.7)' },
                 0.3
@@ -181,7 +228,7 @@ const Banner = () => {
                                 <span className="text-primary font-medium tracking-wide">Frontend Developer</span>
                             </div>
                             
-                            {/* Main heading with word-by-word animation */}
+                            {/* Main heading with prioritized LCP element */}
                             <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide">
                                 <div className="overflow-hidden">
                                     <span className="title-word inline-block text-foreground">Crafting</span>
@@ -190,7 +237,10 @@ const Banner = () => {
                                     <span className="title-word inline-block text-primary drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]">Digital</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-secondary drop-shadow-[0_0_10px_rgba(var(--secondary-rgb),0.3)]">Experiences</span>
+                                    {/* No longer the LCP element */}
+                                    <span 
+                                        className="title-word inline-block text-secondary drop-shadow-[0_0_10px_rgba(var(--secondary-rgb),0.3)]"
+                                    >Experiences</span>
                                 </div>
                             </h1>
                             
@@ -225,14 +275,27 @@ const Banner = () => {
                     {/* Right column - Premium stats cards */}
                     <div className="order-1 lg:order-2 flex flex-col gap-5 md:gap-7">
                         {/* Experience card - This is the LCP element */}
-                        <div className="stat-card lcp-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] hover:before:opacity-100 relative overflow-hidden before:content-[''] before:absolute before:-inset-1 before:bg-primary/5 before:rounded-full before:blur-xl before:opacity-0 before:transition-opacity before:duration-500">
+                        <div 
+                            className="stat-card lcp-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] hover:before:opacity-100 relative overflow-hidden before:content-[''] before:absolute before:-inset-1 before:bg-primary/5 before:rounded-full before:blur-xl before:opacity-0 before:transition-opacity before:duration-500" 
+                            style={{ contentVisibility: 'auto', contain: 'layout' }}
+                            suppressHydrationWarning
+                        >
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-primary/10 flex items-center justify-center">
                                     <span className="text-2xl text-primary">3+</span>
                                 </div>
                                 <div>
-                                    <h5 className="text-3xl font-anton text-primary mb-1" style={{ willChange: 'auto' }}>
+                                    <h5 
+                                        className="lcp-element text-3xl font-anton text-primary mb-1" 
+                                        style={{ 
+                                            willChange: 'auto',
+                                            contentVisibility: 'auto',
+                                            contain: 'paint layout',
+                                            textRendering: 'optimizeSpeed'
+                                        }}
+                                        suppressHydrationWarning
+                                    >
                                         Years of Experience
                                     </h5>
                                     <p className="text-muted-foreground">

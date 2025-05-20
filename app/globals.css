@@ -15,15 +15,15 @@
         --popover-foreground: 220 40% 15%;
 
         /* Premium blue palette for light mode */
-        --primary: 210 100% 40%;
-        --primary-light: 200 100% 45%;
-        --primary-dark: 220 90% 35%;
-        --primary-rgb: 0, 102, 204;
+        --primary: 210 100% 20%;
+        --primary-light: 200 100% 25%;
+        --primary-dark: 220 90% 15%;
+        --primary-rgb: 0, 51, 102;
         --primary-foreground: 0 0% 100%;
 
         /* Gold accent for light mode */
-        --secondary: 40 100% 50%;
-        --secondary-rgb: 255, 204, 0;
+        --secondary: 40 100% 25%;
+        --secondary-rgb: 128, 102, 0;
         --secondary-foreground: 220 40% 15%;
 
         --muted: 210 30% 92%;
@@ -59,14 +59,14 @@
         --popover-foreground: 210 40% 98%;
 
         /* Premium blue palette */
-        --primary: 210 100% 50%;
-        --primary-light: 195 100% 60%;
-        --primary-dark: 220 90% 40%;
-        --primary-rgb: 0, 122, 255;
+        --primary: 210 100% 80%;
+        --primary-light: 195 100% 85%;
+        --primary-dark: 220 90% 70%;
+        --primary-rgb: 179, 217, 255;
         --primary-foreground: 210 40% 98%;
 
         /* Gold accent */
-        --secondary: 45 100% 60%;
+        --secondary: 45 100% 85%;
         --secondary-foreground: 220 35% 10%;
 
         --muted: 217 33% 17%;

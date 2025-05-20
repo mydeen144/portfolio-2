@@ -43,6 +43,7 @@ const Navbar = () => {
                         'group size-12 absolute top-5 right-5 md:right-10 z-[2]',
                     )}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    aria-label="Toggle menu"
                 >
                     <span
                         className={cn(

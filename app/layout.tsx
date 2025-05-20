@@ -12,14 +12,15 @@ import { ThemeProvider } from '@/components/ThemeProviderSimple';
 import { ThemeToggle } from '@/components/ThemeToggleSimple';
 import ClientComponents from './_components/ClientComponents';
 
-// Optimize font loading with display swap
+// Optimize font loading with block period to reduce CLS
 const antonFont = Anton({
     weight: '400',
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-anton',
-    display: 'swap', // Prevents font blocking
+    display: 'optional', // Better for LCP text elements
     preload: true,
+    fallback: ['Arial', 'sans-serif'],
 });
 
 const robotoFlex = Roboto_Flex({
@@ -29,6 +30,7 @@ const robotoFlex = Roboto_Flex({
     variable: '--font-roboto-flex',
     display: 'swap',
     preload: true,
+    fallback: ['Arial', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
@@ -48,6 +50,29 @@ export default function RootLayout({
                 {/* Preload critical assets */}
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                
+                {/* Preload critical font for LCP */}
+                <link 
+                    rel="preload" 
+                    href="/fonts/anton-latin-400-normal.woff2" 
+                    as="font" 
+                    type="font/woff2" 
+                    crossOrigin="anonymous" 
+                />
+                
+                {/* Add font-display CSS to help with LCP */}
+                <style dangerouslySetInnerHTML={{ __html: `
+                    @font-face {
+                        font-family: 'Anton';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-display: optional;
+                    }
+                    .lcp-element {
+                        font-family: Anton, Arial, sans-serif;
+                        font-display: optional;
+                    }
+                `}} />
             </head>
             <GoogleAnalytics gaId="G-MHLY1LNGY5" />
             <Script id="hotjar" strategy="lazyOnload">
