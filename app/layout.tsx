@@ -4,35 +4,37 @@ import { ReactLenis } from 'lenis/react';
 
 import 'lenis/dist/lenis.css';
 import './globals.css';
-import Footer from '@/components/Footer';
-import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
-import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
-import CustomCursor from '@/components/CustomCursor';
-import Preloader from '../components/Preloader';
-import StickyEmail from './_components/StickyEmail';
+import Footer from '@/components/Footer';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/ThemeProviderSimple';
 import { ThemeToggle } from '@/components/ThemeToggleSimple';
+import ClientComponents from './_components/ClientComponents';
 
+// Optimize font loading with display swap
 const antonFont = Anton({
     weight: '400',
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-anton',
+    display: 'swap', // Prevents font blocking
+    preload: true,
 });
 
 const robotoFlex = Roboto_Flex({
-    weight: ['100', '400', '500', '600', '700', '800'],
+    weight: ['400', '500', '700'], // Reduced font weights
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-roboto-flex',
+    display: 'swap',
+    preload: true,
 });
 
 export const metadata: Metadata = {
     title: 'Portfolio - Mydeen Pitchai',
     description: 'Personal portfolio of Mydeen Pitchai',
+    viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({
@@ -42,8 +44,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                {/* Preload critical assets */}
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            </head>
             <GoogleAnalytics gaId="G-MHLY1LNGY5" />
-            <Script id="hotjar" strategy="afterInteractive">
+            <Script id="hotjar" strategy="lazyOnload">
                 {`(function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
                 h._hjSettings={hjid:6380611,hjsv:6};
@@ -61,7 +68,7 @@ export default function RootLayout({
                         root
                         options={{
                             lerp: 0.1,
-                            duration: 1.4,
+                            duration: 1.2, // Slightly reduced for better performance
                         }}
                     >
                         <Navbar />
@@ -69,11 +76,8 @@ export default function RootLayout({
                         <main>{children}</main>
                         <Footer />
 
-                        <CustomCursor />
-                        <Preloader />
-                        <ScrollProgressIndicator />
-                        <ParticleBackground />
-                        <StickyEmail />
+                        {/* Load non-critical UI elements via client component */}
+                        <ClientComponents />
                     </ReactLenis>
                 </ThemeProvider>
             </body>

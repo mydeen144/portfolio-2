@@ -1,6 +1,5 @@
 'use client';
-import { useGSAP } from '@gsap/react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 
 const Preloader = () => {
@@ -8,212 +7,210 @@ const Preloader = () => {
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [loadingText, setLoadingText] = useState('INITIALIZING');
     const timelineRef = useRef<gsap.core.Timeline | null>(null);
+    const [isVisible, setIsVisible] = useState(true);
 
-    // Simulate loading progress with changing text
+    // Simulate loading progress with even faster progression
     useEffect(() => {
+        // Start with higher initial value to reduce perceived loading time
+        setLoadingProgress(30);
+        
         const interval = setInterval(() => {
             setLoadingProgress(prev => {
-                const newValue = prev + Math.floor(Math.random() * 15) + 5; // Increased speed
+                const newValue = prev + Math.floor(Math.random() * 25) + 15; // Even faster progress
                 if (newValue >= 100) {
                     clearInterval(interval);
                     setLoadingText('WELCOME');
                     return 100;
                 }
                 
-                // Update loading text based on progress
-                if (newValue < 30) setLoadingText('INITIALIZING');
-                else if (newValue < 60) setLoadingText('LOADING ASSETS');
-                else if (newValue < 90) setLoadingText('FINALIZING');
+                // Simplified text updates
+                if (newValue < 50) setLoadingText('LOADING');
                 else setLoadingText('ALMOST READY');
                 
                 return newValue;
             });
-        }, 80); // Reduced interval time
+        }, 30); // Faster interval for quicker completion
 
         return () => clearInterval(interval);
     }, []);
     
-    // Monitor loading progress and ensure it completes
+    // Further reduced loading time and faster transitions
     useEffect(() => {
-        // Force completion after a maximum time to prevent getting stuck
+        // Force completion after a very short maximum time to prevent blocking LCP
         const maxLoadingTime = setTimeout(() => {
             setLoadingProgress(100);
             setLoadingText('WELCOME');
             if (timelineRef.current) {
-                setTimeout(() => {
-                    timelineRef.current?.play();
-                }, 300); // Reduced delay
+                timelineRef.current?.play();
             }
-        }, 2500); // Maximum 2.5 seconds loading time
+        }, 500); // Reduced to 500ms maximum loading time
         
         // Normal completion
         if (loadingProgress >= 100 && timelineRef.current) {
             clearTimeout(maxLoadingTime);
-            setTimeout(() => {
-                timelineRef.current?.play();
-            }, 400); // Reduced delay
+            timelineRef.current?.play(); // Immediate play without delay
         }
         
         return () => clearTimeout(maxLoadingTime);
     }, [loadingProgress]);
+    
+    // Hide preloader completely after animation completes
+    useEffect(() => {
+        const hideTimer = setTimeout(() => {
+            setIsVisible(false);
+        }, 2000); // Hide after 2 seconds regardless of animation state
+        
+        return () => clearTimeout(hideTimer);
+    }, []);
 
-    useGSAP(
-        () => {
-            // Create timeline and store in ref so we can access it outside this useGSAP scope
-            const tl = gsap.timeline({
-                defaults: {
-                    ease: 'power3.out',
-                },
-                paused: true,
-            });
-            
-            // Store the timeline in the ref
-            timelineRef.current = tl;
+    // Use useLayoutEffect instead of useGSAP for critical animations
+    // This runs synchronously before browser paint
+    useLayoutEffect(() => {
+        if (!isVisible) return;
+        
+        // Create highly optimized timeline
+        const tl = gsap.timeline({
+            defaults: {
+                ease: 'power2.out',
+                duration: 0.3, // Even faster animations
+            },
+            paused: true,
+        });
+        
+        timelineRef.current = tl;
 
-            // Animate the name letters first
-            tl.to('.name-text span', {
-                y: 0,
-                stagger: 0.05,
-                duration: 0.8,
-                ease: 'back.out(1.7)'
-            });
-            
-            // Then animate the 3D layers
-            tl.fromTo('.layer', 
-                { y: 0 },
-                { 
-                    y: -100, 
-                    stagger: 0.05,
-                    duration: 0.8
-                },
-                "-=0.4"
-            );
-            
-            // Fade out the preloader
-            tl.to(
-                preloaderRef.current,
-                {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    duration: 0.8,
-                },
-                '+=0.2',
-            );
+        // Minimal animation sequence
+        tl.to('.name-text span', {
+            y: 0,
+            stagger: 0.02, // Faster stagger
+            duration: 0.4,
+            ease: 'back.out(1.2)' // Less extreme easing
+        });
+        
+        // Faster fade out
+        tl.to(
+            preloaderRef.current,
+            {
+                opacity: 0,
+                pointerEvents: 'none',
+                duration: 0.3,
+                onComplete: () => {
+                    // Clean up animations when preloader is hidden
+                    if (preloaderRef.current) {
+                        preloaderRef.current.style.display = 'none';
+                    }
+                }
+            },
+            '+=0.1',
+        );
+        
+        // Return cleanup function
+        return () => {
+            if (tl) tl.kill();
+        };
+    }, [isVisible]);
+    
+    // Use useEffect for non-critical animations
+    useEffect(() => {
+        if (!isVisible) return;
+        
+        // Minimal background animations - only if visible
+        const hexagonAnim = gsap.to('.hexagon', {
+            rotation: 360,
+            repeat: -1,
+            duration: 40, // Even slower rotation
+            ease: 'none',
+            force3D: true,
+            overwrite: true
+        });
 
-            // Continuous animations for background elements - with GPU acceleration
-            gsap.to('.hexagon', {
-                rotation: 360,
-                repeat: -1,
-                duration: 20,
-                ease: 'none',
-                force3D: true,
-                overwrite: true
-            });
+        // Simplified code line animation
+        const lineAnim = gsap.to('.code-line', {
+            width: '100%',
+            duration: 1,
+            stagger: 0.05,
+            ease: 'power1.inOut',
+        });
+        
+        // Clean up animations
+        return () => {
+            hexagonAnim.kill();
+            lineAnim.kill();
+        };
+    }, [isVisible]);
 
-            gsap.to('.rotating-circle', {
-                rotation: -360,
-                repeat: -1,
-                duration: 15,
-                ease: 'none',
-            });
-
-            gsap.to('.code-line', {
-                width: '100%',
-                duration: 2,
-                stagger: 0.2,
-                ease: 'power2.inOut',
-            });
-            
-            // Pulse animation for the name
-            gsap.to('.name-highlight', {
-                opacity: 0.8,
-                duration: 1.5,
-                repeat: -1,
-                yoyo: true,
-                ease: 'sine.inOut'
-            });
-        },
-        { scope: preloaderRef, dependencies: [loadingProgress] },
-    );
-
+    // Don't render anything if not visible
+    if (!isVisible) return null;
+    
     return (
         <div
             ref={preloaderRef}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background contain-layout contain-paint"
-            style={{ contentVisibility: 'auto' }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background contain-layout"
+            style={{ contain: 'strict' }}
         >
-            {/* 3D Layered Background */}
-            <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                <div className="layer layer-1 absolute w-[800px] h-[800px] rounded-full border border-primary/10 transform-style-3d rotate-x-12 rotate-y-12"></div>
-                <div className="layer layer-2 absolute w-[600px] h-[600px] rounded-full border border-secondary/20 transform-style-3d rotate-x-8 rotate-y-8"></div>
-                <div className="layer layer-3 absolute w-[400px] h-[400px] rounded-full border border-primary/30 transform-style-3d rotate-x-5 rotate-y-5"></div>
-            </div>
+            {/* Removed 3D Layered Background for better performance */}
             
-            {/* Hexagon Grid - Pre-computed positions to avoid layout shifts */}
-            <div className="absolute inset-0 overflow-hidden opacity-30 contain-layout">
-                {[...Array(20)].map((_, i) => {
-                    // Pre-compute positions using a deterministic pattern instead of random
-                    // This creates a grid-like pattern that won't cause layout shifts
-                    const row = Math.floor(i / 5);
-                    const col = i % 5;
-                    const top = 10 + (row * 25); // 4 rows, evenly spaced
-                    const left = 5 + (col * 22); // 5 columns, evenly spaced
+            {/* Background Hexagons - Reduced count */}
+            <div className="absolute inset-0 overflow-hidden">
+                {[...Array(6)].map((_, i) => { // Reduced from 10 to 6
+                    const row = Math.floor(i / 3);
+                    const col = i % 3;
+                    const top = 20 + (row * 50);
+                    const left = 10 + (col * 30);
                     
                     return (
                         <div 
                             key={`hex-${i}`} 
-                            className="hexagon absolute w-[50px] h-[50px] bg-transparent contain-layout"
+                            className="hexagon absolute w-[50px] h-[50px] bg-transparent"
                             style={{
                                 top: `${top}%`,
                                 left: `${left}%`,
                                 clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
                                 border: '1px solid',
                                 borderColor: i % 2 === 0 ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--secondary) / 0.2)',
-                                willChange: 'transform',
-                                transform: 'translateZ(0)'
+                                willChange: 'transform'
                             }}
                         ></div>
                     );
                 })}
             </div>
             
-            {/* Code Lines */}
+            {/* Further simplified Code Lines - only show 2 on each side */}
             <div className="absolute left-[10%] top-[30%] flex flex-col gap-2 w-[200px]">
-                {[...Array(5)].map((_, i) => (
-                    <div key={`code-left-${i}`} className="code-line h-[1px] w-0 bg-gradient-to-r from-primary/80 to-transparent"></div>
+                {[...Array(2)].map((_, i) => (
+                    <div key={`code-left-${i}`} className="code-line h-[1px] w-0 bg-gradient-to-r from-primary/80 to-transparent" style={{willChange: 'width'}}></div>
                 ))}
             </div>
             
             <div className="absolute right-[10%] bottom-[30%] flex flex-col gap-2 w-[200px]">
-                {[...Array(5)].map((_, i) => (
-                    <div key={`code-right-${i}`} className="code-line h-[1px] w-0 bg-gradient-to-l from-secondary/80 to-transparent"></div>
+                {[...Array(2)].map((_, i) => (
+                    <div key={`code-right-${i}`} className="code-line h-[1px] w-0 bg-gradient-to-l from-secondary/80 to-transparent" style={{willChange: 'width'}}></div>
                 ))}
             </div>
 
-            {/* Central Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center gap-8 contain-layout">
-                {/* Name with premium styling */}
-                <div className="relative bg-background/10 backdrop-blur-md px-12 py-8 rounded-xl border border-primary/20 shadow-[0_0_40px_rgba(var(--primary),0.2)] overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+            {/* Further optimized Central Content */}
+            <div className="relative z-10 flex flex-col items-center justify-center gap-4">
+                {/* Name with simplified styling - removed backdrop-blur for better performance */}
+                <div className="relative bg-background px-8 py-5 rounded-xl border border-primary/20 overflow-hidden">
                     <div className="relative z-10">
-                        <p className="name-text flex text-[18vw] lg:text-[150px] font-anton text-center leading-none overflow-hidden">
-                            <span className="inline-block text-primary drop-shadow-[0_0_10px_rgba(var(--primary),0.5)]">M</span>
-                            <span className="inline-block">Y</span>
-                            <span className="inline-block">D</span>
-                            <span className="inline-block text-secondary drop-shadow-[0_0_10px_rgba(var(--secondary),0.5)]">E</span>
-                            <span className="inline-block text-primary drop-shadow-[0_0_10px_rgba(var(--primary),0.5)]">E</span>
-                            <span className="inline-block">N</span>
+                        <p className="name-text flex text-[12vw] lg:text-[100px] font-anton text-center leading-none overflow-hidden">
+                            <span className="inline-block text-primary" style={{transform: 'translateY(100%)', display: 'inline-block'}}>M</span>
+                            <span className="inline-block" style={{transform: 'translateY(100%)', display: 'inline-block'}}>Y</span>
+                            <span className="inline-block" style={{transform: 'translateY(100%)', display: 'inline-block'}}>D</span>
+                            <span className="inline-block text-secondary" style={{transform: 'translateY(100%)', display: 'inline-block'}}>E</span>
+                            <span className="inline-block text-primary" style={{transform: 'translateY(100%)', display: 'inline-block'}}>E</span>
+                            <span className="inline-block" style={{transform: 'translateY(100%)', display: 'inline-block'}}>N</span>
                         </p>
-                        <div className="text-center text-xs tracking-[0.5em] text-foreground mt-4 font-mono font-light">FRONTEND DEVELOPER</div>
+                        <div className="text-center text-xs tracking-[0.5em] text-foreground mt-3 font-mono font-light">FRONTEND DEVELOPER</div>
                     </div>
                 </div>
                 
-                {/* Loading Progress */}
-                <div className="progress-container w-[300px] flex flex-col items-center gap-3">
+                {/* Loading Progress - Further optimized */}
+                <div className="progress-container w-[250px] flex flex-col items-center gap-2">
                     <div className="w-full h-[2px] bg-muted overflow-hidden rounded-full">
                         <div 
-                            className="progress-fill h-full bg-gradient-to-r from-primary to-secondary origin-left scale-x-0"
-                            style={{ transform: `scaleX(${loadingProgress / 100})` }}
+                            className="progress-fill h-full bg-primary origin-left scale-x-0"
+                            style={{ transform: `scaleX(${loadingProgress / 100})`, willChange: 'transform' }}
                         ></div>
                     </div>
                     <div className="flex justify-between w-full text-xs font-mono">
