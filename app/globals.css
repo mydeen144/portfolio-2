@@ -3,91 +3,100 @@
 @tailwind utilities;
 
 @layer base {
-    /* Light mode - Premium light theme with blue accents */
+    /* Light mode - Luxury theme with deep navy and rich gold */
     :root {
-        --background: 210 30% 98%;
-        --background-light: 210 40% 95%;
-        --foreground: 220 40% 15%;
+        /* Subtle cream background with warm undertone */
+        --background: 40 30% 98%;
+        --background-light: 40 25% 95%;
+        --foreground: 220 50% 10%;
 
         --card: 0 0% 100%;
-        --card-foreground: 220 40% 15%;
+        --card-foreground: 220 50% 10%;
         --popover: 0 0% 100%;
-        --popover-foreground: 220 40% 15%;
+        --popover-foreground: 220 50% 10%;
 
-        /* Premium blue palette for light mode */
-        --primary: 210 100% 20%;
-        --primary-light: 200 100% 25%;
-        --primary-dark: 220 90% 15%;
-        --primary-rgb: 0, 51, 102;
+        /* Deep navy for primary - exudes luxury and exclusivity */
+        --primary: 220 80% 15%;
+        --primary-light: 220 75% 25%;
+        --primary-dark: 225 85% 10%;
+        --primary-rgb: 10, 25, 51;
         --primary-foreground: 0 0% 100%;
 
-        /* Gold accent for light mode */
-        --secondary: 40 100% 25%;
-        --secondary-rgb: 128, 102, 0;
-        --secondary-foreground: 220 40% 15%;
+        /* Rich gold for secondary - signifies premium quality */
+        --secondary: 42 100% 50%;
+        --secondary-rgb: 255, 204, 0;
+        --secondary-foreground: 220 50% 10%;
 
-        --muted: 210 30% 92%;
-        --muted-foreground: 220 20% 40%;
+        /* Subtle gray with warm undertones */
+        --muted: 40 20% 92%;
+        --muted-foreground: 220 15% 40%;
 
-        --accent: 210 100% 40%;
-        --accent-foreground: 0 0% 100%;
+        /* Accent color for highlights */
+        --accent: 42 100% 50%;
+        --accent-foreground: 220 50% 10%;
 
         --destructive: 0 85% 60%;
         --destructive-foreground: 0 0% 100%;
 
-        --border: 210 30% 85%;
-        --input: 210 30% 92%;
-        --ring: 210 100% 40%;
+        --border: 40 20% 85%;
+        --input: 40 20% 92%;
+        --ring: 220 80% 15%;
 
         --radius: 0.5rem;
-        --chart-1: 210 100% 40%;
-        --chart-2: 200 100% 45%;
-        --chart-3: 220 80% 45%;
-        --chart-4: 240 80% 55%;
-        --chart-5: 190 80% 40%;
+        /* Chart colors - luxury palette for data visualization */
+        --chart-1: 220 80% 15%;
+        --chart-2: 42 100% 50%;
+        --chart-3: 220 75% 25%;
+        --chart-4: 42 90% 40%;
+        --chart-5: 225 85% 10%;
     }
 
-    /* Dark mode - Premium deep blue with gold accents */
+    /* Dark mode - Luxury dark theme with midnight blue and gold accents */
     .dark {
-        --background: 220 35% 8%;
-        --foreground: 210 40% 98%;
+        /* Deep midnight background with subtle blue undertone */
+        --background: 225 50% 5%;
+        --foreground: 40 30% 95%;
 
-        --card: 220 35% 10%;
-        --card-foreground: 210 40% 98%;
+        --card: 225 45% 8%;
+        --card-foreground: 40 30% 95%;
 
-        --popover: 220 35% 8%;
-        --popover-foreground: 210 40% 98%;
+        --popover: 225 50% 5%;
+        --popover-foreground: 40 30% 95%;
 
-        /* Premium blue palette */
-        --primary: 210 100% 80%;
-        --primary-light: 195 100% 85%;
-        --primary-dark: 220 90% 70%;
-        --primary-rgb: 179, 217, 255;
-        --primary-foreground: 210 40% 98%;
+        /* Vibrant navy blue for dark mode */
+        --primary: 220 90% 65%;
+        --primary-light: 215 95% 70%;
+        --primary-dark: 225 85% 60%;
+        --primary-rgb: 77, 133, 230;
+        --primary-foreground: 225 50% 5%;
 
-        /* Gold accent */
-        --secondary: 45 100% 85%;
-        --secondary-foreground: 220 35% 10%;
+        /* Luxury gold accent with proper luminance for dark mode */
+        --secondary: 42 90% 60%;
+        --secondary-rgb: 255, 204, 51;
+        --secondary-foreground: 225 50% 5%;
 
-        --muted: 217 33% 17%;
-        --muted-foreground: 215 20% 65%;
+        /* Supporting colors with proper relationships */
+        --muted: 225 30% 15%;
+        --muted-foreground: 40 20% 70%;
 
-        --accent: 45 100% 60%;
-        --accent-foreground: 220 35% 10%;
+        /* Gold accent for highlights */
+        --accent: 42 90% 60%;
+        --accent-foreground: 225 50% 5%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
+        --destructive: 0 70% 50%;
+        --destructive-foreground: 40 30% 95%;
 
-        --border: 217 33% 17%;
-        --input: 217 33% 17%;
-        --ring: 210 100% 50%;
+        --border: 225 30% 15%;
+        --input: 225 30% 15%;
+        --ring: 220 90% 65%;
 
         --radius: 0.5rem;
-        --chart-1: 200 100% 50%;
-        --chart-2: 220 100% 60%;
-        --chart-3: 180 100% 45%;
-        --chart-4: 240 100% 65%;
-        --chart-5: 190 100% 45%;
+        /* Chart colors for dark mode - luxury palette */
+        --chart-1: 220 90% 65%;
+        --chart-2: 42 90% 60%;
+        --chart-3: 215 95% 70%;
+        --chart-4: 42 80% 50%;
+        --chart-5: 225 85% 60%;
     }
 }
 

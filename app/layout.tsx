@@ -36,7 +36,11 @@ const robotoFlex = Roboto_Flex({
 export const metadata: Metadata = {
     title: 'Portfolio - Mydeen Pitchai',
     description: 'Personal portfolio of Mydeen Pitchai',
-    viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
 };
 
 export default function RootLayout({
@@ -51,25 +55,12 @@ export default function RootLayout({
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 
-                {/* Preload critical font for LCP */}
-                <link 
-                    rel="preload" 
-                    href="/fonts/anton-latin-400-normal.woff2" 
-                    as="font" 
-                    type="font/woff2" 
-                    crossOrigin="anonymous" 
-                />
+                {/* Next.js handles font optimization automatically */}
                 
                 {/* Add font-display CSS to help with LCP */}
                 <style dangerouslySetInnerHTML={{ __html: `
-                    @font-face {
-                        font-family: 'Anton';
-                        font-style: normal;
-                        font-weight: 400;
-                        font-display: optional;
-                    }
                     .lcp-element {
-                        font-family: Anton, Arial, sans-serif;
+                        font-family: var(--font-anton), Arial, sans-serif;
                         font-display: optional;
                     }
                 `}} />
