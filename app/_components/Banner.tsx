@@ -66,7 +66,7 @@ const Banner = () => {
                             const cIC = window.cancelIdleCallback as (handle: number) => void;
                             cIC(immediateRender);
                         } else {
-                            window.cancelAnimationFrame(immediateRender);
+                            window.cancelAnimationFrame(immediateRender as number);
                         }
                     }
                 }
@@ -85,7 +85,7 @@ const Banner = () => {
                             const cIC = window.cancelIdleCallback as (handle: number) => void;
                             cIC(immediateRender);
                         } else {
-                            window.cancelAnimationFrame(immediateRender);
+                            window.cancelAnimationFrame(immediateRender as number);
                         }
                     }
                 }

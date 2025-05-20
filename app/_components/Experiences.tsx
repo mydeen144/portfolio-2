@@ -82,7 +82,7 @@ const Experiences = () => {
 
                 <div className="grid gap-8">
                     {MY_EXPERIENCE.map((item, index) => (
-                        <div key={item.title} className="experience-item group relative">
+                        <div key={`${item.title}-${item.company}`} className="experience-item group relative">
                             {/* Timeline connector */}
                             {index < MY_EXPERIENCE.length - 1 && (
                                 <div className="absolute left-[22px] top-[50px] bottom-[-50px] w-[2px] bg-gradient-to-b from-primary/30 to-transparent"></div>
