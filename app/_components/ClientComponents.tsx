@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 
 // Dynamically import non-critical components with loading priority
+// Load preloader with a slight delay to avoid blocking LCP
 const Preloader = dynamic(() => import('../../components/Preloader'), {
     ssr: false,
     loading: () => null, // Don't show anything while loading
@@ -30,6 +31,8 @@ const StickyEmail = dynamic(() => import('../_components/StickyEmail'), {
 export default function ClientComponents() {
     // Only load non-critical components after main content is rendered
     const [shouldLoadNonCritical, setShouldLoadNonCritical] = useState(false);
+    // Separate state for preloader to delay it slightly
+    const [shouldLoadPreloader, setShouldLoadPreloader] = useState(false);
     
     useEffect(() => {
         // Set up intersection observer to detect when main content is visible
@@ -39,7 +42,7 @@ export default function ClientComponents() {
                 // Delay loading non-critical components slightly
                 setTimeout(() => {
                     setShouldLoadNonCritical(true);
-                }, 100);
+                }, 300); // Increased delay for non-critical components
                 observer.disconnect();
             }
         });
@@ -50,17 +53,27 @@ export default function ClientComponents() {
             observer.observe(mainElement);
         } else {
             // If main element isn't found, load after a short delay anyway
-            setTimeout(() => setShouldLoadNonCritical(true), 500);
+            setTimeout(() => setShouldLoadNonCritical(true), 800); // Increased delay
         }
+        
+        // Delay preloader to allow LCP elements to render first
+        setTimeout(() => {
+            setShouldLoadPreloader(true);
+        }, 100); // Small delay to prioritize main content rendering
         
         return () => observer.disconnect();
     }, []);
     
-    // Load preloader immediately but delay other components
+    // Load components with proper prioritization
     return (
         <Suspense fallback={null}>
-            <CustomCursor />
-            <Preloader />
+            {/* Only load cursor and preloader after a slight delay */}
+            {shouldLoadPreloader && (
+                <>
+                    <CustomCursor />
+                    <Preloader />
+                </>
+            )}
             {shouldLoadNonCritical && (
                 <>
                     <ScrollProgressIndicator />

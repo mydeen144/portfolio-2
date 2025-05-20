@@ -76,23 +76,21 @@ const Skills = () => {
 
     return (
         <section id="my-stack" ref={containerRef} className="relative py-10">
-            {/* Background decorative elements */}
+            {/* Simplified background with CSS instead of multiple DOM elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Subtle grid lines */}
-                <div className="absolute inset-0 grid grid-cols-6 opacity-5">
-                    {[...Array(5)].map((_, i) => (
-                        <div key={`v-line-${i}`} className="h-full w-px bg-primary/30 mx-auto"></div>
-                    ))}
-                </div>
-                <div className="absolute inset-0 grid grid-rows-6 opacity-5">
-                    {[...Array(5)].map((_, i) => (
-                        <div key={`h-line-${i}`} className="w-full h-px bg-primary/30 my-auto"></div>
-                    ))}
+                {/* Use CSS background for grid instead of DOM elements */}
+                <div className="absolute inset-0 opacity-5" 
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(to right, hsl(var(--primary)/30) 1px, transparent 1px),
+                            linear-gradient(to bottom, hsl(var(--primary)/30) 1px, transparent 1px)
+                        `,
+                        backgroundSize: 'calc(100% / 6) calc(100% / 6)'
+                    }}>
                 </div>
                 
-                {/* Decorative blobs */}
+                {/* Reduced to just one blob */}
                 <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-primary/5 blur-3xl opacity-30"></div>
-                <div className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-secondary/5 blur-3xl opacity-30"></div>
             </div>
 
             <div className="container relative z-10">
@@ -122,13 +120,10 @@ const Skills = () => {
                                         className="skill-item flex gap-3.5 items-center leading-none group/item relative"
                                         key={tech.name}
                                     >
-                                        {/* Icon with hover effects */}
+                                        {/* Simplified icon with hover effects using fewer DOM elements */}
                                         <div className="relative">
-                                            {/* Glow effect on hover */}
-                                            <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 scale-150"></div>
-                                            
-                                            {/* Icon container with border */}
-                                            <div className="relative z-10 p-1 rounded-full border border-border/30 group-hover/item:border-primary/30 transition-all duration-300 bg-background/50 backdrop-blur-sm">
+                                            {/* Icon container with border and hover effects via CSS */}
+                                            <div className="relative z-10 p-1 rounded-full border border-border/30 group-hover/item:border-primary/30 group-hover/item:shadow-[0_0_10px_rgba(var(--primary-rgb),0.2)] transition-all duration-300 bg-background/50 backdrop-blur-sm">
                                                 <Image
                                                     src={tech.icon}
                                                     alt={tech.name}
@@ -140,12 +135,9 @@ const Skills = () => {
                                         </div>
                                         
                                         {/* Tech name with hover effect */}
-                                        <span className="text-2xl capitalize group-hover/item:text-primary transition-colors duration-300">
+                                        <span className="text-2xl capitalize group-hover/item:text-primary transition-colors duration-300 relative after:absolute after:h-px after:bg-gradient-to-r after:from-primary/50 after:to-transparent after:left-0 after:right-0 after:-bottom-2 after:scale-x-0 after:group-hover/item:scale-x-100 after:origin-left after:transition-transform after:duration-300">
                                             {tech.name}
                                         </span>
-                                        
-                                        {/* Decorative line under text on hover */}
-                                        <div className="absolute -bottom-2 left-12 right-0 h-px bg-gradient-to-r from-primary/50 to-transparent scale-x-0 group-hover/item:scale-x-100 origin-left transition-transform duration-300"></div>
                                     </div>
                                 ))}
                             </div>

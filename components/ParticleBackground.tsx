@@ -7,11 +7,11 @@ import { useTheme } from './ThemeProviderSimple';
 gsap.registerPlugin(useGSAP);
 
 // Throttle function to limit how often a function can be called
-const throttle = <T extends (...args: any[]) => any>(func: T, limit: number): ((...args: Parameters<T>) => void) => {
+const throttle = <T extends (..._args: any[]) => any>(func: T, limit: number): ((..._args: Parameters<T>) => void) => {
     let inThrottle: boolean;
-    return function(this: any, ...args: Parameters<T>) {
+    return function(this: any, ..._args: Parameters<T>) {
         if (!inThrottle) {
-            func.apply(this, args);
+            func.apply(this, _args);
             inThrottle = true;
             setTimeout(() => inThrottle = false, limit);
         }
@@ -24,7 +24,7 @@ const ParticleBackground = () => {
     const animationsRef = useRef<gsap.core.Tween[]>([]);
     const { theme } = useTheme();
     const [particleColor, setParticleColor] = useState('bg-primary/20');
-    const [particleCount, setParticleCount] = useState(30); // Further reduced count
+    const [particleCount, setParticleCount] = useState(10); // Drastically reduced count to minimize DOM elements
     const [isLowPerformanceMode, setIsLowPerformanceMode] = useState(false);
     const [isVisible, setIsVisible] = useState(false); // Start hidden
     
@@ -42,10 +42,10 @@ const ParticleBackground = () => {
             setParticleCount(15); // Even fewer particles for low-power devices
         }
         
-        // Delay showing particles until after LCP
+        // Significantly delay showing particles until after LCP
         const timer = setTimeout(() => {
             setIsVisible(true);
-        }, 1000); // Delay particles by 1 second to prioritize content
+        }, 2000); // Delay particles by 2 seconds to ensure LCP is complete
         
         return () => clearTimeout(timer);
     }, []);
@@ -64,11 +64,11 @@ const ParticleBackground = () => {
             if (isLowPerformanceMode) return; // Don't change if in low performance mode
             
             if (width < 768) {
-                setParticleCount(30);
+                setParticleCount(5); // Minimal for mobile
             } else if (width < 1280) {
-                setParticleCount(40);
+                setParticleCount(8); // Minimal for tablets
             } else {
-                setParticleCount(50);
+                setParticleCount(10); // Minimal for desktops
             }
         }, 250); // Throttle to once every 250ms
         
@@ -102,7 +102,7 @@ const ParticleBackground = () => {
         });
         animationsRef.current = [];
         
-        // Initialize particles with a longer delay to ensure critical content loads first
+        // Initialize particles with a much longer delay to ensure LCP completes first
         const initTimeout = setTimeout(() => {
             particlesRef.current.forEach((particle) => {
                 if (!particle) return;
@@ -144,7 +144,7 @@ const ParticleBackground = () => {
                     animationsRef.current.push(anim2);
                 }
             });
-        }, 500); // Longer delay to ensure other critical content loads first
+        }, 1000); // Much longer delay to ensure LCP completes first
         
         return () => clearTimeout(initTimeout);
     }, [particleColor, particleCount, isLowPerformanceMode, isVisible]);
@@ -169,7 +169,7 @@ const ParticleBackground = () => {
     return (
         <div 
             ref={containerRef} 
-            className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+            className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-50" // Reduced opacity
             style={{ contain: 'strict' }}
         >
             {particles}

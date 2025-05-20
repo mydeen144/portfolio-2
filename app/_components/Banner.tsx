@@ -12,42 +12,80 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const Banner = () => {
     const containerRef = React.useRef<HTMLDivElement>(null);
 
-    // Enhanced animations on load and scroll
+    // Separate state to track if LCP has occurred
+    const [lcpComplete, setLcpComplete] = React.useState(false);
+
+    // Use useEffect to monitor LCP and defer animations
+    React.useEffect(() => {
+        // Monitor LCP completion
+        if ('PerformanceObserver' in window) {
+            const lcpObserver = new PerformanceObserver((entryList) => {
+                const entries = entryList.getEntries();
+                if (entries.length > 0) {
+                    setLcpComplete(true);
+                    lcpObserver.disconnect();
+                }
+            });
+            
+            lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+            
+            // Fallback - set LCP complete after a timeout
+            const fallbackTimer = setTimeout(() => {
+                setLcpComplete(true);
+            }, 1000);
+            
+            return () => {
+                lcpObserver.disconnect();
+                clearTimeout(fallbackTimer);
+            };
+        } else {
+            // Fallback for browsers without PerformanceObserver
+            const timer = setTimeout(() => {
+                setLcpComplete(true);
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, []);
+    
+    // Optimized animations that only run after LCP
     useGSAP(
         () => {
-            // Initial animation on page load
+            // Skip animations if LCP hasn't completed
+            if (!lcpComplete) return;
+            
+            // Initial animation on page load - deferred until after LCP
             const loadTl = gsap.timeline();
             
             // Animate the grid lines first
             loadTl.fromTo('.grid-line', 
                 { scaleX: 0, opacity: 0 },
-                { scaleX: 1, opacity: 0.5, stagger: 0.05, duration: 1.2, ease: 'power3.out' },
+                { scaleX: 1, opacity: 0.5, stagger: 0.05, duration: 1, ease: 'power3.out' },
                 0
             );
             
-            // Then animate the text elements
+            // Then animate the text elements - except LCP elements
             loadTl.fromTo('.title-word', 
                 { y: 80, opacity: 0 },
-                { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'back.out(1.7)' },
+                { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'back.out(1.7)' },
                 0.3
             );
             
             loadTl.fromTo('.badge', 
                 { scale: 0, opacity: 0 },
-                { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+                { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' },
                 0.5
             );
             
             loadTl.fromTo('.banner-description', 
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8 },
+                { y: 0, opacity: 1, duration: 0.7 },
                 0.7
             );
             
-            // Animate the stats cards with a staggered effect
-            loadTl.fromTo('.stat-card', 
+            // Animate the stats cards with a staggered effect - except LCP elements
+            loadTl.fromTo('.stat-card:not(.lcp-card)', 
                 { x: 100, opacity: 0 },
-                { x: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power3.out' },
+                { x: 0, opacity: 1, stagger: 0.15, duration: 0.7, ease: 'power3.out' },
                 0.6
             );
             
@@ -109,22 +147,22 @@ const Banner = () => {
         <section className="relative overflow-hidden min-h-[100svh]" id="banner" ref={containerRef}>
             {/* Premium background elements */}
             <div className="absolute inset-0 overflow-hidden">
-                {/* Grid lines for tech aesthetic */}
-                <div className="absolute inset-0 flex flex-col justify-between opacity-10">
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`h-grid-${i}`} className="grid-line h-px bg-primary origin-left"></div>
-                    ))}
-                </div>
-                <div className="absolute inset-0 flex flex-row justify-between opacity-10">
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`v-grid-${i}`} className="grid-line w-px h-full bg-primary origin-top"></div>
-                    ))}
-                </div>
+                {/* Grid Lines using CSS background instead of DOM elements */}
+                <div 
+                    className="absolute inset-0 opacity-5" 
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(to right, hsl(var(--primary)/30) 1px, transparent 1px),
+                            linear-gradient(to bottom, hsl(var(--primary)/30) 1px, transparent 1px)
+                        `,
+                        backgroundSize: 'calc(100% / 12) calc(100% / 12)',
+                        willChange: 'transform'
+                    }}
+                ></div>
                 
-                {/* Floating shapes with blur effects - increased opacity for better visibility */}
-                <div className="floating-shape absolute top-[10%] left-[5%] w-[300px] h-[300px] rounded-full bg-primary/30 blur-[80px] opacity-50 dark:opacity-40"></div>
-                <div className="floating-shape absolute top-[40%] right-[10%] w-[250px] h-[250px] rounded-full bg-secondary/30 blur-[60px] opacity-50 dark:opacity-40"></div>
-                <div className="floating-shape absolute bottom-[15%] left-[20%] w-[200px] h-[200px] rounded-full bg-primary/25 blur-[50px] opacity-50 dark:opacity-40"></div>
+                {/* Reduced floating shapes with blur effects */}
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/5 blur-3xl opacity-30"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/5 blur-3xl opacity-30"></div>
                 
                 {/* Rotating circles */}
                 <div className="rotating-circle absolute top-[20%] left-[30%] w-[400px] h-[400px] rounded-full border border-dashed border-primary/10 opacity-30"></div>
@@ -186,17 +224,15 @@ const Banner = () => {
                     
                     {/* Right column - Premium stats cards */}
                     <div className="order-1 lg:order-2 flex flex-col gap-5 md:gap-7">
-                        {/* Experience card */}
-                        <div className="stat-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] relative overflow-hidden">
-                            {/* Pulsing background effect */}
-                            <div className="pulse-element absolute -inset-1 bg-primary/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        {/* Experience card - This is the LCP element */}
+                        <div className="stat-card lcp-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] hover:before:opacity-100 relative overflow-hidden before:content-[''] before:absolute before:-inset-1 before:bg-primary/5 before:rounded-full before:blur-xl before:opacity-0 before:transition-opacity before:duration-500">
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-primary/10 flex items-center justify-center">
                                     <span className="text-2xl text-primary">3+</span>
                                 </div>
                                 <div>
-                                    <h5 className="text-3xl font-anton text-primary mb-1">
+                                    <h5 className="text-3xl font-anton text-primary mb-1" style={{ willChange: 'auto' }}>
                                         Years of Experience
                                     </h5>
                                     <p className="text-muted-foreground">
@@ -207,9 +243,7 @@ const Banner = () => {
                         </div>
                         
                         {/* Projects card */}
-                        <div className="stat-card group bg-background/20 backdrop-blur-xl border border-secondary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--secondary-rgb),0.2)] relative overflow-hidden md:ml-12">
-                            {/* Pulsing background effect */}
-                            <div className="pulse-element absolute -inset-1 bg-secondary/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="stat-card group bg-background/20 backdrop-blur-xl border border-secondary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--secondary-rgb),0.2)] hover:before:opacity-100 relative overflow-hidden md:ml-12 before:content-[''] before:absolute before:-inset-1 before:bg-secondary/5 before:rounded-full before:blur-xl before:opacity-0 before:transition-opacity before:duration-500">
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-secondary/10 flex items-center justify-center">
@@ -227,9 +261,7 @@ const Banner = () => {
                         </div>
                         
                         {/* Hours card */}
-                        <div className="stat-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] relative overflow-hidden">
-                            {/* Pulsing background effect */}
-                            <div className="pulse-element absolute -inset-1 bg-primary/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="stat-card group bg-background/20 backdrop-blur-xl border border-primary/20 rounded-2xl p-7 transform hover:scale-105 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)] hover:before:opacity-100 relative overflow-hidden before:content-[''] before:absolute before:-inset-1 before:bg-primary/5 before:rounded-full before:blur-xl before:opacity-0 before:transition-opacity before:duration-500">
                             
                             <div className="relative z-10 flex items-center gap-5">
                                 <div className="flex-shrink-0 size-14 rounded-full bg-primary/10 flex items-center justify-center">
