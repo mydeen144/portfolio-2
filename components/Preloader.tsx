@@ -100,12 +100,14 @@ const Preloader = () => {
                 '+=0.2',
             );
 
-            // Continuous animations for background elements
+            // Continuous animations for background elements - with GPU acceleration
             gsap.to('.hexagon', {
                 rotation: 360,
                 repeat: -1,
                 duration: 20,
                 ease: 'none',
+                force3D: true,
+                overwrite: true
             });
 
             gsap.to('.rotating-circle', {
@@ -137,7 +139,8 @@ const Preloader = () => {
     return (
         <div
             ref={preloaderRef}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background overflow-hidden perspective-1000"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background contain-layout contain-paint"
+            style={{ contentVisibility: 'auto' }}
         >
             {/* 3D Layered Background */}
             <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -146,21 +149,32 @@ const Preloader = () => {
                 <div className="layer layer-3 absolute w-[400px] h-[400px] rounded-full border border-primary/30 transform-style-3d rotate-x-5 rotate-y-5"></div>
             </div>
             
-            {/* Hexagon Grid */}
-            <div className="absolute inset-0 overflow-hidden opacity-30">
-                {[...Array(20)].map((_, i) => (
-                    <div 
-                        key={`hex-${i}`} 
-                        className="hexagon absolute w-[50px] h-[50px] bg-transparent"
-                        style={{
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                            border: '1px solid',
-                            borderColor: i % 2 === 0 ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--secondary) / 0.2)',
-                        }}
-                    ></div>
-                ))}
+            {/* Hexagon Grid - Pre-computed positions to avoid layout shifts */}
+            <div className="absolute inset-0 overflow-hidden opacity-30 contain-layout">
+                {[...Array(20)].map((_, i) => {
+                    // Pre-compute positions using a deterministic pattern instead of random
+                    // This creates a grid-like pattern that won't cause layout shifts
+                    const row = Math.floor(i / 5);
+                    const col = i % 5;
+                    const top = 10 + (row * 25); // 4 rows, evenly spaced
+                    const left = 5 + (col * 22); // 5 columns, evenly spaced
+                    
+                    return (
+                        <div 
+                            key={`hex-${i}`} 
+                            className="hexagon absolute w-[50px] h-[50px] bg-transparent contain-layout"
+                            style={{
+                                top: `${top}%`,
+                                left: `${left}%`,
+                                clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                                border: '1px solid',
+                                borderColor: i % 2 === 0 ? 'hsl(var(--primary) / 0.2)' : 'hsl(var(--secondary) / 0.2)',
+                                willChange: 'transform',
+                                transform: 'translateZ(0)'
+                            }}
+                        ></div>
+                    );
+                })}
             </div>
             
             {/* Code Lines */}
@@ -177,7 +191,7 @@ const Preloader = () => {
             </div>
 
             {/* Central Content */}
-            <div className="relative z-10 flex flex-col items-center justify-center gap-8">
+            <div className="relative z-10 flex flex-col items-center justify-center gap-8 contain-layout">
                 {/* Name with premium styling */}
                 <div className="relative bg-background/10 backdrop-blur-md px-12 py-8 rounded-xl border border-primary/20 shadow-[0_0_40px_rgba(var(--primary),0.2)] overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>

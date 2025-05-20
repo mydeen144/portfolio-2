@@ -125,6 +125,19 @@
         @apply pl-5 mt-2 list-disc;
     }
     
+    /* CSS Containment utilities to prevent layout shifts */
+    .contain-layout {
+        contain: layout;
+    }
+    
+    .contain-paint {
+        contain: paint;
+    }
+    
+    .contain-size {
+        contain: size;
+    }
+    
     /* Premium animations */
     .animate-float-slow {
         animation: float 8s ease-in-out infinite;
