@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Light mode - Premium light theme with blue accents */
+    :root {
+        --background: 210 30% 98%;
+        --background-light: 210 40% 95%;
+        --foreground: 220 40% 15%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 220 40% 15%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 40% 15%;
+
+        /* Premium blue palette for light mode */
+        --primary: 210 100% 40%;
+        --primary-light: 200 100% 45%;
+        --primary-dark: 220 90% 35%;
+        --primary-rgb: 0, 102, 204;
+        --primary-foreground: 0 0% 100%;
+
+        /* Gold accent for light mode */
+        --secondary: 40 100% 50%;
+        --secondary-rgb: 255, 204, 0;
+        --secondary-foreground: 220 40% 15%;
+
+        --muted: 210 30% 92%;
+        --muted-foreground: 220 20% 40%;
+
+        --accent: 210 100% 40%;
+        --accent-foreground: 0 0% 100%;
+
+        --destructive: 0 85% 60%;
+        --destructive-foreground: 0 0% 100%;
+
+        --border: 210 30% 85%;
+        --input: 210 30% 92%;
+        --ring: 210 100% 40%;
+
+        --radius: 0.5rem;
+        --chart-1: 210 100% 40%;
+        --chart-2: 200 100% 45%;
+        --chart-3: 220 80% 45%;
+        --chart-4: 240 80% 55%;
+        --chart-5: 190 80% 40%;
+    }
+
+    /* Dark mode - Premium deep blue with gold accents */
+    .dark {
+        --background: 220 35% 8%;
+        --foreground: 210 40% 98%;
+
+        --card: 220 35% 10%;
+        --card-foreground: 210 40% 98%;
+
+        --popover: 220 35% 8%;
+        --popover-foreground: 210 40% 98%;
+
+        /* Premium blue palette */
+        --primary: 210 100% 50%;
+        --primary-light: 195 100% 60%;
+        --primary-dark: 220 90% 40%;
+        --primary-rgb: 0, 122, 255;
+        --primary-foreground: 210 40% 98%;
+
+        /* Gold accent */
+        --secondary: 45 100% 60%;
+        --secondary-foreground: 220 35% 10%;
+
+        --muted: 217 33% 17%;
+        --muted-foreground: 215 20% 65%;
+
+        --accent: 45 100% 60%;
+        --accent-foreground: 220 35% 10%;
+
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+
+        --border: 217 33% 17%;
+        --input: 217 33% 17%;
+        --ring: 210 100% 50%;
+
+        --radius: 0.5rem;
+        --chart-1: 200 100% 50%;
+        --chart-2: 220 100% 60%;
+        --chart-3: 180 100% 45%;
+        --chart-4: 240 100% 65%;
+        --chart-5: 190 100% 45%;
+    }
+}
+
+@layer base {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    * {
+        @apply border-border !cursor-none;
+    }
+    body {
+        @apply bg-background text-foreground font-roboto-flex;
+    }
+    
+    /* Custom cursor styles */
+    .cursor-path {
+        @apply fill-primary stroke-background/50;
+    }
+    
+    .dark-cursor {
+        @apply fill-primary stroke-background/50;
+    }
+    
+    .light-cursor {
+        @apply fill-secondary stroke-background/80;
+    }
+}
+
+@layer components {
+    .grid {
+        @apply gap-[25px];
+    }
+
+    .markdown-text ul {
+        @apply pl-5 mt-2 list-disc;
+    }
+    
+    /* Premium animations */
+    .animate-float-slow {
+        animation: float 8s ease-in-out infinite;
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse 6s ease-in-out infinite;
+    }
+    
+    .animation-delay-1000 {
+        animation-delay: 1s;
+    }
+    
+    .animation-delay-1500 {
+        animation-delay: 1.5s;
+    }
+    
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    
+    /* Experience and Project section styles */
+    .experience-item:hover .timeline-dot {
+        @apply bg-primary/40 border-primary;
+    }
+    
+    .project-item:hover .project-image {
+        @apply scale-105;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+}
