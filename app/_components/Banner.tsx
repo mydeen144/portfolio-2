@@ -33,8 +33,8 @@ const Banner = () => {
                     (lcpElement as HTMLElement).getBoundingClientRect();
                 }
             }, { timeout: 10 });
-        } else {
-            immediateRender = (window as Window).requestAnimationFrame(() => {
+        } else if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
+            immediateRender = (window as Window & typeof globalThis).requestAnimationFrame(() => {
                 const lcpElement = document.querySelector('.lcp-element');
                 if (lcpElement) {
                     (lcpElement as HTMLElement).getBoundingClientRect();
@@ -65,8 +65,8 @@ const Banner = () => {
                         if ('cancelIdleCallback' in window) {
                             const cIC = window.cancelIdleCallback as (handle: number) => void;
                             cIC(immediateRender);
-                        } else {
-                            window.cancelAnimationFrame(immediateRender as number);
+                        } else if (typeof window !== 'undefined' && 'cancelAnimationFrame' in window) {
+                            (window as Window & typeof globalThis).cancelAnimationFrame(immediateRender);
                         }
                     }
                 }
@@ -84,8 +84,8 @@ const Banner = () => {
                         if ('cancelIdleCallback' in window) {
                             const cIC = window.cancelIdleCallback as (handle: number) => void;
                             cIC(immediateRender);
-                        } else {
-                            window.cancelAnimationFrame(immediateRender as number);
+                        } else if (typeof window !== 'undefined' && 'cancelAnimationFrame' in window) {
+                            (window as Window & typeof globalThis).cancelAnimationFrame(immediateRender);
                         }
                     }
                 }
