@@ -145,7 +145,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/proudify.webp',
         longThumbnail: '/projects/long/proudify.webp',
         images: [
-            '/projects/images/proudify.webp',
+            '/projects/images/proudify.webp'
         ],
     },
     {
@@ -184,7 +184,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/digital-dopamine.webp',
         longThumbnail: '/projects/long/digital-dopamine.webp',
         images: [
-            '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png',
+            '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png'
         ],
     },
     {
@@ -224,8 +224,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/students-xerox.webp',
         longThumbnail: '/projects/long/students-xerox.webp',
         images: [
-            '/projects/images/students-xerox-1.webp',
-            '/projects/images/students-xerox-2.webp',
+            '/projects/images/asx.webp'
         ],
     },
     {
@@ -265,8 +264,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/sevensground.webp',
         longThumbnail: '/projects/long/sevensground.webp',
         images: [
-            '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png',
-            '/projects/images/sevens.webp',
+            '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png'
         ],
     },
     {
@@ -306,7 +304,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/interview-node.webp',
         longThumbnail: '/projects/long/interview-node.webp',
         images: [
-            '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png',
+            '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png'
         ],
     },
     {
@@ -346,7 +344,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/wpblazer.webp',
         longThumbnail: '/projects/long/wpblazer.webp',
         images: [
-            '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png',
+            '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png'
         ],
     },
     {
@@ -507,7 +505,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/blazers-io.webp',
         longThumbnail: '/projects/long/blazers-io.webp',
         images: [
-            '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png',
+            '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png'
         ],
     },
     // {
