@@ -145,8 +145,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/proudify.webp',
         longThumbnail: '/projects/long/proudify.webp',
         images: [
-            '/projects/images/proudify-1.webp',
-            '/projects/images/proudify-2.webp',
+            '/projects/images/proudify.webp',
         ],
     },
     {
@@ -185,8 +184,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/digital-dopamine.webp',
         longThumbnail: '/projects/long/digital-dopamine.webp',
         images: [
-            '/projects/images/digital-dopamine-1.webp',
-            '/projects/images/digital-dopamine-2.webp',
+            '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png',
         ],
     },
     {
@@ -267,8 +265,8 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/sevensground.webp',
         longThumbnail: '/projects/long/sevensground.webp',
         images: [
-            '/projects/images/sevensground-1.webp',
-            '/projects/images/sevensground-2.webp',
+            '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png',
+            '/projects/images/sevens.webp',
         ],
     },
     {
@@ -308,8 +306,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/interview-node.webp',
         longThumbnail: '/projects/long/interview-node.webp',
         images: [
-            '/projects/images/interview-node-1.webp',
-            '/projects/images/interview-node-2.webp',
+            '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png',
         ],
     },
     {
@@ -349,8 +346,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/wpblazer.webp',
         longThumbnail: '/projects/long/wpblazer.webp',
         images: [
-            '/projects/images/wpblazer-1.webp',
-            '/projects/images/wpblazer-2.webp',
+            '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png',
         ],
     },
     {
@@ -511,8 +507,7 @@ export const PROJECTS: IProject[] = [
         thumbnail: '/projects/thumbnail/blazers-io.webp',
         longThumbnail: '/projects/long/blazers-io.webp',
         images: [
-            '/projects/images/blazers-io-1.webp',
-            '/projects/images/blazers-io-2.webp',
+            '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png',
         ],
     },
     // {
@@ -616,25 +611,25 @@ export const PROJECTS: IProject[] = [
     //         'I developed Crenotive, a portfolio website using Html, SASS, and jQuery to showcase services and expertise. The design focuses on responsive user experience and effective presentation of professional achievements.',
     //     role: ``,
     // },
-    {
-        title: 'devLinks',
-        slug: 'devLinks',
-        techStack: ['Next.js', 'Formik', 'Drag & Drop', 'Tailwind CSS'],
-        thumbnail: '/projects/thumbnail/devLinks.jpg',
-        longThumbnail: '/projects/long/devLinks.jpg',
-        images: [
-            '/projects/images/devLinks-1.png',
-            '/projects/images/devLinks-2.png',
-            '/projects/images/devLinks-3.png',
-        ],
-        sourceCode: 'https://github.com/Tajmirul/devsLink',
-        liveUrl: 'https://devlinks-demo.vercel.app/auth/signin',
-        year: 2023,
-        description: `One of the most challenging projects in Frontend Mentor.<br/><br/>
+    // {
+    //     title: 'devLinks',
+    //     slug: 'devLinks',
+    //     techStack: ['Next.js', 'Formik', 'Drag & Drop', 'Tailwind CSS'],
+    //     thumbnail: '/projects/thumbnail/devLinks.jpg',
+    //     longThumbnail: '/projects/long/devLinks.jpg',
+    //     images: [
+    //         '/projects/images/devLinks-1.png',
+    //         '/projects/images/devLinks-2.png',
+    //         '/projects/images/devLinks-3.png',
+    //     ],
+    //     sourceCode: 'https://github.com/Tajmirul/devsLink',
+    //     liveUrl: 'https://devlinks-demo.vercel.app/auth/signin',
+    //     year: 2023,
+    //     description: `One of the most challenging projects in Frontend Mentor.<br/><br/>
 
-            I developed a LinkSharing App as part of the Frontend Mentor challenge, utilizing React, Redux, and Tailwind CSS to create a responsive and feature-rich platform. The app allows users to share, save, and explore links, with a focus on intuitive design and smooth navigation. Advanced state management ensures efficient data handling for user interactions.`,
-        role: ``,
-    },
+    //         I developed a LinkSharing App as part of the Frontend Mentor challenge, utilizing React, Redux, and Tailwind CSS to create a responsive and feature-rich platform. The app allows users to share, save, and explore links, with a focus on intuitive design and smooth navigation. Advanced state management ensures efficient data handling for user interactions.`,
+    //     role: ``,
+    // },
 ];
 
 export const MY_EXPERIENCE = [
