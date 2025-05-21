@@ -142,8 +142,8 @@ export const PROJECTS: IProject[] = [
             'MySQL',
             'AJAX',
         ],
-        thumbnail: '/projects/thumbnail/proudify.webp',
-        longThumbnail: '/projects/long/proudify.webp',
+        thumbnail: '/projects/images/proudify.webp',
+        longThumbnail: '/projects/images/proudify.webp',
         images: [
             '/projects/images/proudify.webp'
         ],
@@ -181,8 +181,8 @@ export const PROJECTS: IProject[] = [
             'CSS',
             'JavaScript',
         ],
-        thumbnail: '/projects/thumbnail/digital-dopamine.webp',
-        longThumbnail: '/projects/long/digital-dopamine.webp',
+        thumbnail: '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png',
+        longThumbnail: '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png',
         images: [
             '/projects/images/screencapture-digitaldopamine-in-2025-05-21-11_28_42.png'
         ],
@@ -221,8 +221,8 @@ export const PROJECTS: IProject[] = [
             'MySQL',
             'AJAX',
         ],
-        thumbnail: '/projects/thumbnail/students-xerox.webp',
-        longThumbnail: '/projects/long/students-xerox.webp',
+        thumbnail: '/projects/images/asx.webp',
+        longThumbnail: '/projects/images/asx.webp',
         images: [
             '/projects/images/asx.webp'
         ],
@@ -261,8 +261,8 @@ export const PROJECTS: IProject[] = [
             'PostgreSQL',
             'PHP',
         ],
-        thumbnail: '/projects/thumbnail/sevensground.webp',
-        longThumbnail: '/projects/long/sevensground.webp',
+        thumbnail: '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png',
+        longThumbnail: '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png',
         images: [
             '/projects/images/screencapture-sevensground-ae-2025-05-21-11_26_57.png'
         ],
@@ -301,8 +301,8 @@ export const PROJECTS: IProject[] = [
             'Cache',
             'Custom Post Types',
         ],
-        thumbnail: '/projects/thumbnail/interview-node.webp',
-        longThumbnail: '/projects/long/interview-node.webp',
+        thumbnail: '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png',
+        longThumbnail: '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png',
         images: [
             '/projects/images/screencapture-interviewnode-2025-05-21-11_27_59.png'
         ],
@@ -341,8 +341,8 @@ export const PROJECTS: IProject[] = [
             'API Development',
             'PHP',
         ],
-        thumbnail: '/projects/thumbnail/wpblazer.webp',
-        longThumbnail: '/projects/long/wpblazer.webp',
+        thumbnail: '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png',
+        longThumbnail: '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png',
         images: [
             '/projects/images/screencapture-wpblazer-2025-05-21-11_29_35.png'
         ],
@@ -381,8 +381,8 @@ export const PROJECTS: IProject[] = [
             'AJAX',
             'PHP',
         ],
-        thumbnail: '/projects/thumbnail/proofblazer.webp',
-        longThumbnail: '/projects/long/proofblazer.webp',
+        thumbnail: '/projects/images/proofblazer-1.webp',
+        longThumbnail: '/projects/images/proofblazer-2.webp',
         images: [
             '/projects/images/proofblazer-1.webp',
             '/projects/images/proofblazer-2.webp',
@@ -421,8 +421,8 @@ export const PROJECTS: IProject[] = [
             'PHP',
             'JavaScript',
         ],
-        thumbnail: '/projects/thumbnail/siteblazer.webp',
-        longThumbnail: '/projects/long/siteblazer.webp',
+        thumbnail: '/projects/images/siteblazer-1.webp',
+        longThumbnail: '/projects/images/siteblazer-2.webp',
         images: [
             '/projects/images/siteblazer-1.webp',
             '/projects/images/siteblazer-2.webp',
@@ -461,8 +461,8 @@ export const PROJECTS: IProject[] = [
             'Monitoring APIs',
             'Data Visualization',
         ],
-        thumbnail: '/projects/thumbnail/monitorblazer.webp',
-        longThumbnail: '/projects/long/monitorblazer.webp',
+        thumbnail: '/projects/images/monitorblazer-1.webp',
+        longThumbnail: '/projects/images/monitorblazer-2.webp',
         images: [
             '/projects/images/monitorblazer-1.webp',
             '/projects/images/monitorblazer-2.webp',
@@ -502,8 +502,8 @@ export const PROJECTS: IProject[] = [
             'HTML5',
             'CSS3',
         ],
-        thumbnail: '/projects/thumbnail/blazers-io.webp',
-        longThumbnail: '/projects/long/blazers-io.webp',
+        thumbnail: '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png',
+        longThumbnail: '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png',
         images: [
             '/projects/images/screencapture-blazers-io-2025-05-21-11_30_43.png'
         ],
