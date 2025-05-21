@@ -13,30 +13,47 @@ A modern, blazing-fast portfolio built with cutting-edge web technologies.
 
 ![Portfolio Preview](/public/Screenshot_1.png)
 
+## 📊 Repository Insights
+
+<p align="center">
+  <a href="https://github.com/mydeen144/portfolio-2.0/stargazers">
+    <img src="https://img.shields.io/github/stars/mydeen144/portfolio-2.0?style=for-the-badge&color=yellow" alt="GitHub stars">
+  </a>
+  <a href="https://github.com/mydeen144/portfolio-2.0/network/members">
+    <img src="https://img.shields.io/github/forks/mydeen144/portfolio-2.0?style=for-the-badge&color=blue" alt="GitHub forks">
+  </a>
+  <a href="https://github.com/mydeen144/portfolio-2.0/issues">
+    <img src="https://img.shields.io/github/issues/mydeen144/portfolio-2.0?style=for-the-badge&color=red" alt="GitHub issues">
+  </a>
+  <a href="https://github.com/mydeen144/portfolio-2.0/graphs/traffic">
+    <img src="https://img.shields.io/github/watchers/mydeen144/portfolio-2.0?style=for-the-badge&color=green" alt="GitHub watchers">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/mydeen144/portfolio-2.0/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/mydeen144/portfolio-2.0?style=for-the-badge&color=orange" alt="GitHub contributors">
+  </a>
+  <a href="https://github.com/mydeen144/portfolio-2.0/commits/main">
+    <img src="https://img.shields.io/github/last-commit/mydeen144/portfolio-2.0?style=for-the-badge&color=purple" alt="Last commit">
+  </a>
+  <img src="https://img.shields.io/github/repo-size/mydeen144/portfolio-2.0?style=for-the-badge&color=teal" alt="Repo size">
+</p>
+
+### 📈 Activity
+
+[![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=mydeen144&theme=github-compact&hide_border=true)](https://github.com/mydeen144/portfolio-2.0/graphs/contributors)
+
+| Metric | Last 30 Days |
+|--------|-------------|
+| 👀 Unique visitors | ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=mydeen144.portfolio-2.0) |
+| ⭐ Stars gained | [![Stars](https://img.shields.io/github/stars/mydeen144/portfolio-2.0?style=flat&color=yellow)](https://github.com/mydeen144/portfolio-2.0/stargazers) |
+| 🔀 Forks created | [![Forks](https://img.shields.io/github/forks/mydeen144/portfolio-2.0?style=flat&color=blue)](https://github.com/mydeen144/portfolio-2.0/network/members) |
+| 📝 Issues opened | [![Issues](https://img.shields.io/github/issues/mydeen144/portfolio-2.0?style=flat&color=red)](https://github.com/mydeen144/portfolio-2.0/issues) |
+
 </div>
 
-## ⚡️ Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/mydeen144/portfolio-2.0.git
-
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm dev
-```
-
-<details>
-<summary>🔧 Prerequisites</summary>
-
-- Node.js 18+
-- pnpm (recommended) or npm
-- Git
-</details>
-
-## 🎯 Key Features
+## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
@@ -47,58 +64,7 @@ pnpm dev
 | ♿ **Accessibility** | WCAG 2.1 AAA compliant |
 | 🔍 **SEO** | Perfect Lighthouse SEO score |
 
-## 🛠 Tech Stack
-
-<details>
-<summary>💻 Core</summary>
-
-- **Framework:** Next.js 15.2
-- **Language:** TypeScript 5
-- **Styling:** Tailwind CSS 3.4
-</details>
-
-<details>
-<summary>🎨 UI & Animation</summary>
-
-- **Components:** Radix UI
-- **Icons:** Lucide Icons
-- **Animations:** GSAP + Framer Motion
-- **Scroll:** Lenis
-</details>
-
-<details>
-<summary>🔧 Development</summary>
-
-- **Linting:** ESLint
-- **Formatting:** Prettier
-- **Git Hooks:** Husky
-- **Package Manager:** pnpm
-</details>
-
-## 📂 Project Structure
-
-```sh
-portfolio-2.0/
-├── app/                # Next.js app router
-│   ├── layout.tsx     # Root layout
-│   ├── page.tsx       # Home page
-│   └── globals.css    # Global styles
-├── components/        # Reusable UI components
-│   ├── ui/           # Core UI components
-│   └── sections/     # Page sections
-├── lib/              # Utilities & config
-├── public/           # Static assets
-└── types/            # TypeScript types
-```
-
-## ⚡ Performance
-
-```mermaid
-graph LR
-    A[First Paint] -->|0.5s| B[First Contentful Paint]
-    B -->|0.7s| C[Time to Interactive]
-    C -->|1.0s| D[Fully Loaded]
-```
+## 🎯 Performance
 
 | Metric | Score |
 |--------|-------|
@@ -107,58 +73,34 @@ graph LR
 | Best Practices | 100/100 |
 | SEO | 100/100 |
 
-## 🚀 Deployment
+## 💝 Inspired By
 
-```bash
-# Build for production
-pnpm build
+This portfolio draws inspiration from these amazing developers:
 
-# Start production server
-pnpm start
-```
+- [Brittany Chiang](https://github.com/bchiang7/v4) - Clean code structure and minimalist design
+- [Lee Robinson](https://github.com/leerob/leerob.io) - Performance optimization techniques
+- [Josh W Comeau](https://www.joshwcomeau.com/) - Animation and interaction patterns
+- [Takuya Matsuyama](https://www.craftz.dog/) - Dark mode implementation
+- [Kent C. Dodds](https://github.com/kentcdodds/kentcdodds.com) - Accessibility patterns
 
-## 📖 Documentation
+## 🙌 Special Thanks
 
-Visit our [documentation site](https://mydeen-pitchai.vercel.app/docs) for:
-- Detailed setup guide
-- Component documentation
-- Customization options
-- Deployment instructions
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. Commit your changes
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-4. Push to the branch
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. Open a Pull Request
+- UI Components: [Radix UI](https://www.radix-ui.com)
+- Icons: [Lucide Icons](https://lucide.dev)
+- Fonts: [Google Fonts](https://fonts.google.com)
+- Animations: [GSAP](https://greensock.com/gsap/)
+- Scroll Effects: [Lenis](https://lenis.studiofreight.com/)
+- Design System: [Tailwind CSS](https://tailwindcss.com)
 
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙌 Credits
-
-- UI Components by [Radix UI](https://www.radix-ui.com)
-- Icons by [Lucide](https://lucide.dev)
-- Fonts by [Google Fonts](https://fonts.google.com)
-
 ---
 
 <div align="center">
 
-### Connect With Me
+### Let's Connect
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://mydeen-pitchai.vercel.app/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mydeen144)
