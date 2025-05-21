@@ -91,7 +91,7 @@ This project is open source and available under the [MIT License](LICENSE).
   <p>Designed & Built with ❤️ by Mydeen Pitchai</p>
   <p>
     <a href="https://mydeen-pitchai.vercel.app/" target="_blank">Website</a> •
-    <a href="https://github.com/mydeen" target="_blank">GitHub</a> •
+    <a href="https://github.com/mydeen144" target="_blank">GitHub</a> •
     <a href="https://linkedin.com/in/mydeenpitchai" target="_blank">LinkedIn</a>
   </p>
 </div>
