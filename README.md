@@ -1,39 +1,97 @@
-# 🚀 My Portfolio Website
+# ✨ Mydeen Pitchai - Personal Portfolio
 
-![image](https://github.com/user-attachments/assets/ade45c4b-b2cb-46cb-b8a6-31cad3bd0c5a)
+<div align="center">
+  <img src="/public/Screenshot_1.png" alt="Portfolio Screenshot" width="100%" />
+  <p><a href="https://mydeen-pitchai.vercel.app/" target="_blank">✨ Live Demo</a></p>
+</div>
 
-[Checkout the initial design here](https://www.figma.com/design/56hODoGFDzZfZduBPfQeBg/New-Portfolio?node-id=18-1550&t=73vRMGTW0gspTSND-1)
+## � About This Project
 
-## 🚨 Forking this repo (please read!)
+Welcome to my personal portfolio website repository! This project showcases my skills, experience, and projects in a clean, modern interface built with Next.js and other cutting-edge technologies.
 
-Many people have contacted me asking me if they can use this code for their own website, and the answer to that question is usually **yes, with attribution**.
+I designed this portfolio to not only display my work but also to demonstrate my coding abilities and design sensibilities. The site features smooth animations, responsive layouts, and an intuitive user experience.
 
-I value keeping my site open source, but as you all know, _**plagiarism is bad**_. It's always disheartening whenever I find that someone has copied my site without giving me credit. I spent a non-trivial amount of effort building and designing this iteration of my website, and I am proud of it! All I ask of you all is to not claim this effort as your own.
+## 🛠️ Built With
 
-Please also note that I did not build this site with the intention of it being a starter theme, so if you have questions about implementation, please refer to the [Next.js docs](https://nextjs.org/docs).
+- **Next.js** - React framework for production
+- **Tailwind CSS** - For styling
+- **Framer Motion** - For smooth animations
+- **TypeScript** - For type safety
+- **GSAP** - For advanced animations
 
-If you like my work, give it a star⭐.
+## 🚀 Getting Started
 
-### TL;DR
+### Prerequisites
 
-Yes, you can fork this repo. Please give me proper credit by linking back to [me.toinfinite.dev](https://www.me.toinfinite.dev/). Thanks!
+- Node.js (14.x or later)
+- pnpm (recommended) or npm
 
-## 🛠 Installation & Set Up
+### Installation
 
-First, run the development server:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/portfolio-2.0.git
+   cd portfolio-2.0
+   ```
 
-```bash
-pnpm install
-pnpm dev
-```
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run the development server:
+   ```bash
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## 🌟 Features
+
+- **Responsive Design** - Looks great on all devices
+- **Dark/Light Mode** - Toggle between themes
+- **Interactive UI** - Engaging user experience with animations
+- **Project Showcase** - Detailed project cards with links
+- **Contact Form** - Easy way for visitors to reach out
+- **Performance Optimized** - Fast loading times and smooth interactions
+
+## 📝 Usage Guidelines
+
+I'm happy to share my work with the community, and you're welcome to fork this repository **with proper attribution**. If you use this code as inspiration or as a base for your own portfolio:
+
+- Please provide credit by linking back to [mydeen-pitchai.vercel.app](https://mydeen-pitchai.vercel.app/)
+- Do not claim the design or code as your own original work
+- Consider it a learning resource rather than a template
+
+I've put significant effort into creating this portfolio, and I appreciate your respect for that work.
 
 ## 🤝 Contributing
-If you'd like to contribute or suggest improvements, feel free to open an issue or submit a pull request. All contributions are welcome!
 
-## Credit
-_This readme is inspired from [Brittany Chiang's github](https://github.com/bchiang7/v4)_
+Contributions are what make the open-source community such an amazing place to learn and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 🙏 Acknowledgments
+
+- Design inspiration from [Brittany Chiang](https://github.com/bchiang7/v4) and [Tajmirul](https://github.com/Tajmirul)
+- Icons from [Heroicons](https://heroicons.com/)
+- Fonts from [Google Fonts](https://fonts.google.com/)
 
 ## 📄 License
-This project is open source and available under the [MIT License](https://github.com/mydeen/portfolio-2.0/blob/main/LICENSE).
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+  <p>Designed & Built with ❤️ by Mydeen Pitchai</p>
+  <p>
+    <a href="https://mydeen-pitchai.vercel.app/" target="_blank">Website</a> •
+    <a href="https://github.com/mydeen" target="_blank">GitHub</a> •
+    <a href="https://linkedin.com/in/mydeenpitchai" target="_blank">LinkedIn</a>
+  </p>
+</div>
