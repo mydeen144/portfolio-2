@@ -30,7 +30,7 @@ I designed this portfolio to not only display my work but also to demonstrate my
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/portfolio-2.0.git
+   git clone https://github.com/mydeen144/portfolio-2.0.git
    cd portfolio-2.0
    ```
 
