@@ -62,6 +62,18 @@ export default function RootLayout({
                 </Script>
                 {/* End Google Tag Manager */}
 
+                {/* Google Analytics 4 */}
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZQNTQ9HK0V" strategy="afterInteractive" />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-ZQNTQ9HK0V');
+                    `}
+                </Script>
+                {/* End Google Analytics 4 */}
+
                 {/* Preload critical assets */}
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
