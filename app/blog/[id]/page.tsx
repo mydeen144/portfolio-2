@@ -99,8 +99,9 @@ const BLOG_POSTS = [
     }
 ];
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const post = BLOG_POSTS.find(post => post.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const post = BLOG_POSTS.find(post => post.id === id);
     
     if (!post) {
         return {
@@ -123,8 +124,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
-export default function BlogPost({ params }: { params: { id: string } }) {
-    const post = BLOG_POSTS.find(post => post.id === params.id);
+export default async function BlogPost({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const post = BLOG_POSTS.find(post => post.id === id);
     
     if (!post) {
         notFound();

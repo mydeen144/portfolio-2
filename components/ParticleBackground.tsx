@@ -24,11 +24,11 @@ const ParticleBackground = () => {
     const animationsRef = useRef<gsap.core.Tween[]>([]);
     const { theme } = useTheme();
     const [particleColor, setParticleColor] = useState('bg-primary/20');
-    const [particleCount, setParticleCount] = useState(10); // Drastically reduced count to minimize DOM elements
+    const [particleCount, setParticleCount] = useState(30); // Increased count for better visual effect
     const [isLowPerformanceMode, setIsLowPerformanceMode] = useState(false);
-    const [isVisible, setIsVisible] = useState(false); // Start hidden
+    const isVisible = true; // Always visible
     
-    // Check for low performance devices and delay initialization
+    // Check for low performance devices
     useEffect(() => {
         // Check if device is likely to be low-powered
         const isLowPower = window.navigator.userAgent.includes('Mobile') || 
@@ -39,15 +39,8 @@ const ParticleBackground = () => {
         
         if (isLowPower || prefersReducedMotion) {
             setIsLowPerformanceMode(true);
-            setParticleCount(15); // Even fewer particles for low-power devices
+            setParticleCount(15); // Fewer particles for low-power devices
         }
-        
-        // Significantly delay showing particles until after LCP
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, 2000); // Delay particles by 2 seconds to ensure LCP is complete
-        
-        return () => clearTimeout(timer);
     }, []);
     
     // Update particle styling based on theme
@@ -64,11 +57,11 @@ const ParticleBackground = () => {
             if (isLowPerformanceMode) return; // Don't change if in low performance mode
             
             if (width < 768) {
-                setParticleCount(5); // Minimal for mobile
+                setParticleCount(20); // More particles for mobile
             } else if (width < 1280) {
-                setParticleCount(8); // Minimal for tablets
+                setParticleCount(40); // More particles for tablets
             } else {
-                setParticleCount(10); // Minimal for desktops
+                setParticleCount(60); // More particles for desktops
             }
         }, 250); // Throttle to once every 250ms
         
@@ -102,52 +95,47 @@ const ParticleBackground = () => {
         });
         animationsRef.current = [];
         
-        // Initialize particles with a much longer delay to ensure LCP completes first
-        const initTimeout = setTimeout(() => {
-            particlesRef.current.forEach((particle) => {
-                if (!particle) return;
-                
-                // Even simpler particle setup
-                const size = Math.random() * 2 + 1; // Smaller particles
-                
-                gsap.set(particle, {
-                    width: size,
-                    height: size,
-                    opacity: Math.random() * 0.3 + 0.1, // Lower opacity
-                    left: Math.random() * window.innerWidth,
-                    top: Math.random() * window.innerHeight,
-                    force3D: true, // Force GPU acceleration
-                });
-
-                // Simplified animation - just vertical movement with longer duration
-                const anim1 = gsap.to(particle, {
-                    y: '-=' + (window.innerHeight / 2),
-                    duration: Math.random() * 20 + 15, // Even slower for better performance
-                    delay: Math.random() * 3,
-                    repeat: -1,
-                    repeatRefresh: true,
-                    ease: 'none',
-                });
-                
-                animationsRef.current.push(anim1);
-                
-                // Only add horizontal movement if not in low performance mode
-                // and for a subset of particles (further reducing calculations)
-                if (!isLowPerformanceMode && Math.random() > 0.5) {
-                    const anim2 = gsap.to(particle, {
-                        x: (Math.random() - 0.5) * 30, // Even less movement
-                        duration: Math.random() * 15 + 10,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: 'sine.inOut',
-                    });
-                    animationsRef.current.push(anim2);
-                }
+        // Initialize particles immediately
+        particlesRef.current.forEach((particle) => {
+            if (!particle) return;
+            
+            // Enhanced particle setup
+            const size = Math.random() * 3 + 2; // Larger particles for better visibility
+            
+            gsap.set(particle, {
+                width: size,
+                height: size,
+                opacity: Math.random() * 0.5 + 0.2, // Higher opacity for better visibility
+                left: Math.random() * window.innerWidth,
+                top: Math.random() * window.innerHeight,
+                force3D: true, // Force GPU acceleration
             });
-        }, 1000); // Much longer delay to ensure LCP completes first
+
+            // Improved animation - vertical movement
+            const anim1 = gsap.to(particle, {
+                y: '-=' + (window.innerHeight / 2),
+                duration: Math.random() * 15 + 10, // Faster for better visibility
+                delay: Math.random() * 2,
+                repeat: -1,
+                repeatRefresh: true,
+                ease: 'none',
+            });
+            
+            animationsRef.current.push(anim1);
+            
+            // Add horizontal movement for all particles
+            const anim2 = gsap.to(particle, {
+                x: (Math.random() - 0.5) * 50, // More movement
+                duration: Math.random() * 10 + 5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
+            });
+            animationsRef.current.push(anim2);
+        });
         
-        return () => clearTimeout(initTimeout);
-    }, [particleColor, particleCount, isLowPerformanceMode, isVisible]);
+        return () => {};
+    }, [particleColor, particleCount, isLowPerformanceMode]);
 
     // Memoize the particle array to prevent unnecessary re-renders
     const particles = useMemo(() => {
@@ -169,7 +157,7 @@ const ParticleBackground = () => {
     return (
         <div 
             ref={containerRef} 
-            className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-50" // Reduced opacity
+            className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-80" // Increased opacity
             style={{ contain: 'strict' }}
         >
             {particles}

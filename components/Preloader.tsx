@@ -53,11 +53,11 @@ const Preloader = () => {
         return () => clearTimeout(maxLoadingTime);
     }, [loadingProgress]);
     
-    // Hide preloader much faster to avoid blocking LCP
+    // Keep preloader visible for a reasonable time
     useEffect(() => {
         const hideTimer = setTimeout(() => {
             setIsVisible(false);
-        }, 1000); // Hide after 1 second to improve LCP
+        }, 3000); // Show for 3 seconds to ensure animations are visible
         
         return () => clearTimeout(hideTimer);
     }, []);
@@ -109,39 +109,34 @@ const Preloader = () => {
         };
     }, [isVisible]);
     
-    // Defer non-critical animations until after LCP
+    // Animations start immediately
     useEffect(() => {
         if (!isVisible) return;
         
-        // Delay non-critical animations to prioritize LCP
-        const animationDelay = setTimeout(() => {
-            // Minimal background animations - only if visible
-            const hexagonAnim = gsap.to('.hexagon', {
-                rotation: 360,
-                repeat: -1,
-                duration: 40, // Even slower rotation
-                ease: 'none',
-                force3D: true,
-                overwrite: true
-            });
+        // Start animations immediately
+        // Hexagon animation
+        const hexagonAnim = gsap.to('.hexagon', {
+            rotation: 360,
+            repeat: -1,
+            duration: 20, // Faster rotation for better visibility
+            ease: 'none',
+            force3D: true,
+            overwrite: true
+        });
 
-            // Simplified code line animation
-            const lineAnim = gsap.to('.code-line', {
-                width: '100%',
-                duration: 1,
-                stagger: 0.05,
-                ease: 'power1.inOut',
-            });
-            
-            // Store animations for cleanup
-            return () => {
-                hexagonAnim.kill();
-                lineAnim.kill();
-            };
-        }, 500); // Delay non-critical animations
+        // Code line animation
+        const lineAnim = gsap.to('.code-line', {
+            width: '100%',
+            duration: 1,
+            stagger: 0.05,
+            ease: 'power1.inOut',
+        });
         
-        // Clean up timeout
-        return () => clearTimeout(animationDelay);
+        // Store animations for cleanup
+        return () => {
+            hexagonAnim.kill();
+            lineAnim.kill();
+        };
     }, [isVisible]);
 
     // Don't render anything if not visible
@@ -155,16 +150,40 @@ const Preloader = () => {
         >
             {/* Removed 3D Layered Background for better performance */}
             
-            {/* Single decorative hexagon instead of multiple */}
+            {/* Multiple decorative hexagons for better visual effect */}
             <div className="absolute inset-0 overflow-hidden">
                 <div 
-                    className="hexagon absolute w-[50px] h-[50px] bg-transparent"
+                    className="hexagon absolute w-[80px] h-[80px] bg-transparent"
                     style={{
                         top: '20%',
                         left: '10%',
                         clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                        border: '1px solid',
-                        borderColor: 'hsl(var(--primary) / 0.2)',
+                        border: '2px solid',
+                        borderColor: 'hsl(var(--primary) / 0.5)',
+                        willChange: 'transform'
+                    }}
+                ></div>
+                
+                <div 
+                    className="hexagon absolute w-[60px] h-[60px] bg-transparent"
+                    style={{
+                        top: '60%',
+                        right: '15%',
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                        border: '2px solid',
+                        borderColor: 'hsl(var(--secondary) / 0.5)',
+                        willChange: 'transform'
+                    }}
+                ></div>
+                
+                <div 
+                    className="hexagon absolute w-[40px] h-[40px] bg-transparent"
+                    style={{
+                        bottom: '20%',
+                        left: '20%',
+                        clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                        border: '2px solid',
+                        borderColor: 'hsl(var(--primary) / 0.5)',
                         willChange: 'transform'
                     }}
                 ></div>

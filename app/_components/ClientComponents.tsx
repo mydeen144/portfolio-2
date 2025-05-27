@@ -35,33 +35,15 @@ export default function ClientComponents() {
     const [shouldLoadPreloader, setShouldLoadPreloader] = useState(false);
     
     useEffect(() => {
-        // Set up intersection observer to detect when main content is visible
-        const observer = new IntersectionObserver((entries) => {
-            // If main content is visible, load non-critical components
-            if (entries[0].isIntersecting) {
-                // Delay loading non-critical components slightly
-                setTimeout(() => {
-                    setShouldLoadNonCritical(true);
-                }, 300); // Increased delay for non-critical components
-                observer.disconnect();
-            }
-        });
+        // Load preloader immediately
+        setShouldLoadPreloader(true);
         
-        // Start observing the main element
-        const mainElement = document.querySelector('main');
-        if (mainElement) {
-            observer.observe(mainElement);
-        } else {
-            // If main element isn't found, load after a short delay anyway
-            setTimeout(() => setShouldLoadNonCritical(true), 800); // Increased delay
-        }
-        
-        // Delay preloader to allow LCP elements to render first
+        // Load non-critical components after a short delay
         setTimeout(() => {
-            setShouldLoadPreloader(true);
-        }, 100); // Small delay to prioritize main content rendering
+            setShouldLoadNonCritical(true);
+        }, 500);
         
-        return () => observer.disconnect();
+        return () => {};
     }, []);
     
     // Load components with proper prioritization
