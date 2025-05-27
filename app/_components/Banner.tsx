@@ -234,13 +234,12 @@ const Banner = () => {
                             {/* Main heading with prioritized LCP element - Improved for SEO */}
                             <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide">
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Mydeen Pitchai</span>
+                                    <span className="title-word lcp-element inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Mydeen Pitchai</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
                                     <span className="title-word inline-block text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Full Stack</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
-                                    {/* No longer the LCP element */}
                                     <span 
                                         className="title-word inline-block text-secondary drop-shadow-[0_0_15px_rgba(var(--secondary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100"
                                     >Developer</span>

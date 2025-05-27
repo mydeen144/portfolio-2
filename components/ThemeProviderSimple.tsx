@@ -18,9 +18,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Only access localStorage after component is mounted on the client
     setMounted(true);
+    
+    // Check localStorage first
     const storedTheme = localStorage.getItem("theme") as Theme;
+    
     if (storedTheme) {
       setTheme(storedTheme);
+    } else {
+      // If no stored theme, check system preference
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(prefersDark ? "dark" : "light");
     }
   }, []);
 
@@ -31,6 +38,23 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.add(theme);
     localStorage.setItem("theme", theme);
   }, [theme, mounted]);
+  
+  // Listen for system preference changes
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only update if there's no user preference stored
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [mounted]);
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === "dark" ? "light" : "dark"));

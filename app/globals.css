@@ -176,6 +176,70 @@
     .project-item:hover .project-image {
         @apply scale-105;
     }
+    
+    /* Responsive utility classes */
+    .mobile-only {
+        @apply block md:hidden;
+    }
+    
+    .desktop-only {
+        @apply hidden md:block;
+    }
+    
+    .tablet-up {
+        @apply hidden sm:block;
+    }
+    
+    .desktop-up {
+        @apply hidden lg:block;
+    }
+    
+    /* Responsive typography */
+    .responsive-h1 {
+        @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-anton;
+    }
+    
+    .responsive-h2 {
+        @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-anton;
+    }
+    
+    .responsive-h3 {
+        @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-anton;
+    }
+    
+    .responsive-p {
+        @apply text-base sm:text-lg md:text-xl;
+    }
+    
+    /* Responsive spacing */
+    .responsive-section {
+        @apply py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24;
+    }
+    
+    .responsive-container {
+        @apply px-4 sm:px-6 md:px-8 lg:px-10 xl:px-0 mx-auto;
+        max-width: 100%;
+    }
+    
+    @screen xl {
+        .responsive-container {
+            max-width: 1148px;
+        }
+    }
+    
+    /* Responsive grid layouts */
+    .grid-cols-responsive {
+        @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+    }
+    
+    /* Responsive flex layouts */
+    .flex-responsive {
+        @apply flex flex-col md:flex-row;
+    }
+    
+    .flex-responsive-reverse {
+        @apply flex flex-col md:flex-row-reverse;
+    }
 }
 
 @keyframes float {
@@ -202,5 +266,147 @@
     100% {
         opacity: 0.4;
         transform: scale(1);
+    }
+}
+
+/* Responsive Media Queries */
+/* Mobile-first approach */
+
+/* Extra small devices (phones, 420px and up) */
+@media (min-width: 420px) {
+    .container {
+        @apply px-4;
+    }
+    
+    h1 {
+        @apply text-3xl;
+    }
+    
+    h2 {
+        @apply text-2xl;
+    }
+    
+    h3 {
+        @apply text-xl;
+    }
+}
+
+/* Small devices (large phones, 640px and up) */
+@media (min-width: 640px) {
+    .container {
+        @apply px-6;
+    }
+    
+    h1 {
+        @apply text-4xl;
+    }
+    
+    h2 {
+        @apply text-3xl;
+    }
+    
+    h3 {
+        @apply text-2xl;
+    }
+    
+    /* Improved spacing for small devices */
+    section {
+        @apply py-12;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        @apply px-8;
+    }
+    
+    h1 {
+        @apply text-5xl;
+    }
+    
+    h2 {
+        @apply text-4xl;
+    }
+    
+    h3 {
+        @apply text-3xl;
+    }
+    
+    /* Improved spacing for medium devices */
+    section {
+        @apply py-16;
+    }
+    
+    /* Show desktop navigation elements */
+    .desktop-only {
+        @apply block;
+    }
+    
+    /* Hide mobile navigation elements */
+    .mobile-only {
+        @apply hidden;
+    }
+}
+
+/* Large devices (desktops, 1024px and up) */
+@media (min-width: 1024px) {
+    .container {
+        @apply px-10;
+    }
+    
+    h1 {
+        @apply text-6xl;
+    }
+    
+    h2 {
+        @apply text-5xl;
+    }
+    
+    h3 {
+        @apply text-4xl;
+    }
+    
+    /* Improved spacing for large devices */
+    section {
+        @apply py-20;
+    }
+    
+    /* Enhanced grid layouts for larger screens */
+    .grid-cols-responsive {
+        @apply grid-cols-3;
+    }
+}
+
+/* Extra large devices (large desktops, 1280px and up) */
+@media (min-width: 1280px) {
+    .container {
+        @apply px-0;
+        max-width: 1148px;
+    }
+    
+    /* Improved spacing for extra large devices */
+    section {
+        @apply py-24;
+    }
+    
+    /* Enhanced grid layouts for larger screens */
+    .grid-cols-responsive {
+        @apply grid-cols-4;
+    }
+}
+
+/* Print styles for better printing experience */
+@media print {
+    body {
+        @apply bg-white text-black;
+    }
+    
+    .no-print {
+        @apply hidden;
+    }
+    
+    .page-break {
+        page-break-before: always;
     }
 }

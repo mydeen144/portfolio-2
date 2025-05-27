@@ -87,7 +87,7 @@ const AboutMe = () => {
                 {/* About me content with cards */}
                 <div className="relative">
                     <div className="slide-up-and-fade inline-block bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 mb-8">
-                        <span className="text-primary font-medium">About Me</span>
+                        <h2 className="text-primary font-medium m-0 p-0 text-base">About Me</h2>
                     </div>
                     
                     <div className="grid md:grid-cols-12 gap-8 items-center">

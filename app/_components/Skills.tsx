@@ -140,9 +140,9 @@ const Skills = () => {
                                 {/* Category title with premium styling */}
                                 <div className="category-title relative">
                                     <div className="absolute -left-3 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-primary/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                    <p className="text-5xl font-anton leading-none text-muted-foreground uppercase group-hover:text-primary transition-colors duration-300">
+                                    <h3 className="text-5xl font-anton leading-none text-muted-foreground uppercase group-hover:text-primary transition-colors duration-300">
                                         {category}
-                                    </p>
+                                    </h3>
                                 </div>
                             </div>
 

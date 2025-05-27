@@ -99,6 +99,87 @@ const Footer = async () => {
                 </div>
             </div>
             
+            {/* Footer navigation */}
+            <div className="container relative z-10 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    {/* Column 1: About */}
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">About</h3>
+                        <ul className="space-y-2">
+                            <li>
+                                <a href="/#about-me" className="text-muted-foreground hover:text-primary transition-colors duration-300">About Me</a>
+                            </li>
+                            <li>
+                                <a href="/#my-experience" className="text-muted-foreground hover:text-primary transition-colors duration-300">Experience</a>
+                            </li>
+                            <li>
+                                <a href="/#my-stack" className="text-muted-foreground hover:text-primary transition-colors duration-300">Skills</a>
+                            </li>
+                            <li>
+                                <a href="/#selected-projects" className="text-muted-foreground hover:text-primary transition-colors duration-300">Projects</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    {/* Column 2: Projects */}
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Projects</h3>
+                        <ul className="space-y-2">
+                            <li>
+                                <a href="/projects/proudify" className="text-muted-foreground hover:text-primary transition-colors duration-300">Proudify</a>
+                            </li>
+                            <li>
+                                <a href="/projects/digital-dopamine" className="text-muted-foreground hover:text-primary transition-colors duration-300">Digital Dopamine</a>
+                            </li>
+                            <li>
+                                <a href="/projects/students-xerox" className="text-muted-foreground hover:text-primary transition-colors duration-300">Students Xerox</a>
+                            </li>
+                            <li>
+                                <a href="/projects/wpblazer" className="text-muted-foreground hover:text-primary transition-colors duration-300">WPBlazer</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    {/* Column 3: Blog */}
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Blog</h3>
+                        <ul className="space-y-2">
+                            <li>
+                                <a href="/blog/laravel-best-practices" className="text-muted-foreground hover:text-primary transition-colors duration-300">Laravel Best Practices</a>
+                            </li>
+                            <li>
+                                <a href="/blog/tailwind-tips" className="text-muted-foreground hover:text-primary transition-colors duration-300">Tailwind CSS Tips</a>
+                            </li>
+                            <li>
+                                <a href="/blog/wordpress-performance" className="text-muted-foreground hover:text-primary transition-colors duration-300">WordPress Performance</a>
+                            </li>
+                            <li>
+                                <a href="/blog" className="text-muted-foreground hover:text-primary transition-colors duration-300">All Articles</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    {/* Column 4: Contact */}
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Contact</h3>
+                        <ul className="space-y-2">
+                            <li>
+                                <a href={`mailto:${GENERAL_INFO.email}`} className="text-muted-foreground hover:text-primary transition-colors duration-300">Email Me</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/mydeen144" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-300">GitHub</a>
+                            </li>
+                            <li>
+                                <a href="https://linkedin.com/in/mydeenpitchai" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-300">LinkedIn</a>
+                            </li>
+                            <li>
+                                <a href="https://wa.me/918807375255" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-300">WhatsApp</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
             {/* Footer bottom */}
             <div className="container relative z-10 border-t border-border/30 pt-6">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -106,6 +187,11 @@ const Footer = async () => {
                         <p className="text-muted-foreground text-sm">
                             © {currentYear} <span className="text-foreground font-medium">Mydeen Pitchai</span>. All rights reserved.
                         </p>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 justify-center md:justify-start">
+                            <a href="/sitemap.xml" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Sitemap</a>
+                            <a href="/privacy-policy" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Privacy Policy</a>
+                            <a href="/terms-of-service" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Terms of Service</a>
+                        </div>
                     </div>
                     
                     <div className="flex items-center gap-6">
