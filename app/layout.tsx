@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/ThemeProviderSimple';
 import { ThemeToggle } from '@/components/ThemeToggleSimple';
-import ClientComponents from './_components/ClientComponents';
+import ClientComponentsWrapper from './_components/ClientComponentsWrapper';
 
 // Optimize font loading with block period to reduce CLS
 const antonFont = Anton({
@@ -33,8 +33,9 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-    title: 'Portfolio - Mydeen Pitchai',
-    description: 'Personal portfolio of Mydeen Pitchai',
+    title: 'Mydeen Pitchai | Full Stack Developer | PHP, Laravel & WordPress Expert',
+    description: 'Experienced Full Stack Developer with 5+ years specializing in PHP, Laravel, WordPress, and modern front-end technologies like Tailwind CSS & Alpine.js',
+    keywords: 'Full Stack Developer, PHP Developer, Laravel Expert, WordPress Developer, Web Development, Tailwind CSS, Alpine.js',
 };
 
 export const viewport = {
@@ -50,8 +51,8 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                {/* Google Tag Manager */}
-                <Script id="gtm-script" strategy="afterInteractive">
+                {/* Google Tag Manager - Deferred loading */}
+                <Script id="gtm-script" strategy="lazyOnload">
                     {`
                         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -62,9 +63,9 @@ export default function RootLayout({
                 </Script>
                 {/* End Google Tag Manager */}
 
-                {/* Google Analytics 4 */}
-                <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZQNTQ9HK0V" strategy="afterInteractive" />
-                <Script id="google-analytics" strategy="afterInteractive">
+                {/* Google Analytics 4 - Deferred loading */}
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZQNTQ9HK0V" strategy="lazyOnload" />
+                <Script id="google-analytics" strategy="lazyOnload">
                     {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
@@ -100,8 +101,11 @@ export default function RootLayout({
                     <ReactLenis
                         root
                         options={{
-                            lerp: 0.1,
-                            duration: 1.2, // Slightly reduced for better performance
+                            lerp: 0.08,
+                            duration: 1.0, // Further reduced for better performance
+                            smoothWheel: true,
+                            smoothTouch: false, // Disable on touch devices for better performance
+                            wheelMultiplier: 0.8,
                         }}
                     >
                         <Navbar />
@@ -110,7 +114,7 @@ export default function RootLayout({
                         <Footer />
 
                         {/* Load non-critical UI elements via client component */}
-                        <ClientComponents />
+                        <ClientComponentsWrapper />
                     </ReactLenis>
                 </ThemeProvider>
             </body>

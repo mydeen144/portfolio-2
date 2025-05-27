@@ -54,10 +54,10 @@ const Banner = () => {
             
             lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
             
-            // Reduced fallback timeout for faster animation start
+            // Even shorter fallback timeout for faster animation start
             const fallbackTimer = setTimeout(() => {
                 setLcpComplete(true);
-            }, 500);
+            }, 300);
             
             return () => {
                 if (typeof window !== 'undefined') {
@@ -74,10 +74,10 @@ const Banner = () => {
                 clearTimeout(fallbackTimer);
             };
         } else {
-            // Fallback for browsers without PerformanceObserver
+            // Fallback for browsers without PerformanceObserver - faster timeout
             const timer = setTimeout(() => {
                 setLcpComplete(true);
-            }, 500);
+            }, 300);
             return () => {
                 if (typeof window !== 'undefined') {
                     if (immediateRender !== null) {
@@ -159,33 +159,36 @@ const Banner = () => {
                 ease: 'none',
             });
 
-            // Continuous animations for background elements
+            // Reduced continuous animations for better performance
             gsap.to('.floating-shape', {
-                y: -30,
-                rotation: '+=10',
-                duration: 5,
+                y: -20,
+                rotation: '+=8',
+                duration: 6, // Slower animation for better performance
                 ease: 'sine.inOut',
                 repeat: -1,
                 yoyo: true,
-                stagger: 0.5,
+                stagger: 0.8, // Increased stagger for less CPU usage
             });
             
             gsap.to('.rotating-circle', {
                 rotation: 360,
-                duration: 25,
+                duration: 40, // Much slower rotation for better performance
                 ease: 'none',
                 repeat: -1,
             });
             
-            gsap.to('.pulse-element', {
-                scale: 1.1,
-                opacity: 0.8,
-                duration: 2,
-                ease: 'sine.inOut',
-                repeat: -1,
-                yoyo: true,
-                stagger: 0.5,
-            });
+            // Only animate pulse elements if device is powerful enough
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                gsap.to('.pulse-element', {
+                    scale: 1.05, // Reduced scale change
+                    opacity: 0.8,
+                    duration: 3, // Slower animation
+                    ease: 'sine.inOut',
+                    repeat: -1,
+                    yoyo: true,
+                    stagger: 1.0, // Increased stagger for better performance
+                });
+            }
         },
         { scope: containerRef },
     );
@@ -228,19 +231,19 @@ const Banner = () => {
                                 <span className="text-primary font-medium tracking-wide">Full Stack Developer</span>
                             </div>
                             
-                            {/* Main heading with prioritized LCP element */}
+                            {/* Main heading with prioritized LCP element - Improved for SEO */}
                             <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide">
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Crafting</span>
+                                    <span className="title-word inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Mydeen Pitchai</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
-                                    <span className="title-word inline-block text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Digital</span>
+                                    <span className="title-word inline-block text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Full Stack</span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
                                     {/* No longer the LCP element */}
                                     <span 
                                         className="title-word inline-block text-secondary drop-shadow-[0_0_15px_rgba(var(--secondary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-secondary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100"
-                                    >Experiences</span>
+                                    >Developer</span>
                                 </div>
                             </h1>
                             
@@ -290,7 +293,8 @@ const Banner = () => {
                                             willChange: 'auto',
                                             contentVisibility: 'auto',
                                             contain: 'paint layout',
-                                            textRendering: 'optimizeSpeed'
+                                            textRendering: 'optimizeSpeed',
+                                            fetchPriority: 'high'
                                         }}
                                         suppressHydrationWarning
                                     >

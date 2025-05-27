@@ -11,4 +11,5 @@
     "[xml]": {
         "editor.defaultFormatter": "redhat.vscode-xml"
     },
+    "zencoder.enableRepoIndexing": true,
 }

@@ -107,10 +107,10 @@ const AboutMe = () => {
                         <div className="md:col-span-7">
                             <div className="space-y-6 text-lg">
                                 <p className="slide-up-and-fade bg-background/40 backdrop-blur-sm p-6 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300">
-                                    I&apos;m a seasoned Full Stack Developer with over 5 years of experience, specializing in PHP frameworks (Laravel, Symfony, Phalcon), WordPress, and modern front-end technologies including Tailwind CSS and Alpine.js.
+                                    I&apos;m a seasoned <a href="/#selected-projects" className="text-primary hover:underline">Full Stack Developer</a> with over 5 years of experience, specializing in PHP frameworks (Laravel, Symfony, Phalcon), WordPress, and modern front-end technologies including Tailwind CSS and Alpine.js. Check out my <a href="/#my-experience" className="text-primary hover:underline">professional experience</a> and <a href="/#skills" className="text-primary hover:underline">technical skills</a>.
                                 </p>
                                 <p className="slide-up-and-fade bg-background/40 backdrop-blur-sm p-6 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300">
-                                    My approach focuses on creating scalable, high-performing solutions tailored to both user needs and business objectives. I&apos;ve transformed digital ecosystems, led interface redesigns, and delivered award-winning work that drives tangible results through performance optimization, accessibility, and responsive design.
+                                    My approach focuses on creating scalable, high-performing solutions tailored to both user needs and business objectives. I&apos;ve transformed digital ecosystems, led interface redesigns, and delivered <a href="/#selected-projects" className="text-primary hover:underline">award-winning work</a> that drives tangible results through performance optimization, accessibility, and responsive design. <a href="mailto:mydeenpitchai.dev@gmail.com" className="text-primary hover:underline">Contact me</a> to discuss your project needs.
                                 </p>
                             </div>
                         </div>
