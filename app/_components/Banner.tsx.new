@@ -63,7 +63,7 @@ const Banner = () => {
                 if (typeof window !== 'undefined') {
                     if (immediateRender !== null) {
                         if ('cancelIdleCallback' in window) {
-                            const cIC = window.cancelIdleCallback as (handle: number) => void;
+                            const cIC = window.cancelIdleCallback as (_handle: number) => void;
                             cIC(immediateRender);
                         } else if (typeof window !== 'undefined' && 'cancelAnimationFrame' in window) {
                             (window as Window & typeof globalThis).cancelAnimationFrame(immediateRender);
@@ -82,7 +82,7 @@ const Banner = () => {
                 if (typeof window !== 'undefined') {
                     if (immediateRender !== null) {
                         if ('cancelIdleCallback' in window) {
-                            const cIC = window.cancelIdleCallback as (handle: number) => void;
+                            const cIC = window.cancelIdleCallback as (_handle: number) => void;
                             cIC(immediateRender);
                         } else if (typeof window !== 'undefined' && 'cancelAnimationFrame' in window) {
                             (window as Window & typeof globalThis).cancelAnimationFrame(immediateRender);
