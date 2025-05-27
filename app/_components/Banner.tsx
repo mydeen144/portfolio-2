@@ -293,10 +293,12 @@ const Banner = () => {
                                             willChange: 'auto',
                                             contentVisibility: 'auto',
                                             contain: 'paint layout',
-                                            textRendering: 'optimizeSpeed',
-                                            fetchPriority: 'high'
+                                            textRendering: 'optimizeSpeed'
                                         }}
-                                        suppressHydrationWarning
+                                        {...{
+                                            fetchPriority: "high",
+                                            suppressHydrationWarning: true
+                                        } as React.HTMLAttributes<HTMLHeadingElement>}
                                     >
                                         Years of Experience
                                     </h5>
