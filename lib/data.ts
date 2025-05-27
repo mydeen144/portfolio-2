@@ -6,15 +6,14 @@ export const GENERAL_INFO = {
     emailSubject: "Let's collaborate on a project",
     emailBody: 'Hi Mydeen, I am reaching out to you because...',
 
-    oldPortfolio: 'https://www.legacy.me.toinfinite.dev',
-    upworkProfile: 'https://www.upwork.com/freelancers/mydeen144',
+    upworkProfile: 'https://www.upwork.com/freelancers/~011081f8ac162b3abb?mp_source=share',
+    fiverrrProfile: 'https://www.fiverr.com/amp_works/',
 };
 
 export const SOCIAL_LINKS = [
     { name: 'github', url: 'https://github.com/mydeen144' },
     { name: 'linkedin', url: 'https://www.linkedin.com/in/mydeen-pitchai-developer/' },
     { name: 'facebook', url: 'https://www.facebook.com/mydeenpitchai.2000' },
-    { name: 'Old Version', url: GENERAL_INFO.oldPortfolio },
 ];
 
 export const MY_STACK = {

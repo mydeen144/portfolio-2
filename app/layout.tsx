@@ -104,7 +104,7 @@ export default function RootLayout({
                             lerp: 0.08,
                             duration: 1.0, // Further reduced for better performance
                             smoothWheel: true,
-                            smoothTouch: false, // Disable on touch devices for better performance
+                            // smoothTouch option removed as it's not supported in this version
                             wheelMultiplier: 0.8,
                         }}
                     >
