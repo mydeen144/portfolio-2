@@ -6,7 +6,6 @@ import 'lenis/dist/lenis.css';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/ThemeProviderSimple';
 import { ThemeToggle } from '@/components/ThemeToggleSimple';
