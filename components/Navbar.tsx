@@ -84,7 +84,7 @@ const Navbar = () => {
                         className="font-bold text-xl text-foreground hover:text-secondary transition-colors duration-300"
                     >
                         <span className="sr-only">Mydeen Pitchai - Full Stack Developer</span>
-                        Portfolio
+                        {/* Portfolio */}
                     </Link>
                     
                     <div className="flex items-center gap-4">

@@ -1,12 +1,12 @@
 'use client';
 import parse from 'html-react-parser';
-import ArrowAnimation from '@/components/ArrowAnimation';
 import TransitionLink from '@/components/TransitionLink';
 import { IProject } from '@/types';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+import { ArrowLeft, Calendar, Code2, ExternalLink, Github, Globe } from 'lucide-react';
+import Image from 'next/image';
 import { useRef } from 'react';
 
 interface Props {
@@ -27,13 +27,15 @@ const ProjectDetails = ({ project }: Props) => {
                 y: 30,
             });
             const tl = gsap.timeline({
-                delay: 0.5,
+                delay: 0.8,
             });
 
             tl.to('.fade-in-later', {
                 autoAlpha: 1,
                 y: 0,
-                stagger: 0.1,
+                stagger: 0.15,
+                duration: 1,
+                ease: 'power2.out'
             });
         },
         { scope: containerRef },
@@ -55,148 +57,171 @@ const ProjectDetails = ({ project }: Props) => {
                     end: 'bottom top',
                     pin: true,
                     pinSpacing: false,
-                    scrub: 0.5,
+                    scrub: 1.5,
                 },
             });
         },
         { scope: containerRef },
     );
 
-    // parallax effect on images
-    useGSAP(
-        () => {
-            gsap.utils
-                .toArray<HTMLDivElement>('#images > div')
-                .forEach((imageDiv, i) => {
-                    gsap.to(imageDiv, {
-                        backgroundPosition: `center 0%`,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: imageDiv,
-                            start: () => (i ? 'top bottom' : 'top 50%'),
-                            end: 'bottom top',
-                            scrub: true,
-                            // invalidateOnRefresh: true, // to make it responsive
-                        },
-                    });
-                });
-        },
-        { scope: containerRef },
-    );
+
 
     return (
-        <section className="pt-5 pb-14">
-            <div className="container" ref={containerRef}>
+        <section className="py-16 md:py-24">
+            <div className="container max-w-7xl mx-auto px-4" ref={containerRef}>
                 <TransitionLink
                     back
                     href="/"
-                    className="mb-16 inline-flex gap-2 items-center group h-12"
+                    className="mb-16 inline-flex gap-2 items-center group h-12 hover:text-primary transition-all duration-300"
                 >
-                    <ArrowLeft className="group-hover:-translate-x-1 group-hover:text-primary transition-all duration-300" />
-                    Back
+                    <ArrowLeft className="group-hover:-translate-x-2 transition-all duration-300" />
+                    <span className="text-lg">Back to Projects</span>
                 </TransitionLink>
 
-                <div
-                    className="top-0 min-h-[calc(100svh-100px)] flex"
-                    id="info"
-                >
-                    <div className="relative w-full">
-                        <div className="flex items-start gap-6 mx-auto mb-10 max-w-[635px]">
-                            <h1 className="fade-in-later opacity-0 text-4xl md:text-[60px] leading-none font-anton overflow-hidden">
-                                <span className="inline-block">
-                                    {project.title}
-                                </span>
+                <div className="grid md:grid-cols-[2fr,1fr] gap-12 lg:gap-20 mb-24" id="info">
+                    <div className="order-2 md:order-1">
+                        <div className="fade-in-later opacity-0 space-y-6">
+                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-anton leading-tight">
+                                {project.title}
                             </h1>
-
-                            <div className="fade-in-later opacity-0 flex gap-2">
-                                {project.sourceCode && (
-                                    <a
-                                        href={project.sourceCode}
-                                        target="_blank"
-                                        rel="noreferrer noopener"
-                                        className="hover:text-primary"
-                                    >
-                                        <Github size={30} />
-                                    </a>
-                                )}
-                                {project.liveUrl && (
-                                    <a
-                                        href={project.liveUrl}
-                                        target="_blank"
-                                        rel="noreferrer noopener"
-                                        className="hover:text-primary"
-                                    >
-                                        <ExternalLink size={30} />
-                                    </a>
-                                )}
+                            
+                            <div className="text-lg prose-xl markdown-text text-muted-foreground">
+                                {parse(project.description)}
                             </div>
-                        </div>
 
-                        <div className="max-w-[635px] space-y-7 pb-20 mx-auto">
-                            <div className="fade-in-later">
-                                <p className="text-muted-foreground font-anton mb-3">
-                                    Year
-                                </p>
-
-                                <div className="text-lg">{project.year}</div>
-                            </div>
-                            <div className="fade-in-later">
-                                <p className="text-muted-foreground font-anton mb-3">
-                                    Tech & Technique
-                                </p>
-
-                                <div className="text-lg">
-                                    {project.techStack.join(', ')}
-                                </div>
-                            </div>
-                            <div className="fade-in-later">
-                                <p className="text-muted-foreground font-anton mb-3">
-                                    Description
-                                </p>
-
-                                <div className="text-lg prose-xl markdown-text">
-                                    {parse(project.description)}
-                                </div>
-                            </div>
                             {project.role && (
-                                <div className="fade-in-later">
-                                    <p className="text-muted-foreground font-anton mb-3">
-                                        My Role
-                                    </p>
-
-                                    <div className="text-lg">
+                                <div>
+                                    <h3 className="text-xl font-anton mb-3">My Role</h3>
+                                    <div className="text-lg text-muted-foreground">
                                         {parse(project.role)}
                                     </div>
                                 </div>
                             )}
                         </div>
+                    </div>
 
-                        <ArrowAnimation />
+                    <div className="order-1 md:order-2">
+                        <div className="sticky top-24 fade-in-later opacity-0">
+                            <div className="bg-background-light/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-background-light/50">
+                                <div className="p-6 space-y-8">
+                                    <div>
+                                        <h3 className="font-anton text-lg mb-4">Project Details</h3>
+                                        <div className="space-y-6">
+                                            <div className="flex items-center gap-3">
+                                                <div className="size-10 rounded-lg bg-background/50 flex items-center justify-center">
+                                                    <Calendar size={20} className="text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm text-muted-foreground">Year</p>
+                                                    <p className="font-medium">{project.year}</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <div className="size-10 rounded-lg bg-background/50 flex items-center justify-center">
+                                                        <Code2 size={20} className="text-primary" />
+                                                    </div>
+                                                    <p className="text-sm text-muted-foreground">Tech Stack</p>
+                                                </div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {project.techStack.map((tech) => (
+                                                        <span 
+                                                            key={tech} 
+                                                            className="px-3 py-1.5 bg-background/50 hover:bg-background rounded-lg text-sm transition-colors duration-300"
+                                                        >
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <h3 className="font-anton text-lg">Links</h3>
+                                        <div className="flex flex-col gap-3">
+                                            {project.liveUrl && (
+                                                <a
+                                                    href={project.liveUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer noopener"
+                                                    className="inline-flex items-center gap-3 px-4 py-3 bg-primary/10 hover:bg-primary/90 hover:text-primary-foreground text-primary rounded-xl transition-all duration-300 group"
+                                                >
+                                                    <div className="size-10 rounded-lg bg-primary/20 group-hover:bg-primary/30 flex items-center justify-center transition-colors duration-300">
+                                                        <Globe size={20} />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <p className="font-medium">Live Demo</p>
+                                                        <p className="text-sm text-muted-foreground group-hover:text-primary-foreground/80 transition-colors duration-300">View the live project</p>
+                                                    </div>
+                                                </a>
+                                            )}
+                                            {project.sourceCode && (
+                                                <a
+                                                    href={project.sourceCode}
+                                                    target="_blank"
+                                                    rel="noreferrer noopener"
+                                                    className="inline-flex items-center gap-3 px-4 py-3 bg-background/50 hover:bg-background rounded-xl transition-all duration-300 group"
+                                                >
+                                                    <div className="size-10 rounded-lg bg-background flex items-center justify-center">
+                                                        <Github size={20} className="group-hover:text-primary transition-colors duration-300" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <p className="font-medium">Source Code</p>
+                                                        <p className="text-sm text-muted-foreground">View on GitHub</p>
+                                                    </div>
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div
-                    className="fade-in-later relative flex flex-col gap-2 max-w-[800px] mx-auto"
-                    id="images"
-                >
+                <div className="space-y-8 fade-in-later opacity-0" id="images">
                     {project.images.map((image) => (
                         <div
                             key={image}
-                            className="group relative w-full aspect-[750/400] bg-background-light"
-                            style={{
-                                backgroundImage: `url(${image})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 50%',
-                                backgroundRepeat: 'no-repeat',
-                            }}
+                            className="group relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-background-light hover:shadow-xl transition-all duration-300"
                         >
-                            <a
-                                href={image}
-                                target="_blank"
-                                className="absolute top-4 right-4 bg-background/70 text-foreground size-12 inline-flex justify-center items-center transition-all opacity-0 hover:bg-primary hover:text-primary-foreground group-hover:opacity-100"
-                            >
-                                <ExternalLink />
-                            </a>
+                            <div className="w-full h-full overflow-hidden">
+                                <Image 
+                                    src={image}
+                                    alt={`${project.title} project screenshot`}
+                                    fill
+                                    className="object-cover animate-none group-hover:animate-slowScroll"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 800px"
+                                    priority={true}
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                                    {project.liveUrl && (
+                                        <a
+                                            href={project.liveUrl}
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                            className="flex items-center gap-2 px-4 py-2 bg-primary/90 hover:bg-primary text-primary-foreground rounded-lg transition-all duration-300"
+                                            title="Visit Live Site"
+                                        >
+                                            <Globe size={20} />
+                                            <span>Visit Site</span>
+                                        </a>
+                                    )}
+                                    <a
+                                        href={image}
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                        className="flex items-center gap-2 px-4 py-2 bg-background/90 hover:bg-background text-foreground rounded-lg transition-all duration-300"
+                                        title="View Full Image"
+                                    >
+                                        <ExternalLink size={20} />
+                                        <span>Full Image</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

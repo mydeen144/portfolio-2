@@ -10,6 +10,12 @@ export default {
     ],
     theme: {
         extend: {
+            keyframes: {
+                slowScroll: {
+                    '0%': { objectPosition: 'center 0%' },
+                    '100%': { objectPosition: 'center 100%' }
+                },
+            },
             colors: {
                 background: {
                     DEFAULT: 'hsl(var(--background))',
@@ -63,6 +69,9 @@ export default {
             fontFamily: {
                 anton: ['var(--font-anton)'],
                 'roboto-flex': ['var(--font-roboto-flex)'],
+            },
+            animation: {
+                slowScroll: 'slowScroll 15s ease-in-out alternate infinite',
             },
             padding: {
                 section: '250px',
