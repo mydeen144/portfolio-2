@@ -49,17 +49,24 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://mydeen-pitchai.vercel.app'),
     openGraph: {
         title: 'Mydeen Pitchai | Full Stack Developer',
-        description: 'Experienced Full Stack Developer with 5+ years specializing in PHP, Laravel, WordPress, and modern front-end technologies.',
+        description: 'Explore Mydeen Pitchai\'s portfolio - Laravel, PHP, WordPress projects and more.',
         url: 'https://mydeen-pitchai.vercel.app',
         siteName: 'Mydeen Pitchai Portfolio',
         locale: 'en_US',
         type: 'website',
+        images: [{
+            url: 'https://mydeen-pitchai.vercel.app/images/mydeen-social-card.png',
+            width: 1200,
+            height: 630,
+            alt: 'Mydeen Pitchai Portfolio Preview'
+        }],
     },
     twitter: {
         card: 'summary_large_image',
         title: 'Mydeen Pitchai | Full Stack Developer',
-        description: 'Experienced Full Stack Developer with 5+ years specializing in PHP, Laravel, WordPress, and modern front-end technologies.',
+        description: 'Explore Mydeen Pitchai\'s portfolio - Laravel, PHP, WordPress projects and more.',
         creator: '@mydeenpitchai',
+        images: ['https://mydeen-pitchai.vercel.app/images/mydeen-social-card.png'],
     },
     robots: {
         index: true,
