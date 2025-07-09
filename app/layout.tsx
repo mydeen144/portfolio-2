@@ -48,8 +48,8 @@ export const metadata: Metadata = {
     },
     metadataBase: new URL('https://mydeen-pitchai.vercel.app'),
     openGraph: {
-        title: 'Mydeen Pitchai | Full Stack Developer',
-        description: 'Explore Mydeen Pitchai\'s portfolio - Laravel, PHP, WordPress projects and more.',
+        title: 'Mydeen Pitchai | Full-Stack Web Developer',
+        description: 'Experienced Full‑Stack Developer (PHP, Laravel, Tailwind, Alpine.js). Check out my portfolio.',
         url: 'https://mydeen-pitchai.vercel.app',
         siteName: 'Mydeen Pitchai Portfolio',
         locale: 'en_US',
@@ -58,13 +58,13 @@ export const metadata: Metadata = {
             url: 'https://mydeen-pitchai.vercel.app/images/mydeen-social-card.png',
             width: 1200,
             height: 630,
-            alt: 'Mydeen Pitchai Portfolio Preview'
+            alt: 'Mydeen Pitchai - Full-Stack Developer Portfolio'
         }],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Mydeen Pitchai | Full Stack Developer',
-        description: 'Explore Mydeen Pitchai\'s portfolio - Laravel, PHP, WordPress projects and more.',
+        title: 'Mydeen Pitchai | Full-Stack Web Developer',
+        description: 'Experienced Full‑Stack Developer – PHP, Laravel, front‑end. View my work!',
         creator: '@mydeenpitchai',
         images: ['https://mydeen-pitchai.vercel.app/images/mydeen-social-card.png'],
     },
@@ -102,6 +102,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
+                <meta property="og:logo" content="https://mydeen-pitchai.vercel.app/images/mp-logo.jpeg" />
                 {/* Google Tag Manager - Deferred loading */}
                 <Script id="gtm-script" strategy="lazyOnload">
                     {`
