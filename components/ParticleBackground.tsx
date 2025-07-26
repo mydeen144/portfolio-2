@@ -76,7 +76,7 @@ const ParticleBackground = ({ mode = 'code-flow' }: ParticleBackgroundProps) => 
             setIsLowPerformanceMode(true);
         }
     }, []);
-
+    
     // Mouse interaction handlers
     const handleMouseMove = useCallback((e: MouseEvent) => {
         const rect = containerRef.current?.getBoundingClientRect();
@@ -426,7 +426,7 @@ const ParticleBackground = ({ mode = 'code-flow' }: ParticleBackgroundProps) => 
             dataFlowsRef.current.forEach(f => f.element.remove());
         };
     }, []);
-
+    
     return (
         <div 
             ref={containerRef} 
