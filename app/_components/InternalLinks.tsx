@@ -120,14 +120,14 @@ const InternalLinks = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link
-                                href="mailto:mydeenpitchai.dev@gmail.com"
+                                href="mailto:mydeen144@gmail.com"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-300"
                             >
                                 <span>📧</span>
                                 <span>Send Email</span>
                             </Link>
                             <Link
-                                href="https://www.upwork.com/freelancers/~011081f8ac162b3abb?mp_source=share"
+                                href="https://www.fiverr.com/amp_works/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
