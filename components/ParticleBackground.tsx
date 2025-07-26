@@ -1,443 +1,178 @@
 'use client';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useRef, useEffect, useState, useMemo, useLayoutEffect, useCallback } from 'react';
+import { useRef, useEffect, useState, useMemo, useLayoutEffect } from 'react';
 import { useTheme } from './ThemeProviderSimple';
 
 gsap.registerPlugin(useGSAP);
 
-interface CodeParticle {
-    element: HTMLDivElement;
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    type: 'function' | 'variable' | 'string' | 'number' | 'operator' | 'comment';
-    content: string;
-    size: number;
-    opacity: number;
-    life: number;
-    maxLife: number;
-    isActive: boolean;
-}
-
-interface DataFlow {
-    from: CodeParticle;
-    to: CodeParticle;
-    element: SVGPathElement;
-    strength: number;
-    type: 'function-call' | 'data-transfer' | 'dependency';
-}
-
-type DevMode = 'code-flow' | 'data-structures' | 'git-branches' | 'api-endpoints' | 'debug-console';
-
-interface ParticleBackgroundProps {
-    mode?: DevMode;
-}
-
-const ParticleBackground = ({ mode = 'code-flow' }: ParticleBackgroundProps) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const svgRef = useRef<SVGSVGElement>(null);
-    const { theme } = useTheme();
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isMouseDown, setIsMouseDown] = useState(false);
-    const [scrollY, setScrollY] = useState(0);
-    
-    // Developer particle system state
-    const particlesRef = useRef<CodeParticle[]>([]);
-    const dataFlowsRef = useRef<DataFlow[]>([]);
-    const animationFrameRef = useRef<number>();
-    const timeRef = useRef(0);
-    
-    // Developer constants
-    const PARTICLE_COUNT = 20; // Reduced count for lighter feel
-    const FLOW_DISTANCE = 100; // Shorter connections
-    const MAX_FLOWS = 6; // Fewer connections
-    
-    // Code syntax elements
-    const codeElements = {
-        function: ['useState', 'useEffect', 'map', 'filter', 'reduce', 'fetch', 'async', 'await'],
-        variable: ['data', 'result', 'config', 'options', 'params', 'response', 'error'],
-        string: ['"Hello"', '"API"', '"data"', '"config"', '"error"', '"success"'],
-        number: ['0', '1', '2', '3', '42', '100', '200', '404', '500'],
-        operator: ['=>', '=', '==', '===', '&&', '||', '?', ':', '...'],
-        comment: ['// TODO', '// FIXME', '// NOTE', '/* */', '// API', '// DB']
+// Throttle function to limit how often a function can be called
+const throttle = <T extends (..._args: any[]) => any>(func: T, limit: number): ((..._args: Parameters<T>) => void) => {
+    let inThrottle: boolean;
+    return function(this: any, ..._args: Parameters<T>) {
+        if (!inThrottle) {
+            func.apply(this, _args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
     };
+};
+
+const ParticleBackground = () => {
+    const particlesRef = useRef<HTMLDivElement[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const animationsRef = useRef<gsap.core.Tween[]>([]);
+    const { theme } = useTheme();
+    const [particleColor, setParticleColor] = useState('bg-primary/20');
+    const [particleCount, setParticleCount] = useState(50); // Increased count for better visual effect
+    const [isLowPerformanceMode, setIsLowPerformanceMode] = useState(false);
+    const [particlesReady, setParticlesReady] = useState(false);
+    const isVisible = true; // Always visible
     
     // Check for low performance devices
-    const [isLowPerformanceMode, setIsLowPerformanceMode] = useState(false);
-    
     useEffect(() => {
+        // Check if device is likely to be low-powered
         const isLowPower = window.navigator.userAgent.includes('Mobile') || 
                           window.navigator.userAgent.includes('Android');
+        
+        // Check if user prefers reduced motion
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
         if (isLowPower || prefersReducedMotion) {
             setIsLowPerformanceMode(true);
+            setParticleCount(25); // More particles even for low-power devices
         }
     }, []);
     
-    // Mouse interaction handlers
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (rect) {
-            setMousePos({ 
-                x: e.clientX - rect.left, 
-                y: e.clientY - rect.top
-            });
-        }
-    }, []);
-
-    const handleMouseDown = useCallback((e: MouseEvent) => {
-        setIsMouseDown(true);
-        createCodeExecution(e.clientX, e.clientY);
-    }, []);
-
-    const handleMouseUp = useCallback(() => {
-        setIsMouseDown(false);
-    }, []);
-
-    const handleScroll = useCallback(() => {
-        setScrollY(window.scrollY);
-    }, []);
-
-    // Add event listeners
+    // Update particle styling based on theme
     useEffect(() => {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
-        window.addEventListener('scroll', handleScroll);
+        if (theme === 'dark') {
+            setParticleColor('bg-primary/30');
+        } else {
+            setParticleColor('bg-secondary/30');
+        }
+        
+        // Adjust particle count based on screen size - throttled
+        const updateParticleCount = throttle(() => {
+            const width = window.innerWidth;
+            if (isLowPerformanceMode) return; // Don't change if in low performance mode
+            
+            if (width < 768) {
+                setParticleCount(35); // More particles for mobile
+            } else if (width < 1280) {
+                setParticleCount(70); // More particles for tablets
+            } else {
+                setParticleCount(100); // More particles for desktops
+            }
+        }, 250); // Throttle to once every 250ms
+        
+        updateParticleCount();
+        window.addEventListener('resize', updateParticleCount);
         
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', updateParticleCount);
         };
-    }, [handleMouseMove, handleMouseDown, handleMouseUp, handleScroll]);
+    }, [theme, isLowPerformanceMode]);
 
-    // Get particle styling based on type
-    const getParticleStyle = (type: CodeParticle['type']) => {
-        const baseClasses = 'absolute rounded-md font-mono text-xs font-medium';
-        
-        switch (type) {
-            case 'function':
-                return `${baseClasses} bg-blue-500/8 text-blue-400/60 border border-blue-500/15`;
-            case 'variable':
-                return `${baseClasses} bg-green-500/8 text-green-400/60 border border-green-500/15`;
-            case 'string':
-                return `${baseClasses} bg-yellow-500/8 text-yellow-400/60 border border-yellow-500/15`;
-            case 'number':
-                return `${baseClasses} bg-purple-500/8 text-purple-400/60 border border-purple-500/15`;
-            case 'operator':
-                return `${baseClasses} bg-red-500/8 text-red-400/60 border border-red-500/15`;
-            case 'comment':
-                return `${baseClasses} bg-gray-500/8 text-gray-400/60 border border-gray-500/15`;
-            default:
-                return `${baseClasses} bg-primary/8 text-primary/60 border border-primary/15`;
+    // Clean up animations when component unmounts
+    useEffect(() => {
+        return () => {
+            // Kill all animations to prevent memory leaks
+            animationsRef.current.forEach(animation => {
+                if (animation) animation.kill();
+            });
+        };
+    }, []);
+
+    // Memoize the particle array to prevent unnecessary re-renders
+    const particles = useMemo(() => {
+        return [...Array(particleCount)].map((_, i) => (
+            <div
+                key={i}
+                ref={(el) => {
+                    if (el) particlesRef.current[i] = el;
+                }}
+                className={`absolute rounded-full ${particleColor} will-change-transform`}
+                style={{ contain: 'layout paint size', willChange: 'transform' }}
+            />
+        ));
+    }, [particleCount, particleColor]);
+
+    // Mark particles as ready after they're rendered
+    useEffect(() => {
+        if (particlesRef.current.length === particleCount) {
+            setParticlesReady(true);
         }
-    };
+    }, [particleCount, particles]);
 
-    // Create code execution effect
-    const createCodeExecution = (x: number, y: number) => {
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (!rect) return;
+    // Use useLayoutEffect to ensure animations run after particles are rendered
+    useLayoutEffect(() => {
+        // Don't initialize if not visible or particles not ready
+        if (!isVisible || !particlesReady) return;
         
-        const centerX = x - rect.left;
-        const centerY = y - rect.top;
+        // Clear previous animations
+        animationsRef.current.forEach(animation => {
+            if (animation) animation.kill();
+        });
+        animationsRef.current = [];
         
-        // Create execution particles
-        const executionTypes: CodeParticle['type'][] = ['function', 'variable', 'operator'];
-        
-        for (let i = 0; i < 5; i++) {
-            const type = executionTypes[Math.floor(Math.random() * executionTypes.length)];
-            const content = codeElements[type][Math.floor(Math.random() * codeElements[type].length)];
+        // Initialize particles immediately
+        particlesRef.current.forEach((particle) => {
+            if (!particle) return;
             
-            const particle = document.createElement('div');
-            particle.className = getParticleStyle(type);
-            particle.textContent = content;
-            particle.style.pointerEvents = 'none';
-            containerRef.current?.appendChild(particle);
-            
-            const particleData: CodeParticle = {
-                element: particle,
-                x: centerX,
-                y: centerY,
-                vx: (Math.random() - 0.5) * 3,
-                vy: (Math.random() - 0.5) * 3,
-                type: type,
-                content: content,
-                size: content.length * 6 + 12,
-                opacity: 1,
-                life: 180,
-                maxLife: 180,
-                isActive: true
-            };
-            
-            particlesRef.current.push(particleData);
+            // Enhanced particle setup
+            const size = Math.random() * 4 + 3; // Larger particles for better visibility
             
             gsap.set(particle, {
-                width: particleData.size,
-                height: 24,
-                left: centerX,
-                top: centerY,
-                opacity: 1,
-                scale: 0,
+                width: size,
+                height: size,
+                opacity: Math.random() * 0.7 + 0.3, // Higher opacity for better visibility
+                left: Math.random() * window.innerWidth,
+                top: Math.random() * window.innerHeight,
+                force3D: true, // Force GPU acceleration
             });
-            
-            // Animate in
-            gsap.to(particle, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'back.out(1.7)',
-            });
-        }
-    };
 
-    // Initialize particle system
-    const initializeParticleSystem = useCallback(() => {
-        if (!containerRef.current || !svgRef.current) return;
-        
-        // Clear existing particles and flows
-        particlesRef.current.forEach(p => p.element.remove());
-        dataFlowsRef.current.forEach(f => f.element.remove());
-        particlesRef.current = [];
-        dataFlowsRef.current = [];
-        
-        const width = containerRef.current.offsetWidth;
-        const height = containerRef.current.offsetHeight;
-        
-        // Create code particles
-        const types: CodeParticle['type'][] = ['function', 'variable', 'string', 'number', 'operator', 'comment'];
-        
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            const type = types[Math.floor(Math.random() * types.length)];
-            const content = codeElements[type][Math.floor(Math.random() * codeElements[type].length)];
-            
-            const particle = document.createElement('div');
-            particle.className = getParticleStyle(type);
-            particle.textContent = content;
-            particle.style.pointerEvents = 'none';
-            containerRef.current.appendChild(particle);
-            
-            const particleData: CodeParticle = {
-                element: particle,
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.05, // Very slow initial velocity
-                vy: (Math.random() - 0.5) * 0.05, // Very slow initial velocity
-                type: type,
-                content: content,
-                size: content.length * 6 + 12,
-                opacity: Math.random() * 0.3 + 0.1,
-                life: Infinity,
-                maxLife: Infinity,
-                isActive: true
-            };
-            
-            particlesRef.current.push(particleData);
-            
-            gsap.set(particle, {
-                width: particleData.size,
-                height: 24,
-                left: particleData.x,
-                top: particleData.y,
-                opacity: particleData.opacity,
-            });
-        }
-        
-        // Create initial data flows
-        createDataFlows();
-    }, []);
-
-    // Create data flows between particles
-    const createDataFlows = useCallback(() => {
-        if (!svgRef.current) return;
-        
-        // Clear existing flows
-        dataFlowsRef.current.forEach(f => f.element.remove());
-        dataFlowsRef.current = [];
-        
-        // Create new flows
-        for (let i = 0; i < particlesRef.current.length; i++) {
-            const from = particlesRef.current[i];
-            
-            for (let j = i + 1; j < particlesRef.current.length; j++) {
-                const to = particlesRef.current[j];
-                
-                const dx = to.x - from.x;
-                const dy = to.y - from.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                // Create flows based on particle types
-                if (distance < FLOW_DISTANCE && dataFlowsRef.current.length < MAX_FLOWS) {
-                    let flowType: DataFlow['type'] = 'data-transfer';
-                    
-                    // Determine flow type based on particle types
-                    if (from.type === 'function' && to.type === 'variable') {
-                        flowType = 'function-call';
-                    } else if (from.type === 'variable' && to.type === 'string') {
-                        flowType = 'data-transfer';
-                    } else if (from.type === 'function' && to.type === 'function') {
-                        flowType = 'dependency';
-                    }
-                    
-                    // Create SVG path
-                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                    const strokeColor = theme === 'dark' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(147, 51, 234, 0.15)';
-                    path.setAttribute('stroke', strokeColor);
-                    path.setAttribute('stroke-width', '1');
-                    path.setAttribute('fill', 'none');
-                    path.setAttribute('opacity', '0.3');
-                    svgRef.current.appendChild(path);
-                    
-                    const flow: DataFlow = {
-                        from: from,
-                        to: to,
-                        element: path,
-                        strength: 1 - (distance / FLOW_DISTANCE),
-                        type: flowType
-                    };
-                    
-                    dataFlowsRef.current.push(flow);
-                }
-            }
-        }
-    }, [theme]);
-
-    // Update particle physics and flows
-    const updatePhysics = useCallback(() => {
-        const width = containerRef.current?.offsetWidth || 800;
-        const height = containerRef.current?.offsetHeight || 600;
-        
-        // Update particle physics
-        particlesRef.current.forEach((particle, i) => {
-            // Mouse interaction
-            const dx = mousePos.x - particle.x;
-            const dy = mousePos.y - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 100) { // Reduced interaction distance
-                const force = isMouseDown ? -0.0002 : 0.00008; // Very gentle forces
-                const strength = (100 - distance) / 100;
-                particle.vx += (dx / distance) * force * strength;
-                particle.vy += (dy / distance) * force * strength;
-            }
-            
-            // Particle interactions
-            particlesRef.current.forEach((other, j) => {
-                if (i === j) return;
-                
-                const dx = other.x - particle.x;
-                const dy = other.y - particle.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance > 0 && distance < 60) { // Reduced particle interaction distance
-                    const force = -0.0001; // Very gentle particle repulsion
-                    const strength = (60 - distance) / 60;
-                    particle.vx -= (dx / distance) * force * strength;
-                    particle.vy -= (dy / distance) * force * strength;
-                }
+            // Improved animation - vertical movement
+            const anim1 = gsap.to(particle, {
+                y: '-=' + (window.innerHeight / 2),
+                duration: Math.random() * 15 + 10, // Faster for better visibility
+                delay: Math.random() * 2,
+                repeat: -1,
+                repeatRefresh: true,
+                ease: 'none',
             });
             
-            // Apply damping
-            particle.vx *= 0.92; // Even stronger damping for very smooth movement
-            particle.vy *= 0.92; // Even stronger damping for very smooth movement
+            animationsRef.current.push(anim1);
             
-            // Update position
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            
-            // Boundary constraints
-            if (particle.x < 0) { particle.x = 0; particle.vx *= -0.5; }
-            if (particle.x > width) { particle.x = width; particle.vx *= -0.5; }
-            if (particle.y < 0) { particle.y = 0; particle.vy *= -0.5; }
-            if (particle.y > height) { particle.y = height; particle.vy *= -0.5; }
-            
-            // Update life for temporary particles
-            if (particle.life < Infinity) {
-                particle.life--;
-                particle.opacity = particle.life / particle.maxLife;
-                
-                if (particle.life <= 0) {
-                    particle.element.remove();
-                    particlesRef.current.splice(i, 1);
-                    return;
-                }
-            }
-            
-            // Update visual representation
-            gsap.set(particle.element, {
-                left: particle.x,
-                top: particle.y,
-                opacity: particle.opacity,
+            // Add horizontal movement for all particles
+            const anim2 = gsap.to(particle, {
+                x: (Math.random() - 0.5) * 50, // More movement
+                duration: Math.random() * 10 + 5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
             });
+            animationsRef.current.push(anim2);
         });
         
-        // Update data flows
-        dataFlowsRef.current.forEach(flow => {
-            const dx = flow.to.x - flow.from.x;
-            const dy = flow.to.y - flow.from.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // Create curved path
-            const midX = (flow.from.x + flow.to.x) / 2;
-            const midY = (flow.from.y + flow.to.y) / 2 + Math.sin(timeRef.current * 0.02) * 20;
-            
-            const pathData = `M ${flow.from.x} ${flow.from.y} Q ${midX} ${midY} ${flow.to.x} ${flow.to.y}`;
-            flow.element.setAttribute('d', pathData);
-            
-            const opacity = Math.max(0, 0.3 * (1 - distance / FLOW_DISTANCE));
-            flow.element.setAttribute('opacity', opacity.toString());
-        });
-        
-        // Recreate flows periodically
-        if (timeRef.current % 400 === 0) {
-            createDataFlows();
-        }
-    }, [mousePos, isMouseDown, createDataFlows]);
-
-    // Animation loop
-    const animate = useCallback(() => {
-        timeRef.current++;
-        updatePhysics();
-        animationFrameRef.current = requestAnimationFrame(animate);
-    }, [updatePhysics]);
-
-    // Initialize and start animation
-    useEffect(() => {
-        initializeParticleSystem();
-        animate();
-        
         return () => {
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
+            // Clean up animations on unmount
+            animationsRef.current.forEach(animation => {
+                if (animation) animation.kill();
+            });
         };
-    }, [initializeParticleSystem, animate]);
+    }, [particleColor, particleCount, isLowPerformanceMode, isVisible, particlesReady]);
 
-    // Clean up on unmount
-    useEffect(() => {
-        return () => {
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
-            particlesRef.current.forEach(p => p.element.remove());
-            dataFlowsRef.current.forEach(f => f.element.remove());
-        };
-    }, []);
+    // Don't render anything until visible
+    if (!isVisible) return null;
     
     return (
         <div 
             ref={containerRef} 
-            className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+            className="fixed inset-0 z-0 pointer-events-none overflow-hidden opacity-100" // Full opacity for better visibility
             style={{ contain: 'strict' }}
         >
-            <svg
-                ref={svgRef}
-                className="absolute inset-0 w-full h-full"
-                style={{ pointerEvents: 'none' }}
-            />
+            {particles}
         </div>
     );
 };

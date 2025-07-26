@@ -59,7 +59,7 @@ export default function ClientComponents() {
             {shouldLoadNonCritical && (
                 <>
                     <ScrollProgressIndicator />
-                    <ParticleBackground mode="code-flow" />
+                    <ParticleBackground />
                     <StickyEmail />
                 </>
             )}
