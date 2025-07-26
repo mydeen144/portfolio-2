@@ -109,7 +109,7 @@ const Experiences = () => {
                                         {item.title}
                                     </p>
                                     <p className="text-muted-foreground">
-                                        Led development of responsive web applications using modern JavaScript frameworks and best practices.
+                                        {item.description}
                                     </p>
                                     
                                     {/* Skills tags */}

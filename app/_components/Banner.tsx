@@ -4,7 +4,7 @@ import Button from '@/components/Button';
 import { GENERAL_INFO } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React from 'react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -114,7 +114,7 @@ const Banner = () => {
             loadTl.fromTo('.title-word:not(.lcp-element)', 
                 { y: 80, opacity: 0 },
                 { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'back.out(1.7)' },
-                0.3
+                0.1 // Reduced delay for faster animation start
             );
             
             loadTl.fromTo('.badge', 
@@ -232,9 +232,22 @@ const Banner = () => {
                             </div>
                             
                             {/* Main heading with prioritized LCP element - Improved for SEO */}
-                            <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide">
+                            <h1 className="text-3xl sm:text-5xl font-anton leading-tight tracking-wide" id="main-heading">
                                 <div className="overflow-hidden">
-                                    <span className="title-word lcp-element inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Mydeen Pitchai</span>
+                                    <span 
+                                        className="title-word lcp-element inline-block text-foreground relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-foreground/20 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100"
+                                        style={{ 
+                                            willChange: 'auto',
+                                            contentVisibility: 'auto',
+                                            contain: 'paint layout',
+                                            textRendering: 'optimizeSpeed',
+                                            fontDisplay: 'swap',
+                                            transform: 'translateZ(0)' // Force hardware acceleration
+                                        } as React.CSSProperties}
+                                        suppressHydrationWarning
+                                    >
+                                        Mydeen Pitchai
+                                    </span>
                                 </div>{' '}
                                 <div className="overflow-hidden">
                                     <span className="title-word inline-block text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.4)] relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/30 after:scale-x-0 after:origin-left after:transition-transform after:duration-500 group-hover:after:scale-x-100">Full Stack</span>
@@ -246,8 +259,17 @@ const Banner = () => {
                                 </div>
                             </h1>
                             
-                            {/* Description with premium styling */}
-                            <p className="banner-description text-lg text-muted-foreground/90 leading-relaxed backdrop-blur-sm py-2 px-1 rounded-md border-l-2 border-primary/30 pl-4">
+                            {/* Description with premium styling - Optimized for LCP */}
+                            <p 
+                                className="banner-description text-lg text-muted-foreground/90 leading-relaxed py-2 px-1 rounded-md border-l-2 border-primary/30 pl-4"
+                                style={{ 
+                                    willChange: 'auto',
+                                    contentVisibility: 'auto',
+                                    contain: 'paint layout',
+                                    textRendering: 'optimizeSpeed'
+                                } as React.CSSProperties}
+                                suppressHydrationWarning
+                            >
                                 Hi! I&apos;m{' '}
                                 <span className="font-medium text-foreground font-anton relative inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/40 group-hover:text-primary transition-colors duration-300">
                                     MYDEEN

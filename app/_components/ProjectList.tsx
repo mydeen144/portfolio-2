@@ -4,8 +4,9 @@ import { PROJECTS } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useRef, useState, MouseEvent } from 'react';
 import Project from './Project';
 
@@ -161,7 +162,10 @@ const ProjectList = () => {
                     <h2 className="text-4xl md:text-6xl font-anton mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
                         Selected <span className="text-primary">Masterpieces</span>
                     </h2>
-                    <p className="text-muted-foreground max-w-2xl mb-6">Explore my portfolio of premium projects showcasing innovative solutions and cutting-edge technologies.</p>
+                    <p className="text-muted-foreground max-w-2xl mb-6">
+                        Explore my portfolio of premium projects showcasing innovative solutions and cutting-edge technologies. 
+                        View my <Link href="/#my-stack" className="text-primary hover:underline">technical skills</Link> and <Link href="/#my-experience" className="text-primary hover:underline">professional experience</Link>.
+                    </p>
                     <div className="h-1 w-32 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
                 </div>
 

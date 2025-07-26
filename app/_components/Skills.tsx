@@ -3,7 +3,7 @@ import SectionTitle from '@/components/SectionTitle';
 import { MY_STACK } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 
@@ -128,9 +128,7 @@ const Skills = () => {
             <div className="container relative z-10">
                 <div className="stack-title mb-8">
                     <SectionTitle title="My Stack" />
-                    {/* <p className="text-muted-foreground max-w-2xl mt-4 text-center mx-auto">
-                        Proficient in a wide range of modern technologies for building premium digital experiences
-                    </p> */}
+                    <h2 className="sr-only">Technical Skills and Technologies</h2>
                 </div>
 
                 <div className="space-y-10">

@@ -9,20 +9,21 @@ import Footer from '@/components/Footer';
 import Script from 'next/script';
 import { ThemeProvider } from '@/components/ThemeProviderSimple';
 import ClientComponentsWrapper from './_components/ClientComponentsWrapper';
+import PerformanceMonitor from '@/components/PerformanceMonitor';
 
-// Optimize font loading with block period to reduce CLS
+// Optimize font loading for better LCP
 const antonFont = Anton({
     weight: '400',
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-anton',
-    display: 'optional', // Better for LCP text elements
+    display: 'swap', // Changed from 'optional' to 'swap' for better LCP
     preload: true,
     fallback: ['Arial', 'sans-serif'],
 });
 
 const robotoFlex = Roboto_Flex({
-    weight: ['400', '500', '700'], // Reduced font weights
+    weight: ['400', '500', '700'],
     style: 'normal',
     subsets: ['latin'],
     variable: '--font-roboto-flex',
@@ -32,7 +33,7 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-    title: 'Mydeen Pitchai | Full Stack Developer | PHP, Laravel & WordPress Expert',
+    title: 'Mydeen Pitchai - Full Stack Developer | PHP, Laravel, WordPress Expert | Portfolio',
     description: 'Experienced Full Stack Developer with 5+ years specializing in PHP, Laravel, WordPress, and modern front-end technologies like Tailwind CSS & Alpine.js',
     keywords: 'Full Stack Developer, PHP Developer, Laravel Expert, WordPress Developer, Web Development, Tailwind CSS, Alpine.js',
     alternates: {
@@ -130,6 +131,8 @@ export default function RootLayout({
                 {/* Preload critical assets */}
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                <link rel="preload" href="https://fonts.googleapis.com/css2?family=Anton&display=swap" as="style" />
+                <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;700&display=swap" as="style" />
                 
                 {/* Next.js handles font optimization automatically */}
                 
@@ -137,12 +140,27 @@ export default function RootLayout({
                 <style dangerouslySetInnerHTML={{ __html: `
                     .lcp-element {
                         font-family: var(--font-anton), Arial, sans-serif;
-                        font-display: optional;
+                        font-display: swap;
+                        contain: paint layout;
+                        content-visibility: auto;
+                        text-rendering: optimizeSpeed;
+                        will-change: auto;
+                    }
+                    .banner-description {
+                        font-family: var(--font-roboto-flex), Arial, sans-serif;
+                        font-display: swap;
+                        contain: paint layout;
+                        content-visibility: auto;
+                    }
+                    .title-word.lcp-element {
+                        font-display: swap !important;
+                        text-rendering: optimizeSpeed !important;
+                        contain: paint layout !important;
+                        content-visibility: auto !important;
                     }
                 `}} />
 
-                {/* Manual canonical link for additional SEO benefit */}
-                <link rel="canonical" href="https://mydeen-pitchai.vercel.app" />
+
 
                 {/* Schema.org structured data */}
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
@@ -338,6 +356,7 @@ export default function RootLayout({
 
                         {/* Load non-critical UI elements via client component */}
                         <ClientComponentsWrapper />
+                        <PerformanceMonitor />
                     </ReactLenis>
                 </ThemeProvider>
             </body>

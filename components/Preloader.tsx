@@ -9,116 +9,109 @@ const Preloader = () => {
     const timelineRef = useRef<gsap.core.Timeline | null>(null);
     const [isVisible, setIsVisible] = useState(true);
 
-    // Extremely accelerated loading progress to minimize LCP impact
+    // Simplified loading logic with better performance
     useEffect(() => {
-        // Start with much higher initial value to reduce perceived loading time
-        setLoadingProgress(60);
+        // Start with higher initial value for faster perceived loading
+        setLoadingProgress(70);
         
         const interval = setInterval(() => {
             setLoadingProgress(prev => {
-                const newValue = prev + Math.floor(Math.random() * 30) + 20; // Ultra-fast progress
+                const newValue = prev + Math.floor(Math.random() * 25) + 15;
                 if (newValue >= 100) {
                     clearInterval(interval);
                     setLoadingText('WELCOME');
                     return 100;
                 }
-                
-                // Minimal text updates
                 setLoadingText('LOADING');
-                
                 return newValue;
             });
-        }, 20); // Even faster interval for quicker completion
+        }, 25);
 
-        return () => clearInterval(interval);
-    }, []);
-    
-    // Extremely reduced loading time to avoid blocking LCP
-    useEffect(() => {
-        // Force completion after a very short maximum time to prevent blocking LCP
+        // Force completion after 500ms maximum to prevent blocking LCP
         const maxLoadingTime = setTimeout(() => {
             setLoadingProgress(100);
             setLoadingText('WELCOME');
             if (timelineRef.current) {
-                timelineRef.current?.play();
+                timelineRef.current.play();
             }
-        }, 300); // Reduced to 300ms maximum loading time to minimize LCP impact
-        
-        // Normal completion
-        if (loadingProgress >= 100 && timelineRef.current) {
-            clearTimeout(maxLoadingTime);
-            timelineRef.current?.play(); // Immediate play without delay
-        }
-        
-        return () => clearTimeout(maxLoadingTime);
-    }, [loadingProgress]);
-    
-    // Keep preloader visible for a reasonable time
-    useEffect(() => {
-        const hideTimer = setTimeout(() => {
-            setIsVisible(false);
-        }, 3000); // Show for 3 seconds to ensure animations are visible
-        
-        return () => clearTimeout(hideTimer);
-    }, []);
+        }, 500);
 
-    // Use useLayoutEffect instead of useGSAP for critical animations
-    // This runs synchronously before browser paint
+        return () => {
+            clearInterval(interval);
+            clearTimeout(maxLoadingTime);
+        };
+    }, []);
+    
+    // Simplified visibility management
+    useEffect(() => {
+        if (loadingProgress >= 100) {
+            // Hide preloader after animation completes (reduced from 3s to 1.5s)
+            const hideTimer = setTimeout(() => {
+                setIsVisible(false);
+            }, 1500);
+            
+            return () => clearTimeout(hideTimer);
+        }
+    }, [loadingProgress]);
+
+    // Optimized animation setup
     useLayoutEffect(() => {
         if (!isVisible) return;
         
-        // Create ultra-optimized timeline
         const tl = gsap.timeline({
             defaults: {
                 ease: 'power2.out',
-                duration: 0.2, // Ultra-fast animations
+                duration: 0.2,
             },
             paused: true,
         });
         
         timelineRef.current = tl;
 
-        // Minimal animation sequence with reduced complexity
+        // Simplified animation sequence
         tl.to('.name-text span', {
             y: 0,
-            stagger: 0.01, // Minimal stagger
-            duration: 0.3,
-            ease: 'power1.out' // Simpler easing
+            stagger: 0.02,
+            duration: 0.4,
+            ease: 'power1.out'
         });
         
-        // Immediate fade out
         tl.to(
             preloaderRef.current,
             {
                 opacity: 0,
                 pointerEvents: 'none',
-                duration: 0.2,
+                duration: 0.3,
                 onComplete: () => {
-                    // Clean up animations when preloader is hidden
                     if (preloaderRef.current) {
                         preloaderRef.current.style.display = 'none';
                     }
                 }
             },
-            '+=0.05', // Minimal delay
+            '+=0.1'
         );
         
-        // Return cleanup function
         return () => {
             if (tl) tl.kill();
         };
     }, [isVisible]);
     
-    // Animations start immediately
+    // Start animations when loading completes
+    useEffect(() => {
+        if (loadingProgress >= 100 && timelineRef.current) {
+            timelineRef.current.play();
+        }
+    }, [loadingProgress]);
+    
+    // Optimized background animations
     useEffect(() => {
         if (!isVisible) return;
         
-        // Start animations immediately
-        // Hexagon animation
+        // Hexagon animation with better performance
         const hexagonAnim = gsap.to('.hexagon', {
             rotation: 360,
             repeat: -1,
-            duration: 20, // Faster rotation for better visibility
+            duration: 25,
             ease: 'none',
             force3D: true,
             overwrite: true
@@ -127,12 +120,11 @@ const Preloader = () => {
         // Code line animation
         const lineAnim = gsap.to('.code-line', {
             width: '100%',
-            duration: 1,
-            stagger: 0.05,
+            duration: 1.2,
+            stagger: 0.1,
             ease: 'power1.inOut',
         });
         
-        // Store animations for cleanup
         return () => {
             hexagonAnim.kill();
             lineAnim.kill();
@@ -148,9 +140,7 @@ const Preloader = () => {
             className="fixed inset-0 z-50 flex items-center justify-center bg-background contain-layout"
             style={{ contain: 'strict', willChange: 'opacity' }}
         >
-            {/* Removed 3D Layered Background for better performance */}
-            
-            {/* Multiple decorative hexagons for better visual effect */}
+            {/* Optimized decorative elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <div 
                     className="hexagon absolute w-[80px] h-[80px] bg-transparent"
@@ -189,7 +179,7 @@ const Preloader = () => {
                 ></div>
             </div>
             
-            {/* Extremely simplified Code Lines - only show 1 on each side */}
+            {/* Simplified code lines */}
             <div className="absolute left-[10%] top-[30%] flex flex-col gap-2 w-[200px]">
                 <div key="code-left-1" className="code-line h-[1px] w-0 bg-gradient-to-r from-primary/80 to-transparent" style={{willChange: 'width'}}></div>
             </div>
@@ -198,9 +188,9 @@ const Preloader = () => {
                 <div key="code-right-1" className="code-line h-[1px] w-0 bg-gradient-to-l from-secondary/80 to-transparent" style={{willChange: 'width'}}></div>
             </div>
 
-            {/* Further optimized Central Content */}
+            {/* Central content */}
             <div className="relative z-10 flex flex-col items-center justify-center gap-4">
-                {/* Name with simplified styling - removed backdrop-blur for better performance */}
+                {/* Name with optimized styling */}
                 <div className="relative bg-background px-8 py-5 rounded-xl border border-primary/20 overflow-hidden">
                     <div className="relative z-10">
                         <p className="name-text flex text-[12vw] lg:text-[100px] font-anton text-center leading-none overflow-hidden">
@@ -215,7 +205,7 @@ const Preloader = () => {
                     </div>
                 </div>
                 
-                {/* Loading Progress - Further optimized */}
+                {/* Progress bar */}
                 <div className="progress-container w-[250px] flex flex-col items-center gap-2">
                     <div className="w-full h-[2px] bg-muted overflow-hidden rounded-full">
                         <div 
