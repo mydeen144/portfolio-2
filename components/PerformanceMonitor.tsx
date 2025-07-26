@@ -33,7 +33,7 @@ const PerformanceMonitor = () => {
                 if (entries.length > 0) {
                     const fcp = entries[0] as PerformanceEntry;
                     metrics.fcp = fcp.startTime;
-                    console.log('FCP:', metrics.fcp.toFixed(2), 'ms');
+                    // console.log('FCP:', metrics.fcp.toFixed(2), 'ms');
                 }
             });
             fcpObserver.observe({ type: 'paint', buffered: true });
@@ -47,7 +47,7 @@ const PerformanceMonitor = () => {
                 if (entries.length > 0) {
                     const lcp = entries[entries.length - 1] as PerformanceEntry;
                     metrics.lcp = lcp.startTime;
-                    console.log('LCP:', metrics.lcp.toFixed(2), 'ms');
+                    // console.log('LCP:', metrics.lcp.toFixed(2), 'ms');
                 }
             });
             lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
@@ -61,7 +61,7 @@ const PerformanceMonitor = () => {
                 entries.forEach((entry) => {
                     const fid = entry as any;
                     metrics.fid = fid.processingStart - fid.startTime;
-                    console.log('FID:', metrics.fid.toFixed(2), 'ms');
+                    // console.log('FID:', metrics.fid.toFixed(2), 'ms');
                 });
             });
             fidObserver.observe({ type: 'first-input', buffered: true });
@@ -78,7 +78,7 @@ const PerformanceMonitor = () => {
                     if (!clsEntry.hadRecentInput) {
                         clsValue += clsEntry.value;
                         metrics.cls = clsValue;
-                        console.log('CLS:', metrics.cls.toFixed(4));
+                        // console.log('CLS:', metrics.cls.toFixed(4));
                     }
                 });
             });
@@ -93,7 +93,7 @@ const PerformanceMonitor = () => {
                 entries.forEach((entry) => {
                     const navigationEntry = entry as PerformanceNavigationTiming;
                     metrics.ttfb = navigationEntry.responseStart - navigationEntry.requestStart;
-                    console.log('TTFB:', metrics.ttfb.toFixed(2), 'ms');
+                    // console.log('TTFB:', metrics.ttfb.toFixed(2), 'ms');
                 });
             });
             navigationObserver.observe({ type: 'navigation', buffered: true });

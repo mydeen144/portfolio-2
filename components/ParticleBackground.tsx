@@ -135,7 +135,7 @@ const ParticleBackground = () => {
         });
         
         return () => {};
-    }, [particleColor, particleCount, isLowPerformanceMode]);
+    }, [particleColor, particleCount, isLowPerformanceMode, isVisible]);
 
     // Memoize the particle array to prevent unnecessary re-renders
     const particles = useMemo(() => {

@@ -1,5 +1,6 @@
 import { GENERAL_INFO } from '@/lib/data';
 import { ArrowUpRight, Github, GitFork, Linkedin, Mail, Phone, Star } from 'lucide-react';
+import Link from 'next/link';
 
 interface RepoStats {
     stargazers_count: number;
@@ -107,16 +108,16 @@ const Footer = async () => {
                         <h3 className="text-xl font-bold mb-4">About</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="/#about-me" className="text-muted-foreground hover:text-primary transition-colors duration-300">About Me</a>
+                                <Link href="/#about-me" className="text-muted-foreground hover:text-primary transition-colors duration-300">About Me</Link>
                             </li>
                             <li>
-                                <a href="/#my-experience" className="text-muted-foreground hover:text-primary transition-colors duration-300">Experience</a>
+                                <Link href="/#my-experience" className="text-muted-foreground hover:text-primary transition-colors duration-300">Experience</Link>
                             </li>
                             <li>
-                                <a href="/#my-stack" className="text-muted-foreground hover:text-primary transition-colors duration-300">Skills</a>
+                                <Link href="/#my-stack" className="text-muted-foreground hover:text-primary transition-colors duration-300">Skills</Link>
                             </li>
                             <li>
-                                <a href="/#selected-projects" className="text-muted-foreground hover:text-primary transition-colors duration-300">Projects</a>
+                                <Link href="/#selected-projects" className="text-muted-foreground hover:text-primary transition-colors duration-300">Projects</Link>
                             </li>
                         </ul>
                     </div>
@@ -126,16 +127,16 @@ const Footer = async () => {
                         <h3 className="text-xl font-bold mb-4">Projects</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="/projects/proudify" className="text-muted-foreground hover:text-primary transition-colors duration-300">Proudify</a>
+                                <Link href="/projects/proudify" className="text-muted-foreground hover:text-primary transition-colors duration-300">Proudify</Link>
                             </li>
                             <li>
-                                <a href="/projects/digital-dopamine" className="text-muted-foreground hover:text-primary transition-colors duration-300">Digital Dopamine</a>
+                                <Link href="/projects/digital-dopamine" className="text-muted-foreground hover:text-primary transition-colors duration-300">Digital Dopamine</Link>
                             </li>
                             <li>
-                                <a href="/projects/students-xerox" className="text-muted-foreground hover:text-primary transition-colors duration-300">Students Xerox</a>
+                                <Link href="/projects/students-xerox" className="text-muted-foreground hover:text-primary transition-colors duration-300">Students Xerox</Link>
                             </li>
                             <li>
-                                <a href="/projects/wpblazer" className="text-muted-foreground hover:text-primary transition-colors duration-300">WPBlazer</a>
+                                <Link href="/projects/wpblazer" className="text-muted-foreground hover:text-primary transition-colors duration-300">WPBlazer</Link>
                             </li>
                         </ul>
                     </div>
@@ -145,16 +146,16 @@ const Footer = async () => {
                         <h3 className="text-xl font-bold mb-4">Blog</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="/blog/laravel-best-practices" className="text-muted-foreground hover:text-primary transition-colors duration-300">Laravel Best Practices</a>
+                                <Link href="/blog/laravel-best-practices" className="text-muted-foreground hover:text-primary transition-colors duration-300">Laravel Best Practices</Link>
                             </li>
                             <li>
-                                <a href="/blog/tailwind-tips" className="text-muted-foreground hover:text-primary transition-colors duration-300">Tailwind CSS Tips</a>
+                                <Link href="/blog/tailwind-tips" className="text-muted-foreground hover:text-primary transition-colors duration-300">Tailwind CSS Tips</Link>
                             </li>
                             <li>
-                                <a href="/blog/wordpress-performance" className="text-muted-foreground hover:text-primary transition-colors duration-300">WordPress Performance</a>
+                                <Link href="/blog/wordpress-performance" className="text-muted-foreground hover:text-primary transition-colors duration-300">WordPress Performance</Link>
                             </li>
                             <li>
-                                <a href="/blog" className="text-muted-foreground hover:text-primary transition-colors duration-300">All Articles</a>
+                                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors duration-300">All Articles</Link>
                             </li>
                         </ul>
                     </div>

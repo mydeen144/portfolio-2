@@ -4,14 +4,6 @@ const nextConfig: NextConfig = {
     // Performance optimizations
     experimental: {
         optimizePackageImports: ['lucide-react', 'gsap'],
-        turbo: {
-            rules: {
-                '*.svg': {
-                    loaders: ['@svgr/webpack'],
-                    as: '*.js',
-                },
-            },
-        },
     },
     
     // Image optimization
