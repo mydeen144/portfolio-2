@@ -15,7 +15,7 @@ export default function Home() {
             <Skills />
             <Experiences />
             <ProjectList />
-            <InternalLinks />
+            {/* <InternalLinks /> */}
             {/* <BlogSection />
             <SiteMap /> */}
         </div>

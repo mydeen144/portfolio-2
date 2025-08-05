@@ -1,5 +1,4 @@
 'use client';
-// Import components and utilities
 import { PROJECTS } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import { useGSAP } from '@gsap/react';
@@ -7,152 +6,179 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useRef, useState, MouseEvent } from 'react';
-import Project from './Project';
+import React, { useRef } from 'react';
+import { ExternalLink, Calendar, Code } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ProjectList = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const projectListRef = useRef<HTMLDivElement>(null);
-    const imageContainer = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLImageElement>(null);
-    const [selectedProject, setSelectedProject] = useState<string | null>(
-        PROJECTS[0].slug,
-    );
-
-    // update imageRef.current href based on the cursor hover position
-    // also update image position
-    useGSAP(
-        (context, contextSafe) => {
-            // show image on hover
-            if (window.innerWidth < 768) {
-                setSelectedProject(null);
-                return;
-            }
-
-            const handleMouseMove = contextSafe?.((e: MouseEvent) => {
-                if (!containerRef.current) return;
-                if (!imageContainer.current) return;
-
-                if (window.innerWidth < 768) {
-                    setSelectedProject(null);
-                    return;
-                }
-
-                const containerRect =
-                    containerRef.current?.getBoundingClientRect();
-                const imageRect =
-                    imageContainer.current.getBoundingClientRect();
-                const offsetTop = e.clientY - containerRect.y;
-
-                // if cursor is outside the container, hide the image
-                if (
-                    containerRect.y > e.clientY ||
-                    containerRect.bottom < e.clientY ||
-                    containerRect.x > e.clientX ||
-                    containerRect.right < e.clientX
-                ) {
-                    return gsap.to(imageContainer.current, {
-                        duration: 0.3,
-                        opacity: 0,
-                    });
-                }
-
-                gsap.to(imageContainer.current, {
-                    y: offsetTop - imageRect.height / 2,
-                    duration: 1,
-                    opacity: 1,
-                });
-            }) as any;
-
-            window.addEventListener('mousemove', handleMouseMove);
-
-            return () => {
-                window.removeEventListener('mousemove', handleMouseMove);
-            };
-        },
-        { scope: containerRef, dependencies: [containerRef.current] },
-    );
 
     useGSAP(
         () => {
-            const tl = gsap.timeline({
+            // Animate section title
+            gsap.from('.projects-title', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: 'top bottom',
-                    end: 'top 80%',
-                    toggleActions: 'restart none none reverse',
-                    scrub: 1,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
                 },
             });
 
-            tl.from(containerRef.current, {
-                y: 150,
+            // Animate project cards with staggered effect
+            gsap.from('.project-card', {
+                y: 50,
                 opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            });
+
+            // Fade out when scrolling away
+            gsap.to(containerRef.current, {
+                y: -100,
+                opacity: 0.5,
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'bottom 30%',
+                    end: 'bottom 10%',
+                    scrub: 1,
+                },
             });
         },
         { scope: containerRef },
     );
 
-    const handleMouseEnter = (slug: string) => {
-        if (window.innerWidth < 768) {
-            setSelectedProject(null);
-            return;
-        }
-
-        setSelectedProject(slug);
-    };
-
     return (
-        <section className="py-10 relative overflow-hidden" id="selected-projects">
-            {/* Premium background elements */}
-            <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
-                {/* Animated gradient blobs */}
-                <div className="absolute top-[10%] right-[5%] w-[300px] h-[300px] rounded-full bg-gradient-to-br from-primary/30 to-transparent blur-[80px] animate-pulse-slow"></div>
-                <div className="absolute bottom-[15%] left-[10%] w-[250px] h-[250px] rounded-full bg-gradient-to-tr from-secondary/30 to-transparent blur-[60px] animate-pulse-slow animation-delay-1000"></div>
-                
-                {/* Geometric shapes */}
-                <div className="absolute top-[30%] right-[15%] w-[100px] h-[100px] border-2 border-primary/20 rotate-45 animate-float-slow"></div>
-                <div className="absolute bottom-[25%] right-[20%] w-[80px] h-[80px] border-2 border-secondary/20 rounded-full animate-float-slow animation-delay-2000"></div>
-                <div className="absolute top-[50%] left-[8%] w-[120px] h-[120px] border-2 border-primary/20 rounded-md rotate-12 animate-float-slow animation-delay-1500"></div>
-                
-                {/* Tech grid lines with animation */}
-                <div className="absolute inset-0 flex flex-col justify-between opacity-15">
-                    {[...Array(10)].map((_, i) => (
-                        <div 
-                            key={`h-grid-${i}`} 
-                            className="h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent w-full origin-left"
-                            style={{ animationDelay: `${i * 0.1}s` }}
-                        ></div>
-                    ))}
+        <section id="selected-projects" ref={containerRef} className="relative py-10">
+            {/* Background decorative elements */}
+            <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+                <div className="absolute top-[20%] right-[10%] w-[200px] h-[200px] bg-primary/30 rounded-3xl rotate-12"></div>
+                <div className="absolute bottom-[15%] left-[5%] w-[150px] h-[150px] bg-secondary/30 rounded-full"></div>
+                <div className="absolute top-[60%] right-[20%] w-[100px] h-[100px] bg-primary/20 rounded-lg rotate-45"></div>
+            </div>
+
+            <div className="container relative z-10">
+                {/* Section Header */}
+                <div className="projects-title mb-12">
+                    <div className="inline-block bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 mb-6">
+                        <h2 className="text-primary font-medium m-0 p-0 text-base flex items-center gap-2">
+                            <Code className="w-4 h-4" />
+                            Featured Projects
+                        </h2>
+                    </div>
+                    <h3 className="text-4xl md:text-5xl font-anton leading-tight text-foreground">
+                        My Latest <span className="text-primary">Work</span>
+                    </h3>
                 </div>
-                <div className="absolute inset-0 flex flex-row justify-between opacity-15">
-                    {[...Array(10)].map((_, i) => (
-                        <div 
-                            key={`v-grid-${i}`} 
-                            className="w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent origin-top"
-                            style={{ animationDelay: `${i * 0.1}s` }}
-                        ></div>
-                    ))}
-                </div>
-                
-                {/* Code-like pattern */}
-                <div className="absolute bottom-0 left-0 right-0 h-[30%] opacity-5">
-                    <div className="flex flex-col gap-2 font-mono text-xs">
-                        {[...Array(8)].map((_, i) => (
-                            <div key={`code-${i}`} className="flex gap-2">
-                                <span className="text-primary">const</span>
-                                <span className="text-secondary">project{i}</span>
-                                <span>=</span>
-                                <span className="text-primary">{`{ id: ${i}, title: 'Project ${i}' }`}</span>
+
+                {/* Projects Grid */}
+                <div className="space-y-8">
+                    {PROJECTS.map((project, index) => (
+                        <div
+                            key={project.slug}
+                            className="project-card bg-background/40 backdrop-blur-sm p-8 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden group"
+                        >
+                            {/* Top accent line */}
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
+                            
+                            <div className="grid md:grid-cols-12 gap-8 items-center">
+                                {/* Project Image */}
+                                <div className="md:col-span-5">
+                                    <div className="relative aspect-video rounded-xl overflow-hidden border border-border/30 group-hover:border-primary/30 transition-colors duration-300">
+                                        <Image
+                                            src={project.thumbnail}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    </div>
+                                </div>
+
+                                {/* Project Content */}
+                                <div className="md:col-span-7 space-y-6">
+                                    {/* Project Header */}
+                                    <div>
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                <Calendar className="w-4 h-4" />
+                                                {project.year}
+                                            </div>
+                                        </div>
+                                        <h4 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                                            {project.title}
+                                        </h4>
+                                    </div>
+
+                                    {/* Project Description */}
+                                    <div className="space-y-4">
+                                        <p className="text-muted-foreground leading-relaxed">
+                                            {project.description.replace(/<[^>]*>/g, '').slice(0, 200)}...
+                                        </p>
+                                    </div>
+
+                                    {/* Tech Stack */}
+                                    <div>
+                                        <h5 className="text-sm font-medium text-muted-foreground mb-3">Technologies Used</h5>
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.techStack.slice(0, 6).map((tech, techIndex) => (
+                                                <span
+                                                    key={techIndex}
+                                                    className="px-3 py-1 text-xs font-medium bg-secondary/20 text-secondary rounded-full border border-secondary/30"
+                                                >
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                            {project.techStack.length > 6 && (
+                                                <span className="px-3 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full border border-border">
+                                                    +{project.techStack.length - 6} more
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Project Links */}
+                                    <div className="flex items-center gap-4 pt-2">
+                                        {project.liveUrl && project.liveUrl !== 'Internal Project' && project.liveUrl !== 'Internal Project (Unreleased)' && (
+                                            <Link
+                                                href={project.liveUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group/link"
+                                            >
+                                                <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                                View Live Project
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        ))}
+
+                            {/* Hover overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
+                        </div>
+                    ))}
+                </div>
+                
+                {/* Call to Action */}
+                <div className="text-center mt-16">
+                    <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium hover:bg-primary/20 transition-colors cursor-pointer">
+                        <Code className="w-5 h-5" />
+                        View All Projects
                     </div>
                 </div>
             </div>
-            
-            
         </section>
     );
 };
