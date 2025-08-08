@@ -285,12 +285,14 @@ const Banner = () => {
                             rel="noopener noreferrer"
                             href={GENERAL_INFO.upworkProfile}
                             variant="primary"
-                            className="cta-button inline-flex items-center gap-2 px-7 py-3.5 text-lg shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)] transition-all"
+                            className="cta-button inline-flex items-center gap-2 px-7 py-4 text-lg shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)] transition-all"
                         >
-                            <span>Hire Me</span>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
+                            <span className="flex items-center gap-2">
+                                Hire Me
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </span>
                         </Button>
                     </div>
                     

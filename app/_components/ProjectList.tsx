@@ -6,22 +6,48 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useRef } from 'react';
-import { ExternalLink, Calendar, Code } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { ExternalLink, Calendar, Code, ArrowRight, Sparkles, Play } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ProjectList = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const horizontalRef = useRef<HTMLDivElement>(null);
+    const cardsContainerRef = useRef<HTMLDivElement>(null);
+    const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
     useGSAP(
         () => {
+            // Horizontal scroll animation - starts when cards container touches top navbar
+            const horizontalScroll = gsap.to('.project-card', {
+                x: () => -(horizontalRef.current?.scrollWidth || 0) + (window.innerWidth - 200),
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: cardsContainerRef.current,
+                    start: 'top top+=0', // Start exactly when top of cards container reaches top of viewport
+                    end: 'bottom top+=0', // End when bottom of cards container reaches top of viewport
+                    scrub: 1,
+                    pin: cardsContainerRef.current,
+                    anticipatePin: 1,
+                    onUpdate: (self) => {
+                        // Reverse scroll effect - when scrolling back up
+                        if (self.direction === -1) {
+                            // Cards move back to original position
+                            gsap.set('.project-card', {
+                                x: self.progress * ((horizontalRef.current?.scrollWidth || 0) - window.innerWidth + 200)
+                            });
+                        }
+                    }
+                },
+            });
+
             // Animate section title
             gsap.from('.projects-title', {
-                y: 30,
+                y: 50,
                 opacity: 0,
-                duration: 0.8,
-                ease: 'power2.out',
+                duration: 1,
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top 85%',
@@ -31,11 +57,12 @@ const ProjectList = () => {
 
             // Animate project cards with staggered effect
             gsap.from('.project-card', {
-                y: 50,
+                y: 100,
                 opacity: 0,
-                stagger: 0.1,
-                duration: 0.8,
-                ease: 'power2.out',
+                scale: 0.8,
+                stagger: 0.2,
+                duration: 1,
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: 'top 80%',
@@ -43,139 +70,196 @@ const ProjectList = () => {
                 },
             });
 
-            // Fade out when scrolling away
-            gsap.to(containerRef.current, {
+            // Parallax background elements
+            gsap.to('.bg-element', {
                 y: -100,
-                opacity: 0.5,
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: 'bottom 30%',
-                    end: 'bottom 10%',
+                    start: 'top bottom',
+                    end: 'bottom top',
                     scrub: 1,
                 },
             });
+
+            return () => {
+                horizontalScroll.kill();
+            };
         },
         { scope: containerRef },
     );
 
+    const handleProjectHover = (projectSlug: string) => {
+        setHoveredProject(projectSlug);
+        // Removed auto-scroll functionality - only manual scrolling now
+    };
+
+    const handleProjectLeave = () => {
+        setHoveredProject(null);
+    };
+
     return (
-        <section id="selected-projects" ref={containerRef} className="relative py-10">
-            {/* Background decorative elements */}
-            <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-                <div className="absolute top-[20%] right-[10%] w-[200px] h-[200px] bg-primary/30 rounded-3xl rotate-12"></div>
-                <div className="absolute bottom-[15%] left-[5%] w-[150px] h-[150px] bg-secondary/30 rounded-full"></div>
-                <div className="absolute top-[60%] right-[20%] w-[100px] h-[100px] bg-primary/20 rounded-lg rotate-45"></div>
+        <section id="selected-projects" ref={containerRef} className="relative py-20 overflow-hidden">
+            {/* Enhanced Background Elements */}
+            <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+                <div className="bg-element absolute top-[10%] right-[5%] w-[400px] h-[400px] bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-3xl"></div>
+                <div className="bg-element absolute bottom-[20%] left-[10%] w-[350px] h-[350px] bg-gradient-to-tr from-secondary/30 to-primary/30 rounded-full blur-3xl"></div>
+                <div className="bg-element absolute top-[60%] right-[25%] w-[300px] h-[300px] bg-gradient-to-bl from-primary/20 to-secondary/20 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="container relative z-10">
-                {/* Section Header */}
-                <div className="projects-title mb-12">
-                    <div className="inline-block bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 mb-6">
-                        <h2 className="text-primary font-medium m-0 p-0 text-base flex items-center gap-2">
-                            <Code className="w-4 h-4" />
-                            Featured Projects
-                        </h2>
+            <div className="container relative z-10 max-w-7xl mx-auto px-4">
+                {/* Modern Section Header - Fixed */}
+                <div className="projects-title text-center mb-16">
+                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-xl px-6 py-3 rounded-full border border-primary/20 mb-8">
+                        <Sparkles className="w-4 h-4 text-primary" />
+                        <span className="text-primary font-medium text-sm">Featured Work</span>
+                        <Sparkles className="w-4 h-4 text-secondary" />
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-anton leading-tight text-foreground">
-                        My Latest <span className="text-primary">Work</span>
+                    <h3 className="text-5xl md:text-7xl font-anton leading-tight bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent mb-4">
+                        Latest <span className="text-primary">Projects</span>
                     </h3>
+                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                        Scroll to top position to explore projects horizontally
+                    </p>
                 </div>
 
-                {/* Projects Grid */}
-                <div className="space-y-8">
-                    {PROJECTS.map((project, index) => (
-                        <div
-                            key={project.slug}
-                            className="project-card bg-background/40 backdrop-blur-sm p-8 rounded-2xl border border-border/50 transform hover:scale-[1.02] transition-transform duration-300 relative overflow-hidden group"
-                        >
-                            {/* Top accent line */}
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
-                            
-                            <div className="grid md:grid-cols-12 gap-8 items-center">
-                                {/* Project Image */}
-                                <div className="md:col-span-5">
-                                    <div className="relative aspect-video rounded-xl overflow-hidden border border-border/30 group-hover:border-primary/30 transition-colors duration-300">
-                                        <Image
-                                            src={project.thumbnail}
-                                            alt={project.title}
-                                            fill
-                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    </div>
-                                </div>
+                {/* Horizontal Scroll Container - This gets pinned */}
+                <div ref={cardsContainerRef} className="relative">
+                    {/* Scroll Indicator */}
+                    <div className="absolute top-4 right-4 z-20">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-background/80 backdrop-blur-xl rounded-full border border-primary/20">
+                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                            <span className="text-xs text-primary font-medium">Scroll to top</span>
+                        </div>
+                    </div>
 
-                                {/* Project Content */}
-                                <div className="md:col-span-7 space-y-6">
-                                    {/* Project Header */}
-                                    <div>
-                                        <div className="flex items-center gap-3 mb-3">
-                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                <Calendar className="w-4 h-4" />
-                                                {project.year}
+                    {/* Horizontal Projects Container */}
+                    <div 
+                        ref={horizontalRef}
+                        className="flex gap-8 lg:gap-12 pb-8 overflow-x-auto scrollbar-hide"
+                        style={{ scrollSnapType: 'x mandatory' }}
+                    >
+                        {PROJECTS.map((project, index) => (
+                            <div
+                                key={project.slug}
+                                data-project={project.slug}
+                                className="project-card group relative flex-shrink-0 w-[400px] lg:w-[500px]"
+                                style={{ scrollSnapAlign: 'start' }}
+                                onMouseEnter={() => handleProjectHover(project.slug)}
+                                onMouseLeave={handleProjectLeave}
+                            >
+                                {/* Modern Card Design */}
+                                <div className="relative bg-gradient-to-br from-background/60 to-background/40 backdrop-blur-xl p-8 rounded-3xl border border-border/30 hover:border-primary/30 transition-all duration-500 overflow-hidden h-full">
+                                    {/* Animated gradient border */}
+                                    <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        <div className="absolute inset-0 rounded-3xl bg-background"></div>
+                                    </div>
+                                    
+                                    {/* Content */}
+                                    <div className="relative z-10 h-full flex flex-col">
+                                        {/* Enhanced Project Image */}
+                                        <div className="relative group/image mb-6">
+                                            <div className="relative aspect-[16/10] rounded-2xl overflow-hidden">
+                                                <Image
+                                                    src={project.thumbnail}
+                                                    alt={project.title}
+                                                    fill
+                                                    className="object-cover transition-all duration-700 group-hover/image:scale-110"
+                                                    sizes="(max-width: 1024px) 400px, 500px"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
+                                                
+                                                {/* Play overlay */}
+                                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/image:opacity-100 transition-all duration-500">
+                                                    <div className="bg-background/90 backdrop-blur-sm p-4 rounded-full border border-primary/20">
+                                                        <Play className="w-6 h-6 text-primary fill-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Floating tech badges */}
+                                            <div className="absolute -top-2 -right-2 flex flex-wrap gap-1 max-w-[60%]">
+                                                {project.techStack.slice(0, 3).map((tech, techIndex) => (
+                                                    <span
+                                                        key={techIndex}
+                                                        className="px-2 py-1 text-xs font-medium bg-primary/20 text-primary rounded-full border border-primary/30 backdrop-blur-sm"
+                                                    >
+                                                        {tech}
+                                                    </span>
+                                                ))}
                                             </div>
                                         </div>
-                                        <h4 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                                            {project.title}
-                                        </h4>
-                                    </div>
 
-                                    {/* Project Description */}
-                                    <div className="space-y-4">
-                                        <p className="text-muted-foreground leading-relaxed">
-                                            {project.description.replace(/<[^>]*>/g, '').slice(0, 200)}...
-                                        </p>
-                                    </div>
+                                        {/* Enhanced Project Content */}
+                                        <div className="flex-1 space-y-4">
+                                            {/* Project Header */}
+                                            <div className="space-y-3">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+                                                        <Calendar className="w-4 h-4" />
+                                                        {project.year}
+                                                    </div>
+                                                    <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent"></div>
+                                                </div>
+                                                
+                                                <h4 className="text-2xl lg:text-3xl font-bold group-hover:text-primary transition-colors duration-300">
+                                                    {project.title}
+                                                </h4>
+                                            </div>
 
-                                    {/* Tech Stack */}
-                                    <div>
-                                        <h5 className="text-sm font-medium text-muted-foreground mb-3">Technologies Used</h5>
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.slice(0, 6).map((tech, techIndex) => (
-                                                <span
-                                                    key={techIndex}
-                                                    className="px-3 py-1 text-xs font-medium bg-secondary/20 text-secondary rounded-full border border-secondary/30"
+                                            {/* Enhanced Project Description */}
+                                            <div className="space-y-4">
+                                                <p className="text-muted-foreground leading-relaxed text-sm">
+                                                    {project.description.replace(/<[^>]*>/g, '').slice(0, 120)}...
+                                                </p>
+                                            </div>
+
+                                            {/* Enhanced Tech Stack */}
+                                            <div className="space-y-3">
+                                                <h5 className="text-xs font-semibold text-foreground/80 uppercase tracking-wide">Tech Stack</h5>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {project.techStack.slice(0, 6).map((tech, techIndex) => (
+                                                        <span
+                                                            key={techIndex}
+                                                            className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-primary/10 to-secondary/10 text-primary rounded-lg border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:scale-105"
+                                                        >
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                    {project.techStack.length > 6 && (
+                                                        <span className="px-2 py-1 text-xs font-medium bg-muted/50 text-muted-foreground rounded-lg border border-border">
+                                                            +{project.techStack.length - 6}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Enhanced Project Links */}
+                                            <div className="flex items-center gap-3 pt-4 mt-auto">
+                                                {project.liveUrl && project.liveUrl !== 'Internal Project' && project.liveUrl !== 'Internal Project (Unreleased)' && (
+                                                    <Link
+                                                        href={project.liveUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="group/link flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 text-primary font-medium rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:scale-105"
+                                                    >
+                                                        <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                                        Live Demo
+                                                    </Link>
+                                                )}
+                                                
+                                                <Link
+                                                    href={`/projects/${project.slug}`}
+                                                    className="group/link flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-foreground/5 to-foreground/10 text-foreground font-medium rounded-xl border border-border hover:border-primary/30 transition-all duration-300 hover:scale-105"
                                                 >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                            {project.techStack.length > 6 && (
-                                                <span className="px-3 py-1 text-xs font-medium bg-muted text-muted-foreground rounded-full border border-border">
-                                                    +{project.techStack.length - 6} more
-                                                </span>
-                                            )}
+                                                    Details
+                                                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                                </Link>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    {/* Project Links */}
-                                    <div className="flex items-center gap-4 pt-2">
-                                        {project.liveUrl && project.liveUrl !== 'Internal Project' && project.liveUrl !== 'Internal Project (Unreleased)' && (
-                                            <Link
-                                                href={project.liveUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group/link"
-                                            >
-                                                <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                                                View Live Project
-                                            </Link>
-                                        )}
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Hover overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" />
-                        </div>
-                    ))}
-                </div>
-                
-                {/* Call to Action */}
-                <div className="text-center mt-16">
-                    <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium hover:bg-primary/20 transition-colors cursor-pointer">
-                        <Code className="w-5 h-5" />
-                        View All Projects
+                        ))}
                     </div>
                 </div>
             </div>
