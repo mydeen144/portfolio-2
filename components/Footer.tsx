@@ -190,8 +190,8 @@ const Footer = async () => {
                         </p>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 justify-center md:justify-start">
                             <a href="/sitemap.xml" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Sitemap</a>
-                            <a href="/privacy-policy" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Privacy Policy</a>
-                            <a href="/terms-of-service" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Terms of Service</a>
+                            {/* <a href="/privacy-policy" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Privacy Policy</a>
+                            <a href="/terms-of-service" className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300">Terms of Service</a> */}
                         </div>
                     </div>
                     

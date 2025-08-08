@@ -380,11 +380,10 @@ export const PROJECTS: IProject[] = [
             'AJAX',
             'PHP',
         ],
-        thumbnail: '/projects/images/proofblazer-1.webp',
-        longThumbnail: '/projects/images/proofblazer-2.webp',
+        thumbnail: '/projects/images/screencapture-blazers-io-proofblazer-2025-08-08-21_06_50.png',
+        longThumbnail: '/projects/images/screencapture-blazers-io-proofblazer-2025-08-08-21_06_50.png',
         images: [
-            '/projects/images/proofblazer-1.webp',
-            '/projects/images/proofblazer-2.webp',
+            '/projects/images/screencapture-blazers-io-proofblazer-2025-08-08-21_06_50.png',
         ],
     },
     {
@@ -420,11 +419,10 @@ export const PROJECTS: IProject[] = [
             'PHP',
             'JavaScript',
         ],
-        thumbnail: '/projects/images/siteblazer-1.webp',
-        longThumbnail: '/projects/images/siteblazer-2.webp',
+        thumbnail: '/projects/images/screencapture-blazers-io-siteblazer-2025-08-08-21_02_58.png',
+        longThumbnail: '/projects/images/screencapture-blazers-io-siteblazer-2025-08-08-21_02_58.png',
         images: [
-            '/projects/images/siteblazer-1.webp',
-            '/projects/images/siteblazer-2.webp',
+            '/projects/images/screencapture-blazers-io-siteblazer-2025-08-08-21_02_58.png',
         ],
     },
     {
@@ -460,11 +458,10 @@ export const PROJECTS: IProject[] = [
             'Monitoring APIs',
             'Data Visualization',
         ],
-        thumbnail: '/projects/images/monitorblazer-1.webp',
-        longThumbnail: '/projects/images/monitorblazer-2.webp',
+        thumbnail: '/projects/images/screencapture-blazers-io-monitorblazer-2025-08-08-21_09_27.png',
+        longThumbnail: '/projects/images/screencapture-blazers-io-monitorblazer-2025-08-08-21_09_27.png',
         images: [
-            '/projects/images/monitorblazer-1.webp',
-            '/projects/images/monitorblazer-2.webp',
+            '/projects/images/screencapture-blazers-io-monitorblazer-2025-08-08-21_09_27.png',
         ],
     },
     {

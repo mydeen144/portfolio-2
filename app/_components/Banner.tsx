@@ -194,7 +194,7 @@ const Banner = () => {
     );
 
     return (
-        <section className="relative overflow-hidden min-h-[100svh]" id="banner" ref={containerRef}>
+        <section className="relative overflow-hidden min-h-[100vh]" id="banner" ref={containerRef}>
             {/* Premium background elements */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Grid Lines using CSS background instead of DOM elements */}
@@ -220,7 +220,7 @@ const Banner = () => {
             </div>
             
             {/* Content container */}
-            <div className="container min-h-[100svh] py-16 flex flex-col justify-center items-center relative z-10">
+            <div className="container flex flex-col justify-center items-center relative z-10">
                 {/* Main content with split design */}
                 <div className="w-full grid lg:grid-cols-2 gap-10 items-center">
                     {/* Left column - Text content */}
