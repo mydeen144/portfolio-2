@@ -116,11 +116,9 @@ h1 em,h2 em,.hand{color:#E4561B}.result{color:#E4561B}.btn.or{color:#16130F}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "CreativeWork", "name": "Students Xerox", "description": "Printing used to mean a queue at the shop. I project‑led this platform from brief to launch — scoped it with the client, ran the timeline, coordinated the team. Upload a document, pick print settings, pay, track it live. Zero to 700+ active users in the first quarter; orders now process 15% faster.", "author": {"@type": "Person", "name": "Mydeen Pitchai", "url": "https://mydeen-pitchai.vercel.app/"}, "keywords": "Laravel, PostgreSQL, AWS S3, AWS Lambda, Alpine.js, Tailwind", "url": "https://mydeen-pitchai.vercel.app/work/students-xerox.html"}</script>
 <script>
-// Google Tag Manager + GA4, loaded after the page settles so they never block first paint.
+// Google Tag Manager (it also fires the GA4 tag), loaded on first interaction or 4s after load so it never competes with first paint.
 window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
-gtag('js', new Date());
-gtag('config', 'G-ZQNTQ9HK0V');
 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 (function () {
   var done = false;
@@ -128,11 +126,8 @@ dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
   function load() {
     if (done) return; done = true;
     add('https://www.googletagmanager.com/gtm.js?id=GTM-NRPMNQP6');
-    add('https://www.googletagmanager.com/gtag/js?id=G-ZQNTQ9HK0V');
   }
-  window.addEventListener('load', function () {
-    if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 3500 }); else setTimeout(load, 2500);
-  });
+  window.addEventListener('load', function () { setTimeout(load, 4000); });
   ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (e) { window.addEventListener(e, load, { once: true, passive: true }); });
 })();
 </script>
