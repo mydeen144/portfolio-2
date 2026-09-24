@@ -1,12 +1,13 @@
-# Mydeen Pitchai — Senior Full Stack Laravel & PHP Developer
+# Mydeen Pitchai — Laravel & TALL Stack Developer
 
-> Mydeen Pitchai is a Senior Full Stack Developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). Open for freelance projects.
+> Mydeen Pitchai is a freelance Laravel and TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). Open for freelance projects.
 
-Stack: Laravel, PHP, Phalcon, JavaScript, Alpine.js, Tailwind CSS, MySQL, PostgreSQL, REST APIs, AWS S3, AWS Lambda, WordPress (incl. custom plugins and headless). AI-assisted development with Claude and ChatGPT — every line human-reviewed. Currently Senior Software Developer at OBII Kriationz Web LLP (since July 2024).
+Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filament, PHP, Phalcon, JavaScript, MySQL, PostgreSQL, REST APIs, AWS S3, AWS Lambda, WordPress (incl. custom plugins and headless). AI-assisted development with Claude and ChatGPT — every line human-reviewed. Currently Senior Software Developer at OBII Kriationz Web LLP (since July 2024).
 
 ## Key pages
 
 - [Portfolio home](https://mydeen-pitchai.vercel.app/): sketchboard with all projects, stack, journey and contact form
+- [TALL stack developer](https://mydeen-pitchai.vercel.app/tall-stack-developer.html): what he builds with Laravel, Livewire, Alpine.js and Tailwind CSS, projects and FAQ
 - [Resume (PDF)](https://mydeen-pitchai.vercel.app/Mydeen_Pitchai_Resume.pdf): full work history and education
 
 ## Case studies
@@ -15,14 +16,14 @@ Stack: Laravel, PHP, Phalcon, JavaScript, Alpine.js, Tailwind CSS, MySQL, Postgr
 - [Sevens Ground](https://mydeen-pitchai.vercel.app/work/sevens-ground.html): Sports booking · Dubai
 - [InterviewNode](https://mydeen-pitchai.vercel.app/work/interviewnode.html): EdTech · Careers
 - [Motherhood](https://mydeen-pitchai.vercel.app/work/motherhood-childrens-hospital.html): Healthcare platform
+- [Proudify](https://mydeen-pitchai.vercel.app/work/proudify.html): Certificate SaaS built from scratch on the TALL stack (Laravel 12, Livewire 3) — bulk issuing, QR verification, Razorpay; rendering 3.6× faster
+- [Digital Dopamine](https://mydeen-pitchai.vercel.app/work/digital-dopamine.html): 807-post media site migrated from WordPress to Laravel TALL stack with SEO intact and a Filament CMS
 
 ## More shipped
 
 - Blazers.io suite — SaaS · 6 products ([site](https://blazers.io))
 - SiteBlazer — SaaS · Website launcher
 - WPBlazer — SaaS · WordPress manager
-- Proudify — Company product · Certificates
-- Digital Dopamine — WordPress · SEO
 - Terrain Flooring · RKM Goa — WordPress · SEO
 
 ## Notes

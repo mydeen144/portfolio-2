@@ -20,6 +20,16 @@
       "permanent": true
     },
     {
+      "source": "/projects/proudify",
+      "destination": "/work/proudify.html",
+      "permanent": true
+    },
+    {
+      "source": "/projects/digital-dopamine",
+      "destination": "/work/digital-dopamine.html",
+      "permanent": true
+    },
+    {
       "source": "/projects",
       "destination": "/#l-work",
       "permanent": true
