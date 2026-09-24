@@ -1,0 +1,31 @@
+# Mydeen Pitchai
+
+> Senior Full Stack Laravel & PHP developer based in Tirunelveli, India, with 7+ years shipping web products across e-commerce, healthcare, SaaS, sports and EdTech. Senior Software Developer at OBII Kriationz Web LLP and open for freelance projects.
+
+Mydeen scopes projects with clients, manages the timeline, writes the code and supports it after launch. Main stack: Laravel, PHP, Alpine.js, Tailwind CSS, MySQL, PostgreSQL, AWS S3 and AWS Lambda. Also WordPress (including headless), multilingual and Arabic RTL apps, admin panels, payment gateways and third-party APIs.
+
+## Contact
+
+- [Email](mailto:mydeen144@gmail.com): mydeen144@gmail.com
+- [LinkedIn](https://linkedin.com/in/mydeen-pitchai-developer)
+- [GitHub](https://github.com/mydeen144)
+- [CV (PDF)](https://mydeen-pitchai.vercel.app/assets/a64ad23c07bee80372101d8b923754b8.pdf)
+- Project enquiries: use the contact form on the home page (WebMCP tool `send_project_enquiry`).
+
+## Selected work
+
+- [Students Xerox](https://studentsxerox.com): e-commerce printing platform. Upload, print settings, payments and live order tracking. 0 to 700+ active users in Q1, 15% faster order processing. Laravel, PostgreSQL, AWS S3, AWS Lambda, Alpine.js, Tailwind.
+- [Sevens Ground](https://sevensground.ae): bilingual English and Arabic (RTL) sports booking app for a Dubai football club, with live court availability, payments and an admin panel. Laravel, Alpine.js.
+- InterviewNode: career platform for engineers moving into ML. Custom WordPress plugin serving content over a REST API to a separate front end (headless).
+- Motherhood: paediatric hospital platform. Admin panel UI, third-party appointment API, doctor and speciality management, hospital locator. The hospital was named ET Edge Best Mother & Child Brand 2025.
+- [Blazers.io](https://blazers.io) suite: six SaaS tools listed on Capterra and G2. 20% growth in active users across 150+ customers.
+- SiteBlazer (one-click hosted website builder), WPBlazer (UI redesign, RAMP Award), Proudify (certificate builder on AWS Lambda), Digital Dopamine and other SEO-optimised WordPress sites.
+
+## Experience
+
+- Jul 2024 – present: Senior Software Developer, OBII Kriationz Web LLP, Bengaluru
+- Jul 2023 – May 2024: Software Developer, In2 Computing India Pvt. Ltd., Tirunelveli
+- May 2022 – Jul 2023: Software Developer, Touch Logic Technologies, Tirunelveli (RAMP Award)
+- Dec 2020 – Mar 2022: Web Developer, Techzarinfo Software Solutions, Tiruchirappalli
+- Jun 2019 – Dec 2020: Junior Web Developer, Techsomo, Tirunelveli
+- B.Sc. IT, Sadakathullah Appa College, 2013 – 2016
