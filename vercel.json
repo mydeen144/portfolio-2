@@ -3,21 +3,88 @@
   "installCommand": "",
   "buildCommand": "",
   "outputDirectory": ".",
-  "cleanUrls": true,
   "redirects": [
-    { "source": "/blog", "destination": "/#l-notes", "permanent": true },
-    { "source": "/blog/:path*", "destination": "/#l-notes", "permanent": true },
-    { "source": "/projects", "destination": "/#l-work", "permanent": true },
-    { "source": "/projects/:path*", "destination": "/#l-work", "permanent": true }
+    {
+      "source": "/projects/students-xerox",
+      "destination": "/work/students-xerox.html",
+      "permanent": true
+    },
+    {
+      "source": "/projects/sevensground",
+      "destination": "/work/sevens-ground.html",
+      "permanent": true
+    },
+    {
+      "source": "/projects/interview-node",
+      "destination": "/work/interviewnode.html",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/#l-work",
+      "permanent": true
+    },
+    {
+      "source": "/projects/:path*",
+      "destination": "/#l-work",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/#l-notes",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/#l-notes",
+      "permanent": true
+    },
+    {
+      "source": "/images/mydeen-social-card.png",
+      "destination": "/img/mydeen.jpg",
+      "permanent": true
+    }
   ],
   "headers": [
     {
-      "source": "/(assets|vendor|images)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.pdf",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
     },
     {
       "source": "/llms.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        }
+      ]
     }
   ]
 }

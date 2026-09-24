@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url>
-    <loc>https://mydeen-pitchai.vercel.app/</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://mydeen-pitchai.vercel.app/assets/a00a800d68b74c1121ba07b731b70f95.jpg</image:loc>
-    </image:image>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mydeen-pitchai.vercel.app/</loc><lastmod>2026-09-24</lastmod><priority>1.0</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/work/students-xerox.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/work/sevens-ground.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/work/interviewnode.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/work/motherhood-childrens-hospital.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/notes/laravel-n-plus-one-queries.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/notes/laravel-s3-presigned-uploads.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
+  <url><loc>https://mydeen-pitchai.vercel.app/notes/tailwind-arabic-rtl-laravel.html</loc><lastmod>2026-09-24</lastmod><priority>0.7</priority></url>
 </urlset>
