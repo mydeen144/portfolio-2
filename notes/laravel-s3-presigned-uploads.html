@@ -119,9 +119,12 @@ h1 em,h2 em,.hand{color:#E4561B}.result{color:#E4561B}.btn.or{color:#16130F}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Large uploads to S3 without choking your server", "description": "Let the browser upload straight to S3 with a short-lived presigned URL, and keep PHP workers free.", "author": {"@type": "Person", "name": "Mydeen Pitchai", "url": "https://mydeen-pitchai.vercel.app/"}, "url": "https://mydeen-pitchai.vercel.app/notes/laravel-s3-presigned-uploads.html"}</script>
 <script>
-// Google Tag Manager (it also fires the GA4 tag), loaded on first interaction or 4s after load so it never competes with first paint.
+// Google Tag Manager, loaded on first interaction or 4s after load so it never competes with first paint.
+// The container has no GA4 tag of its own: GTM reads the gtag config below and loads GA4 (G-ZQNTQ9HK0V) once.
 window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-ZQNTQ9HK0V');
 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 (function () {
   var done = false;

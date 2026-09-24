@@ -1265,9 +1265,12 @@ html:not(.dark).words.anim .l-sec>h2 em,html:not(.dark).words.anim .l-stack h2 e
 
 </style>
 <script>
-// Google Tag Manager (it also fires the GA4 tag), loaded on first interaction or 4s after load so it never competes with first paint.
+// Google Tag Manager, loaded on first interaction or 4s after load so it never competes with first paint.
+// The container has no GA4 tag of its own: GTM reads the gtag config below and loads GA4 (G-ZQNTQ9HK0V) once.
 window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-ZQNTQ9HK0V');
 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 (function () {
   var done = false;

@@ -123,9 +123,12 @@ h1 em,h2 em,.hand{color:#E4561B}.result{color:#E4561B}.btn.or{color:#16130F}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Digital Dopamine", "url": "https://mydeen-pitchai.vercel.app/work/digital-dopamine.html", "description": "How Digital Dopamine, an 800+ post media site, moved from WordPress to a Laravel TALL stack build with its SEO intact and a custom Filament (Livewire) CMS. Case study by Mydeen Pitchai.", "author": {"@type": "Person", "@id": "https://mydeen-pitchai.vercel.app/#person", "name": "Mydeen Pitchai", "url": "https://mydeen-pitchai.vercel.app/"}, "about": "WordPress to Laravel migration for a media website", "keywords": "WordPress to Laravel migration, TALL stack, Filament, Livewire, Alpine.js, Tailwind CSS, SEO migration", "sameAs": "https://digitaldopamine.in/"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://mydeen-pitchai.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "Digital Dopamine case study", "item": "https://mydeen-pitchai.vercel.app/work/digital-dopamine.html"}]}]}</script>
 <script>
-// Google Tag Manager (it also fires the GA4 tag), loaded on first interaction or 4s after load so it never competes with first paint.
+// Google Tag Manager, loaded on first interaction or 4s after load so it never competes with first paint.
+// The container has no GA4 tag of its own: GTM reads the gtag config below and loads GA4 (G-ZQNTQ9HK0V) once.
 window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-ZQNTQ9HK0V');
 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 (function () {
   var done = false;

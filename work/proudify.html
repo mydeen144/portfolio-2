@@ -123,9 +123,12 @@ h1 em,h2 em,.hand{color:#E4561B}.result{color:#E4561B}.btn.or{color:#16130F}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CreativeWork", "name": "Proudify", "url": "https://mydeen-pitchai.vercel.app/work/proudify.html", "description": "Proudify is a certificate SaaS built from scratch on the TALL stack (Laravel 12, Livewire 3, Alpine.js, Tailwind): design on a canvas, bulk-issue from CSV, verify by QR. Case study by Mydeen Pitchai.", "author": {"@type": "Person", "@id": "https://mydeen-pitchai.vercel.app/#person", "name": "Mydeen Pitchai", "url": "https://mydeen-pitchai.vercel.app/"}, "about": "Certificate design, issuing and verification SaaS", "keywords": "TALL stack, Laravel 12, Livewire 3, Alpine.js, Tailwind CSS, Razorpay, certificate SaaS", "sameAs": "https://proudify.obiikriationz.com/"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://mydeen-pitchai.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "Proudify case study", "item": "https://mydeen-pitchai.vercel.app/work/proudify.html"}]}]}</script>
 <script>
-// Google Tag Manager (it also fires the GA4 tag), loaded on first interaction or 4s after load so it never competes with first paint.
+// Google Tag Manager, loaded on first interaction or 4s after load so it never competes with first paint.
+// The container has no GA4 tag of its own: GTM reads the gtag config below and loads GA4 (G-ZQNTQ9HK0V) once.
 window.dataLayer = window.dataLayer || [];
 function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-ZQNTQ9HK0V');
 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 (function () {
   var done = false;
