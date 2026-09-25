@@ -151,14 +151,10 @@ body::after{content:"";position:fixed;top:-4px;left:0;z-index:21;width:26px;heig
 @keyframes fxTip{to{left:100%}}
 }}
 @media (prefers-reduced-motion:no-preference){
-/* fx 5 · section headings bleed in like ink once they reach the upper part of the screen, then get a pen underline
+/* fx 5 · section headings bleed in like ink once they reach the upper part of the screen
    (fx.js adds .fx-js and marks each heading .fx-in; without it nothing is hidden) */
-.fx-js .rv h2{width:fit-content;position:relative}
 .fx-js .rv h2:not(.fx-in){clip-path:inset(-25% 100% -35% -6%);filter:blur(8px)}
 .fx-js .rv h2.fx-in{animation:fxInk 1.4s cubic-bezier(.2,.8,.2,1) backwards}
-.fx-js .rv h2::after{content:"";position:absolute;left:-2%;right:-2%;bottom:-.16em;height:.18em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M3 11C40 6 90 4 140 7S190 12 197 8M22 16C70 12 128 12 182 14' fill='none' stroke='%23FF6A2B' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;clip-path:inset(0 100% 0 0);pointer-events:none}
-.fx-js .rv h2.fx-in::after{animation:fxUnder .8s 1s cubic-bezier(.6,0,.2,1) forwards}
-@keyframes fxUnder{to{clip-path:inset(0 0 0 0)}}
 @keyframes fxInk{from{clip-path:inset(-25% 100% -35% -6%);filter:blur(8px);opacity:.3;transform:translateX(-10px)}to{clip-path:inset(-25% -6% -35% -6%);filter:blur(0);opacity:1;transform:none}}
 }
 @media (prefers-reduced-motion:no-preference){
