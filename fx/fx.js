@@ -11,6 +11,55 @@
     return;
   }
 
+  // section headings: ink-bleed in once they reach the upper ~70% of the screen, so the effect is actually seen
+  if (W.IntersectionObserver) {
+    H.classList.add('fx-js');
+    var hio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('fx-in'); hio.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -28% 0px' });
+    Array.prototype.forEach.call(D.querySelectorAll('.rv h2, .l-sec > h2'), function (h) { hio.observe(h); });
+  }
+
+  // TALL page: big T A L L tiles drop in and spell the word, then each flies into its card's corner badge
+  var tsec = /tall-stack-developer/.test(W.location.pathname) ? D.querySelector('main>section') : null;
+  var tcards = tsec ? tsec.querySelectorAll('.dec>div') : [];
+  if (tcards.length === 4 && W.IntersectionObserver && tsec.animate) {
+    tsec.classList.add('fx-tall-wait');
+    var tio = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      tio.disconnect();
+      tallTiles();
+    }, { rootMargin: '0px 0px -35% 0px' });
+    tio.observe(tsec.querySelector('.dec'));
+  }
+  function tallTiles() {
+    if (W.getComputedStyle(tsec).position === 'static') tsec.style.position = 'relative';
+    var TILES = [['T', '#38BDF8', '#0b2530'], ['A', '#77C1D2', '#0f2a30'], ['L', '#FF2D20', '#fff'], ['L', '#FB70A9', '#fff']];
+    var sr = tsec.getBoundingClientRect(), gr = tsec.querySelector('.dec').getBoundingClientRect();
+    var small = W.innerWidth < 700, size = small ? 58 : 84, gap = small ? 10 : 16, rowW = size * 4 + gap * 3;
+    var x0 = gr.left - sr.left + (gr.width - rowW) / 2, y0 = gr.top - sr.top + Math.min(gr.height, 300) / 2 - size / 2;
+    var DROP = 750, STEP = 160, HOLD = 650;
+    TILES.forEach(function (c, i) {
+      var t = D.createElement('span'), card = tcards[i];
+      t.className = 'fx-tile'; t.setAttribute('aria-hidden', 'true'); t.textContent = c[0];
+      t.style.cssText = 'left:' + (x0 + i * (size + gap)) + 'px;top:' + y0 + 'px;width:' + size + 'px;height:' + size + 'px;background:' + c[1] + ';color:' + c[2] + ';font-size:' + Math.round(size * 0.62) + 'px';
+      tsec.appendChild(t);
+      t.animate([
+        { transform: 'translateY(-' + Math.round(W.innerHeight * 0.7) + 'px) rotate(' + (i % 2 ? 20 : -20) + 'deg)', opacity: 0 },
+        { transform: 'translateY(10px) rotate(' + (i % 2 ? -4 : 4) + 'deg)', opacity: 1, offset: 0.6 },
+        { transform: 'translateY(-6px) rotate(0deg)', offset: 0.8 },
+        { transform: 'none', opacity: 1 }
+      ], { duration: DROP, delay: i * STEP, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'backwards' });
+      setTimeout(function () {
+        // badge sits at right:14px, top:14px, 40px square inside the card
+        var cr = card.getBoundingClientRect(), tr = t.getBoundingClientRect();
+        var fly = t.animate([{ transform: 'none' }, { transform: 'translate(' + (cr.right - 54 - tr.left) + 'px,' + (cr.top + 14 - tr.top) + 'px) scale(' + 40 / size + ')' }],
+          { duration: 650, easing: 'cubic-bezier(.65,0,.3,1)', fill: 'forwards' });
+        fly.onfinish = function () { card.classList.add('fx-got'); t.remove(); };
+      }, 3 * STEP + DROP + HOLD + i * 110);
+    });
+  }
+
   // magnetic buttons: .btn leans a few px toward the cursor, springs back on leave (mouse / trackpad only)
   if (W.matchMedia('(pointer: fine)').matches) {
     var cur = null;

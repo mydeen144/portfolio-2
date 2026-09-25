@@ -139,7 +139,17 @@ dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
 <style id="fx">
 /* fx 8 · 404: the paper plane from the contact form, crashed */
 main>div>svg:not(.fx-crash){display:none}
-.fx-crash{display:block;margin:0 auto;width:360px;max-width:86vw;height:auto;overflow:visible}
+.fx-crash{display:block;margin:0 auto;width:auto;height:min(300px,30vh);max-width:86vw;overflow:visible}
+/* the whole 404 fits in one screen: header, scene, text, buttons, footer */
+body{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+main{flex:1;width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding-top:clamp(10px,3vh,40px);padding-bottom:clamp(10px,3vh,40px)}
+main>div{padding:0!important}
+main>div>.hand{margin-top:2px!important}
+main h1{font-size:clamp(32px,min(8vw,7vh),88px);margin:4px 0 10px}
+main .lede{font-size:clamp(15px,2.1vh,20px);line-height:1.5}
+main .btns{margin-top:clamp(12px,2.4vh,26px)}
+footer{width:100%;box-sizing:border-box;padding-top:12px;padding-bottom:16px}
+@media (max-height:700px){.fx-crash{height:19vh}main .btns{gap:8px}main .btns .btn{height:42px}footer{padding-top:8px;padding-bottom:10px}}
 </style>
 <script src="/fx/fx.js" defer></script>
 <!-- fx:end -->
