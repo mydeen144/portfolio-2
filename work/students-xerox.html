@@ -38,7 +38,10 @@
 @font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/instrument-serif-normal-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 </style>
 <style>
-:root{--paper:#F4EFE4;--card:#FFFDF8;--ink:#1D1B17;--pencil:#6F6A60;--line:rgba(29,27,23,.12);--or:#FF6A2B;--serif:'Instrument Serif',Georgia,serif;--sans:'Geist',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;--hand:'Caveat',cursive}
+@font-face { font-family: 'Instrument Serif Fallback'; src: local('Georgia'); size-adjust: 75.9%; ascent-override: 130.5%; descent-override: 40.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Geist Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 103.5%; ascent-override: 99.1%; descent-override: 29.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Geist Fallback'; font-weight: 600 800; src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Neue Bold'), local('Helvetica-Bold'); size-adjust: 102.8%; ascent-override: 99.7%; descent-override: 29.6%; line-gap-override: 0%; }
+:root{--paper:#F4EFE4;--card:#FFFDF8;--ink:#1D1B17;--pencil:#6F6A60;--line:rgba(29,27,23,.12);--or:#FF6A2B;--serif:'Instrument Serif','Instrument Serif Fallback',Georgia,serif;--sans:'Geist','Geist Fallback',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;--hand:'Caveat',cursive}
 *{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;background-image:radial-gradient(circle,#d6ccb9 1px,transparent 1.5px);background-size:26px 26px}
 a{color:inherit}img{display:block;max-width:100%}
 .top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px clamp(16px,4vw,48px);background:rgba(244,239,228,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
