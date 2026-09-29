@@ -7,17 +7,17 @@ Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filame
 ## Key pages
 
 - [Portfolio home](https://mydeen-pitchai.vercel.app/): sketchboard with all projects, stack, journey and contact form
-- [TALL stack developer](https://mydeen-pitchai.vercel.app/tall-stack-developer.html): what he builds with Laravel, Livewire, Alpine.js and Tailwind CSS, projects and FAQ
+- [TALL stack developer](https://mydeen-pitchai.vercel.app/tall-stack-developer): what he builds with Laravel, Livewire, Alpine.js and Tailwind CSS, projects and FAQ
 - [Resume (PDF)](https://mydeen-pitchai.vercel.app/Mydeen_Pitchai_Resume.pdf): full work history and education
 
 ## Case studies
 
-- [Students Xerox](https://mydeen-pitchai.vercel.app/work/students-xerox.html): E-commerce · Printing
-- [Sevens Ground](https://mydeen-pitchai.vercel.app/work/sevens-ground.html): Sports booking · Dubai
-- [InterviewNode](https://mydeen-pitchai.vercel.app/work/interviewnode.html): EdTech · Careers
-- [Motherhood](https://mydeen-pitchai.vercel.app/work/motherhood-childrens-hospital.html): Healthcare platform
-- [Proudify](https://mydeen-pitchai.vercel.app/work/proudify.html): Certificate SaaS built from scratch on the TALL stack (Laravel 12, Livewire 3) — bulk issuing, QR verification, Razorpay; rendering 3.6× faster
-- [Digital Dopamine](https://mydeen-pitchai.vercel.app/work/digital-dopamine.html): 807-post media site migrated from WordPress to Laravel TALL stack with SEO intact and a Filament CMS
+- [Students Xerox](https://mydeen-pitchai.vercel.app/work/students-xerox): E-commerce · Printing
+- [Sevens Ground](https://mydeen-pitchai.vercel.app/work/sevens-ground): Sports booking · Dubai
+- [InterviewNode](https://mydeen-pitchai.vercel.app/work/interviewnode): EdTech · Careers
+- [Motherhood](https://mydeen-pitchai.vercel.app/work/motherhood-childrens-hospital): Healthcare platform
+- [Proudify](https://mydeen-pitchai.vercel.app/work/proudify): Certificate SaaS built from scratch on the TALL stack (Laravel 12, Livewire 3) — bulk issuing, QR verification, Razorpay; rendering 3.6× faster
+- [Digital Dopamine](https://mydeen-pitchai.vercel.app/work/digital-dopamine): 807-post media site migrated from WordPress to Laravel TALL stack with SEO intact and a Filament CMS
 
 ## More shipped
 
@@ -28,9 +28,9 @@ Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filame
 
 ## Notes
 
-- [Kill N+1 queries before they reach production](https://mydeen-pitchai.vercel.app/notes/laravel-n-plus-one-queries.html)
-- [Large uploads to S3 without choking your server](https://mydeen-pitchai.vercel.app/notes/laravel-s3-presigned-uploads.html)
-- [Arabic RTL in Tailwind without a second stylesheet](https://mydeen-pitchai.vercel.app/notes/tailwind-arabic-rtl-laravel.html)
+- [Kill N+1 queries before they reach production](https://mydeen-pitchai.vercel.app/notes/laravel-n-plus-one-queries)
+- [Large uploads to S3 without choking your server](https://mydeen-pitchai.vercel.app/notes/laravel-s3-presigned-uploads)
+- [Arabic RTL in Tailwind without a second stylesheet](https://mydeen-pitchai.vercel.app/notes/tailwind-arabic-rtl-laravel)
 
 ## Contact
 

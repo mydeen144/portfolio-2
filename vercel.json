@@ -3,30 +3,31 @@
   "installCommand": "",
   "buildCommand": "",
   "outputDirectory": ".",
+  "cleanUrls": true,
   "redirects": [
     {
       "source": "/projects/students-xerox",
-      "destination": "/work/students-xerox.html",
+      "destination": "/work/students-xerox",
       "permanent": true
     },
     {
       "source": "/projects/sevensground",
-      "destination": "/work/sevens-ground.html",
+      "destination": "/work/sevens-ground",
       "permanent": true
     },
     {
       "source": "/projects/interview-node",
-      "destination": "/work/interviewnode.html",
+      "destination": "/work/interviewnode",
       "permanent": true
     },
     {
       "source": "/projects/proudify",
-      "destination": "/work/proudify.html",
+      "destination": "/work/proudify",
       "permanent": true
     },
     {
       "source": "/projects/digital-dopamine",
-      "destination": "/work/digital-dopamine.html",
+      "destination": "/work/digital-dopamine",
       "permanent": true
     },
     {
