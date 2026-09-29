@@ -1382,11 +1382,21 @@ if (fine && !reduce && !tall) H.classList.add('fine-ptr');
 // ---------- sound design (synthesised, default off) ----------
 var AC = W.__mpAC || null, sndOn = !!(D.querySelector('.snd:not(.dk)') && D.querySelector('.snd:not(.dk)').getAttribute('aria-pressed') === 'true'), noiseBuf = W.__mpNoise || null;
 function acx() {
-  if (!AC) { var C = W.AudioContext || W.webkitAudioContext; if (!C) return null; AC = new C(); var n = AC.sampleRate, b = AC.createBuffer(1, n, n), d = b.getChannelData(0); for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; noiseBuf = b; }
+  if (!AC) { var C = W.AudioContext || W.webkitAudioContext; if (!C) return null; AC = new C({ latencyHint: 'interactive' }); var n = AC.sampleRate, b = AC.createBuffer(1, n, n), d = b.getChannelData(0); for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; noiseBuf = b; }
   if (AC.state === 'suspended') AC.resume(); return AC;
 }
+// Every sound is scheduled on the audio clock, not with timers: `at` is how many seconds from now the matching
+// visual lands. Where the browser reports its output delay (Bluetooth earbuds can add ~0.2s) the sound starts that
+// much earlier, as far as the lead time allows. A context that is still waking up is awaited so the start isn't clipped.
+function lat() { return Math.min(0.35, Math.max(0, (AC.outputLatency || 0) + (AC.baseLatency || 0))); }
+function go(at, fn) {
+  if (!sndOn || !acx()) return;
+  var asked = performance.now();
+  function run() { var now = AC.currentTime, left = (at || 0) - (performance.now() - asked) / 1000; fn(Math.max(now + 0.005, now + left - lat())); }
+  if (AC.state === 'running') run(); else AC.resume().then(run, function () {});
+}
 function noise(t0, dur) { var s = AC.createBufferSource(); s.buffer = noiseBuf; s.loop = true; s.start(t0); s.stop(t0 + dur + 0.05); return s; }
-var master = null;
+var master = null, wh = null;
 function out() {
   if (!master) { var comp = AC.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 4; master = AC.createGain(); master.gain.value = 0.8; master.connect(comp); comp.connect(AC.destination); }
   return master;
@@ -1394,22 +1404,25 @@ function out() {
 function bp(type, f, q) { var x = AC.createBiquadFilter(); x.type = type; x.frequency.value = f; if (q) x.Q.value = q; return x; }
 var sfx = {
   // graphite on paper: grains of band-passed noise with a wandering centre frequency
-  pencil: function (dur) { if (!sndOn || !acx()) return; var t = AC.currentTime, n = noise(t, dur), f = bp('bandpass', 3000, 1.1), hs = bp('highshelf', 6000), g = AC.createGain(); hs.gain.value = -9; g.gain.setValueAtTime(0, t);
-    for (var k = 0; k < dur; k += 0.03) { g.gain.linearRampToValueAtTime(0.004 + Math.random() * 0.022, t + k); f.frequency.setValueAtTime(2200 + Math.random() * 2000, t + k); }
-    g.gain.linearRampToValueAtTime(0, t + dur); n.connect(f); f.connect(hs); hs.connect(g); g.connect(out()); },
+  pencil: function (dur, at, v) { go(at, function (t) { var n = noise(t, dur), f = bp('bandpass', 3000, 1.1), hs = bp('highshelf', 6000), g = AC.createGain(), lv = v || 1; hs.gain.value = -9; g.gain.setValueAtTime(0, t);
+    for (var k = 0; k < dur; k += 0.03) { g.gain.linearRampToValueAtTime((0.004 + Math.random() * 0.022) * lv, t + k); f.frequency.setValueAtTime(2200 + Math.random() * 2000, t + k); }
+    g.gain.linearRampToValueAtTime(0, t + dur); n.connect(f); f.connect(hs); hs.connect(g); g.connect(out()); }); },
   // rubber stamp: soft low body + papery click
-  thump: function () { if (!sndOn || !acx()) return; var t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(52, t + 0.18); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.008); g.gain.exponentialRampToValueAtTime(0.001, t + 0.26); o.connect(g); g.connect(out()); o.start(t); o.stop(t + 0.28);
-    var n = noise(t, 0.04), lp = bp('lowpass', 1800), g2 = AC.createGain(); g2.gain.setValueAtTime(0.07, t); g2.gain.exponentialRampToValueAtTime(0.001, t + 0.04); n.connect(lp); lp.connect(g2); g2.connect(out()); },
-  // air past the camera, panned left → right
-  whoosh: function (v, dur) { if (!sndOn || !acx()) return; var t = AC.currentTime, d = dur || 0.6, n = noise(t, d), f = bp('bandpass', 260, 1.2), g = AC.createGain(), p = AC.createStereoPanner ? AC.createStereoPanner() : null;
-    f.frequency.setValueAtTime(260, t); f.frequency.exponentialRampToValueAtTime(1400, t + d * 0.7); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05 * (v || 1), t + d * 0.45); g.gain.linearRampToValueAtTime(0, t + d);
-    n.connect(f); f.connect(g); if (p) { p.pan.setValueAtTime(-0.6, t); p.pan.linearRampToValueAtTime(0.6, t + d); g.connect(p); p.connect(out()); } else g.connect(out()); },
+  thump: function (at) { go(at, function (t) { var o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(52, t + 0.18); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.008); g.gain.exponentialRampToValueAtTime(0.001, t + 0.26); o.connect(g); g.connect(out()); o.start(t); o.stop(t + 0.28);
+    var n = noise(t, 0.04), lp = bp('lowpass', 1800), g2 = AC.createGain(); g2.gain.setValueAtTime(0.07, t); g2.gain.exponentialRampToValueAtTime(0.001, t + 0.04); n.connect(lp); lp.connect(g2); g2.connect(out()); }); },
+  // air past the camera, panned left → right; lasts `dur`, loudest at `peak` (share of dur). One at a time:
+  // a new whoosh fades the previous one out in 30ms instead of stacking on top of it
+  whoosh: function (v, dur, peak, at) { go(at, function (t) { var d = dur || 0.6, pk = peak || 0.45, n = noise(t, d), f = bp('bandpass', 260, 1.2), g = AC.createGain(), p = AC.createStereoPanner ? AC.createStereoPanner() : null;
+    if (wh && wh.end > t) { var og = wh.g.gain; if (og.cancelAndHoldAtTime) og.cancelAndHoldAtTime(t); else { og.cancelScheduledValues(t); og.setValueAtTime(og.value, t); } og.linearRampToValueAtTime(0, t + 0.03); }
+    f.frequency.setValueAtTime(260, t); f.frequency.exponentialRampToValueAtTime(1400, t + d * Math.min(0.9, pk + 0.25)); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05 * (v || 1), t + d * pk); g.gain.linearRampToValueAtTime(0, t + d);
+    n.connect(f); f.connect(g); if (p) { p.pan.setValueAtTime(-0.6, t); p.pan.linearRampToValueAtTime(0.6, t + d); g.connect(p); p.connect(out()); } else g.connect(out());
+    wh = { g: g, end: t + d }; }); },
   // a sheet being handled: two crinkles and a soft body
-  paper: function () { if (!sndOn || !acx()) return; var t = AC.currentTime, n = noise(t, 0.26), f = bp('bandpass', 2600, 0.7), g = AC.createGain(); g.gain.setValueAtTime(0, t);
-    for (var k = 0; k < 0.24; k += 0.016) g.gain.linearRampToValueAtTime((k < 0.09 || (k > 0.13 && k < 0.2) ? 0.05 : 0.008) * Math.random(), t + k);
+  paper: function (at, v) { go(at, function (t) { var lv = v || 1, n = noise(t, 0.26), f = bp('bandpass', 2600, 0.7), g = AC.createGain(); g.gain.setValueAtTime(0, t);
+    for (var k = 0; k < 0.24; k += 0.016) g.gain.linearRampToValueAtTime((k < 0.09 || (k > 0.13 && k < 0.2) ? 0.05 : 0.008) * Math.random() * lv, t + k);
     g.gain.linearRampToValueAtTime(0, t + 0.26); n.connect(f); f.connect(g); g.connect(out());
-    var n2 = noise(t, 0.12), f2 = bp('bandpass', 420, 0.8), g2 = AC.createGain(); g2.gain.setValueAtTime(0.05, t); g2.gain.exponentialRampToValueAtTime(0.001, t + 0.12); n2.connect(f2); f2.connect(g2); g2.connect(out()); },
-  tick: function () { if (!sndOn || !acx()) return; var t = AC.currentTime, o = AC.createOscillator(), lp = bp('lowpass', 2400), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = 1250; g.gain.setValueAtTime(0.03, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.045); o.connect(lp); lp.connect(g); g.connect(out()); o.start(t); o.stop(t + 0.05); }
+    var n2 = noise(t, 0.12), f2 = bp('bandpass', 420, 0.8), g2 = AC.createGain(); g2.gain.setValueAtTime(0.05 * lv, t); g2.gain.exponentialRampToValueAtTime(0.001, t + 0.12); n2.connect(f2); f2.connect(g2); g2.connect(out()); }); },
+  tick: function (at) { go(at, function (t) { var o = AC.createOscillator(), lp = bp('lowpass', 2400), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = 1250; g.gain.setValueAtTime(0.03, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.045); o.connect(lp); lp.connect(g); g.connect(out()); o.start(t); o.stop(t + 0.05); }); }
 };
 (function () {
   var b = $('.snd:not(.dk)'); if (!b) return;
@@ -1452,7 +1465,7 @@ function play(el, instant) {
   el.classList.add('armed'); void el.offsetWidth; el.classList.add('s1');
   if (el.querySelector('.sk') || el.classList.contains('journey')) sfx.pencil(1.4);
   el._t.push(later(function () { el.classList.add('s2'); }, 1500));
-  el._t.push(later(function () { el.classList.add('s3', 'sweep'); }, 2300));
+  el._t.push(later(function () { el.classList.add('s3', 'sweep'); if (!reduce && el.classList.contains('pcard') && H.classList.contains('mode-board') && $('.stamp', el)) sfx.thump(1.07); }, 2300));
   el._t.push(later(function () { el.classList.remove('sweep'); }, 3500));
   if (el.classList.contains('pcard')) el._t.push(later(function () { cine(); }, 3150));
   if (el.querySelector('.inks')) { el._t.push(later(function () { el.classList.add('splat'); }, 3150)); el._t.push(later(function () { el.classList.remove('splat'); }, 4200)); }
@@ -1463,7 +1476,6 @@ function play(el, instant) {
 function cine() {
   if (reduce || !H.classList.contains('mode-board')) return;
   var cm = $('.cam'), fl = $('.flash');
-  sfx.thump();
   if (cm) { cm.classList.remove('shake'); void cm.offsetWidth; cm.classList.add('shake'); later(function () { cm.classList.remove('shake'); }, 500); }
   if (fl) { fl.classList.remove('go'); void fl.offsetWidth; fl.classList.add('go'); later(function () { fl.classList.remove('go'); }, 1300); }
 }
@@ -1530,18 +1542,16 @@ function mode(m) {
 var inkEl = $('.inkt'), inking = false;
 function inkSwitch(m, e) {
   if (m === 'board' && boardLazy && W.__mpRemount) {
-    sfx.whoosh(1.1);
-    if (D.startViewTransition && !reduce) { try { H.classList.add('vt-mode'); var vt0 = D.startViewTransition(function () { W.__mpRemount(); }); vt0.finished.then(function () { H.classList.remove('vt-mode'); }, function () { H.classList.remove('vt-mode'); }); return; } catch (x) {} }
-    W.__mpRemount(); return;
+    if (D.startViewTransition && !reduce) { try { H.classList.add('vt-mode'); var vt0 = D.startViewTransition(function () { W.__mpRemount(); }); vt0.ready.then(function () { sfx.whoosh(1.1, 0.75, 0.5); }, function () {}); vt0.finished.then(function () { H.classList.remove('vt-mode'); }, function () { H.classList.remove('vt-mode'); }); return; } catch (x) {} }
+    sfx.whoosh(1.1); W.__mpRemount(); return;
   }
   var cur = H.classList.contains('mode-board') ? 'board' : 'list';
   if (m !== cur && !reduce && D.startViewTransition) {
-    sfx.whoosh(1.1);
-    try { H.classList.add('vt-mode'); var vt = D.startViewTransition(function () { mode(m); }); vt.finished.then(function () { H.classList.remove('vt-mode'); }, function () { H.classList.remove('vt-mode'); }); } catch (x) { mode(m); }
+    try { H.classList.add('vt-mode'); var vt = D.startViewTransition(function () { mode(m); }); vt.ready.then(function () { sfx.whoosh(1.1, 0.75, 0.5); }, function () {}); vt.finished.then(function () { H.classList.remove('vt-mode'); }, function () { H.classList.remove('vt-mode'); }); } catch (x) { mode(m); }
     return;
   }
   if (reduce || !inkEl || m === cur || inking) { mode(m); return; }
-  inking = true; sfx.whoosh(1.2);
+  inking = true; sfx.whoosh(1.2, 0.64, 0.5);
   inkEl.style.setProperty('--ix', (e && e.clientX ? e.clientX : W.innerWidth / 2) + 'px'); inkEl.style.setProperty('--iy', (e && e.clientY ? e.clientY : 60) + 'px');
   inkEl.classList.remove('fade'); inkEl.classList.add('grow');
   later(function () { mode(m); inkEl.classList.add('fade'); }, 640);
@@ -1581,7 +1591,7 @@ function flyTo(x, y, s, dur, done) {
   if (reduce) { cam.x = x; cam.y = y; cam.s = s; clampCam(); dirty = true; if (done) done(); return; }
   var ms = dur || clamp(700 + dist * 0.45, 800, 1700);
   // the whoosh lasts as long as the flight, so it peaks while the camera moves fastest
-  if (dist > 250) sfx.whoosh(clamp(dist / 900, 0.4, 1), ms / 1000);
+  if (dist > 250) sfx.whoosh(clamp(dist / 900, 0.4, 1), ms / 1000, 0.5);
   tween = { t0: performance.now(), dur: ms, x0: cam.x, y0: cam.y, s0: cam.s, x1: x, y1: y, s1: s, dip: clamp(dist / (vw * 1.1), 0, 1) * 0.55, done: done };
   vel.x = vel.y = 0; H.classList.add('moving');
 }
@@ -1631,7 +1641,7 @@ function fitAll() {
 var drawers = {}; $$('[data-drawer]').forEach(function (d) { drawers[d.getAttribute('data-drawer')] = d; });
 var openKey = null;
 function openDrawer(k) { if (openKey !== k) sfx.paper(); if (hint) hint.classList.add('gone'); H.classList.add('drawer-on'); Object.keys(drawers).forEach(function (x) { drawers[x].classList.toggle('open', x === k); }); openKey = k; }
-function closeDrawer() { Object.keys(drawers).forEach(function (x) { drawers[x].classList.remove('open'); }); openKey = null; H.classList.remove('drawer-on'); if (board) board.classList.remove('focusing'); }
+function closeDrawer() { if (openKey) sfx.paper(0, 0.6); Object.keys(drawers).forEach(function (x) { drawers[x].classList.remove('open'); }); openKey = null; H.classList.remove('drawer-on'); if (board) board.classList.remove('focusing'); }
 $$('[data-close]').forEach(function (b) { on(b, 'click', function () { closeDrawer(); }); });
 $$('[data-replay]').forEach(function (b) { on(b, 'click', function () { var k = b.getAttribute('data-replay'); play(cards[k].el); }); });
 
@@ -2132,7 +2142,7 @@ $$('.layers').forEach(function (ls) {
 $$('[data-flip]').forEach(function (b) {
   on(b, 'click', function (e) {
     e.stopPropagation(); var card = b.closest('.pcard'); if (!card) return;
-    card.classList.toggle('flipped'); card.classList.remove('cmp'); sfx.whoosh(0.6); track('flip');
+    card.classList.toggle('flipped'); card.classList.remove('cmp'); sfx.whoosh(0.6, 1, 0.46); track('flip');
   });
 });
 
@@ -2279,7 +2289,7 @@ function fitScale() { return Math.max(MIN_S, Math.min(vw / (bnd[2] - bnd[0] - 30
 function showFin() {
   if (!finEl || !finArmed || !H.classList.contains('mode-board') || finEl.classList.contains('open')) return; finArmed = false;
   closeDrawer(); finEl.setAttribute('aria-hidden', 'false'); finEl.classList.remove('open'); void finEl.offsetWidth; finEl.classList.add('open');
-  sfx.pencil(1.2); later(function () { sfx.thump(); }, 1300); track('finale');
+  sfx.pencil(1.5, 0.35); sfx.pencil(0.5, 1.8, 0.7); sfx.thump(2.29); track('finale');
   if (performance.now() - lastKeyT < 1500) { finPrev = D.activeElement; later(function () { var b = $('[data-fin="talk"]', finEl); if (b) b.focus({ preventScroll: true }); }, 500); }
 }
 function hideFin() {
