@@ -1,6 +1,6 @@
 # Mydeen Pitchai — Laravel & TALL Stack Developer
 
-> Mydeen Pitchai is a freelance Laravel and TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). Open for freelance projects.
+> Mydeen Pitchai is a freelance Laravel and TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). This portfolio sketchboard scored 8.4/10 on [Orpetron](https://orpetron.com/sites/mydeen-pitchai-sketchboard/) (design 8.8, development 8.6, usability 7.9). Open for freelance projects.
 
 Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filament, PHP, Phalcon, JavaScript, MySQL, PostgreSQL, REST APIs, AWS S3, AWS Lambda, WordPress (incl. custom plugins and headless). AI-assisted development with Claude and ChatGPT — every line human-reviewed. Currently Senior Software Developer at OBII Kriationz Web LLP (since July 2024).
 
@@ -9,6 +9,10 @@ Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filame
 - [Portfolio home](https://mydeen-pitchai.vercel.app/): sketchboard with all projects, stack, journey and contact form
 - [TALL stack developer](https://mydeen-pitchai.vercel.app/tall-stack-developer): what he builds with Laravel, Livewire, Alpine.js and Tailwind CSS, projects and FAQ
 - [Resume (PDF)](https://mydeen-pitchai.vercel.app/Mydeen_Pitchai_Resume.pdf): full work history and education
+
+## My product
+
+- [Fillam](https://mydeen-pitchai.vercel.app/work/fillam): his own product, built and shipped solo — a privacy-first browser extension (Vue 3, TypeScript, WXT · Manifest V3, on-device OCR) that reads Aadhaar, PAN and certificates on the user’s computer and fills Indian government, exam and job forms in English and Tamil. Live on [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/cenogbihfhaifgdbcebcgfleogkldjoj) · [website](https://fillam.vercel.app)
 
 ## Case studies
 
