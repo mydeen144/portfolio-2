@@ -1,8 +1,8 @@
 # Mydeen Pitchai — Laravel & TALL Stack Developer
 
-> Mydeen Pitchai is a freelance Laravel and TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). This portfolio sketchboard scored 8.4/10 on [Orpetron](https://orpetron.com/sites/mydeen-pitchai-sketchboard/) (design 8.8, development 8.6, usability 7.9). Open for freelance projects.
+> Mydeen Pitchai is a freelance Laravel and TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) developer from Tirunelveli, Tamil Nadu, India with 7+ years of PHP, Laravel and WordPress experience. He builds web products that ship — e-commerce, healthcare, SaaS, sports and EdTech — and owns projects from brief to launch. RAMP Award winner (Touch Logic Technologies). This portfolio sketchboard scored 8.4/10 on [Orpetron](https://orpetron.com/sites/mydeen-pitchai-sketchboard/) (design 8.8, development 8.6, usability 7.9). Open to full-time roles and freelance projects — immediate joiner. Meanwhile building Fillam, his own product.
 
-Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filament, PHP, Phalcon, JavaScript, MySQL, PostgreSQL, REST APIs, AWS S3, AWS Lambda, WordPress (incl. custom plugins and headless). AI-assisted development with Claude and ChatGPT — every line human-reviewed. Currently Senior Software Developer at OBII Kriationz Web LLP (since July 2024).
+Stack: TALL stack — Laravel, Livewire, Alpine.js, Tailwind CSS — plus Filament, PHP, Phalcon, JavaScript, MySQL, PostgreSQL, REST APIs, AWS S3, AWS Lambda, WordPress (incl. custom plugins and headless). AI-assisted development with Claude and ChatGPT — every line human-reviewed. Most recently Senior Software Developer at OBII Kriationz Web LLP (July 2024 – October 2026).
 
 ## Key pages
 
